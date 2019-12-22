@@ -1,0 +1,143 @@
+.Content{
+    width: 100%;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size: 28px;
+}
+.first{
+    width: 100%;
+    height: auto;
+    background-color: blue;
+    background-size:100%;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.ContainerFirst{
+    position: absolute;
+    width:100%;
+    top:40%;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size:32px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+}
+.StartDivBtn{
+    margin-top: 20px;
+}
+.StartBtn{
+    background: rgba(255, 255, 255, 0.0);
+    width:150px;
+    height: 50px;
+    border: 2px solid rgb(255, 255, 255);
+    margin: 0 auto;
+    padding-bottom: 5px;
+    border-radius: 30px;
+    color: rgb(255, 255, 255) ; 
+    font-size:24px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+}
+.StartBtn:focus{
+    outline: none;
+}
+.StartBtn:hover {
+    background-color: rgb(0, 174, 255);
+    transition: .2s;
+    border: 2px solid rgb(0, 174, 255);
+    color: white;
+}
+.second{
+    width:100%;
+    overflow: hidden;
+    color: black;
+    text-decoration: none;
+    font-size:32px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    display: flex;
+    align-items: center;
+  justify-content: center 
+}
+.Second-Image{
+    margin-top:10%;
+    margin-bottom:10%;
+    width: 400px;
+    height:390px;
+    overflow:hidden;
+    float:left;
+}
+.SecondTextBox{
+    margin-left: 2%;
+    margin-top:10%;
+    margin-bottom:10%;
+    text-align: left;
+    width:500px;
+    float:left;
+    
+}
+.Block-center{
+    width: 100%;  
+    height: auto;
+    position: relative;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.Image{
+    margin-top:5%;
+    margin-right: 20px;
+    width: 200px;
+    overflow:hidden;
+    float: left;
+}
+.TextBox{
+    margin-top:5%; 
+    text-align: left;
+    width:600px;
+    float:left;
+}
+.Label{
+    font-size: 38px;
+    font-family: 'Segoe UI Regular', 'Times New Roman';
+}
+.Text{
+    font-size: 28px;
+}
+.ContainerSecond{
+    position: absolute;
+    width: 100%;  
+    height: auto;
+    background: linear-gradient(-45deg, rgb(38, 173, 252), rgb(194, 86, 221));
+}
+.Third-Image{
+    margin-top:10%;
+    margin-right: 20px;
+    width: 200px;
+    overflow:hidden;
+    float: left;
+}
+.ThirdTextBox{
+    margin-top:10%;
+    text-align: left;
+    width:600px;
+    float:left;
+}
+
+
+@media (max-width: 1080px) { 
+    .Content{
+        width: 1200px;    
+    }
+    .ContainerFirst{
+        width: 1200px;
+    }
+    .first{
+        width: 1200px;
+        background-size:100%;
+        height: 640;
+    }
+    .Block-center{
+        width: 1200px;
+    }
+    .ContainerSecond{
+        width: 1200px;
+    }
+ }

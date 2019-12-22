@@ -1,0 +1,84 @@
+body{
+    margin: 0%;
+}
+.Navbar{
+    margin: 0%;
+    overflow: hidden;
+    background-color:white;
+    height: 70px;
+}
+.LogoDiv{
+    float: left;
+    width:20%;
+    text-align: left;
+    padding-top: 10px;
+}
+.NavPanelDiv{
+    float: left;
+    width:60%;
+    text-align: center;
+    padding-top: 20px;
+}
+.AutorizationDiv{
+    float: left;
+    width: 20%;
+    height: 100%;
+    padding-top: 15px;
+}
+#LogoPng{
+    width: 45px;
+    margin-left: 10%;
+    float: left;
+    margin-top: 3px;
+}
+#LabelLogo{
+    color:rgb(0, 174, 255);
+    text-decoration: none;
+    font-size:24px;
+    font-family: 'Segoe UI Symbol', 'Times New Roman';
+    margin-left: 3%;
+    margin-top: 7px;
+    float: left;
+}
+.LinkNavPanel{
+    color: rgb(15, 15, 15);
+    text-decoration: none;
+    font-size:21px;
+    font-family: 'Candara', 'Times New Roman';
+    margin-left:9%;
+    margin-right: 9%; 
+
+}
+#AutorizBtn{
+    background-color: white;
+    width:90px;
+    height: 40px;
+    border: 2px solid rgb(0, 174, 255);
+    margin: 0 auto;
+    border-radius: 20px;
+    color: rgb(0, 174, 255) ; 
+    font-size:20px;
+    font-family: 'Candara', 'Times New Roman';
+}
+#AutorizBtn:hover {
+    background-color: rgb(0, 174, 255);
+    transition: .2s;
+    border: 2px solid rgb(0, 174, 255);
+    color: white;
+}
+#AutorizBtn:focus{
+    outline: none;
+}
+.LinkNavPanel:hover{
+    color: rgb(0, 174, 255) ;
+    transition: .2s;
+}
+@media (max-width: 1080px) { 
+    .Navbar{
+        margin: 0%;
+        overflow: hidden;
+        background-color:white;
+        height: 70px;
+        width: 1200px;
+    }
+ }
