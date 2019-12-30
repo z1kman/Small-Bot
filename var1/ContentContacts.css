@@ -1,0 +1,36 @@
+.Content{
+    width: 100%;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size: 21px;
+}
+.first{
+    margin-top: 2%;
+    width:100%;
+    overflow: hidden;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.TextBox{
+    margin-top:5%; 
+    text-align: left;
+    width:900px;
+    float:left;
+}
+.Label{
+    font-size: 24px;
+    font-family: 'Segoe UI Regular', 'Times New Roman';
+}
+.Text{
+    font-size: 21px;
+}
+.Map{
+    margin-top:1%;
+    width:100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
