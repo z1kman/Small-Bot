@@ -1,3 +1,7 @@
+
+body{
+    background-color: #F7F8FD;
+}
 .Content{
     width: 100%;
     font-family: 'Segoe UI Light', 'Times New Roman';
@@ -28,9 +32,15 @@
 }
 .Map{
     margin-top:1%;
+    margin-bottom: 10%;
     width:100%;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+@media (max-width: 1080px) { 
+    .Content{
+        width: 1200px;  
+    }
 }

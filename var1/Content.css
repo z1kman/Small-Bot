@@ -1,3 +1,6 @@
+body{
+    background-color: #F7F8FD;
+}
 .Content{
     width: 100%;
     font-family: 'Segoe UI Light', 'Times New Roman';
@@ -102,7 +105,7 @@
     font-size: 28px;
 }
 .ContainerSecond{
-    position: absolute;
+    position: relative;
     width: 100%;  
     height: auto;
     background: linear-gradient(-45deg, rgb(38, 173, 252), rgb(194, 86, 221));
