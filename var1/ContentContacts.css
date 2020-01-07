@@ -10,9 +10,6 @@ body{
     margin-bottom: 80px;
     flex-grow: 1;
 }
-.Content:after{
-    display: block;
-}
 .first{
     margin-top: 2%;
     width:100%;
