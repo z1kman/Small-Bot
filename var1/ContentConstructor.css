@@ -1,0 +1,30 @@
+body{
+    margin: 0%;
+    background-color: rgb(226, 226, 226);
+}
+.InstrumentsPanel{
+    background-color: white;
+    width: 300px;
+    height: 100%;
+}
+.LogoDiv{
+    float: left;
+    width:300px;
+    text-align: left;
+    padding-top: 10px;
+}
+#LogoPng{
+    width: 45px;
+    margin-left: 50px;
+    float: left;
+    margin-top: 3px;
+}
+#LabelLogo{
+    color:rgb(0, 174, 255);
+    text-decoration: none;
+    font-size:24px;
+    font-family: 'Segoe UI Symbol', 'Times New Roman';
+    margin-left: 15px;
+    margin-top: 7px;
+    float: left;
+}

@@ -27,7 +27,7 @@ body{
 }
 #LogoPng{
     width: 45px;
-    margin-left: 10%;
+    margin-left: 50px;
     float: left;
     margin-top: 3px;
 }
@@ -36,7 +36,7 @@ body{
     text-decoration: none;
     font-size:24px;
     font-family: 'Segoe UI Symbol', 'Times New Roman';
-    margin-left: 3%;
+    margin-left: 15px;
     margin-top: 7px;
     float: left;
 }
