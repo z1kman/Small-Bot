@@ -5,6 +5,7 @@ body{
     margin: 0%;
     overflow: hidden;
     background-color:white;
+    min-width: 1080px;
     height: 70px;
 }
 .LogoDiv{
@@ -73,12 +74,3 @@ body{
     color: rgb(0, 174, 255) ;
     transition: .2s;
 }
-@media (max-width: 1080px) { 
-    .Navbar{
-        margin: 0%;
-        overflow: hidden;
-        background-color:white;
-        height: 70px;
-        width: 1200px;
-    }
- }
