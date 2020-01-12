@@ -26,17 +26,15 @@
             </div>
         </div>
         <div class="Constructor">
-                <div class="Panel">
+                <div class="Panel" id="Panel 1">
                     <div class="InputEdit" id = "InputEdit 1" style="display: none;" onclick="OnClickInputEdit(id)">
-                        <input class="Edit" id="Edit 1">
+                        <input type="text" class="Edit" id="Edit 1" maxlength="28">
                     </div>
-                    <div class="TitlePanel" id="EditNamePanel 1" style="display:block;" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
-                        <div class="NamePanel" id="NamePanel 1">
-                            Panel
-                        </div>
-                        <div class="ImgPencil" style="opacity: 0;" id="ImgPencil 1">
-                            <img src="source/constructor/pencil.png" alt="Редактировать" width="18px">
-                        </div>
+                    <div class="TitlePanel" id="EditNamePanel 1" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
+                        <span class="NamePanel" id="NamePanel 1">Panel</span>
+                        <span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1">
+                            <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
+                        </span>
                     </div>
                     <div class="Bot">
                         <div class="Label"> 
