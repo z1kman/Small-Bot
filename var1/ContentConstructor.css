@@ -39,8 +39,27 @@ body{
     padding: 20px;
     background-color: white;
 }
+.TitlePanel{
+    width:80px;
+    padding-left: 5px;
+    border-radius: 7px;
+    min-height: 30px;
+}
+.TitlePanel:hover{
+    background-color: #F7F8FD ;
+}
+.NamePanel{
+    margin-bottom: 4px;
+    display: inline-block;
+    margin-left:4px;   
+}
+.ImgPencil{ 
+    width:20px;
+    display: inline-block;
+}
 .Bot{
     border-radius: 5px;
+    margin-top: 5px;
     border: 1px dashed rgba(1, 140, 204, 0.582);
 }
 .Bot:hover{
@@ -73,4 +92,19 @@ body{
     color: white;
     background-color: rgb(0, 174, 255);
     transition: 0.3s;
+}
+.InputEdit{
+    width: 300px;
+    height: 30px;
+}
+.Edit{
+    background-color: white;
+    border:1px solid rgb(139, 139, 139);
+    border-radius: 5px;
+    width: 340px;
+    color: black;
+    font-family: 'Candara', 'Times New Roman';
+    font-size:20px;
+    background-color: rgba(0, 174, 255, 0);
+    outline: none;
 }

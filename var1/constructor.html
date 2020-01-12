@@ -5,6 +5,7 @@
             <meta name="viewport" content="width = device-width, initial-scale=1">
             <link rel="stylesheet" href="NavbarConstructor.css">
             <link rel="stylesheet" href="ContentConstructor.css">
+            <script src="ContentConstructor.js"></script>
     <body> 
         <div class="Navbar">
             <div class="LogoDiv">
@@ -26,8 +27,19 @@
         </div>
         <div class="Constructor">
                 <div class="Panel">
+                    <div class="InputEdit" id = "InputEdit 1" style="display: none;" onclick="OnClickInputEdit(id)">
+                        <input class="Edit" id="Edit 1">
+                    </div>
+                    <div class="TitlePanel" id="EditNamePanel 1" style="display:block;" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
+                        <div class="NamePanel" id="NamePanel 1">
+                            Panel
+                        </div>
+                        <div class="ImgPencil" style="opacity: 0;" id="ImgPencil 1">
+                            <img src="source/constructor/pencil.png" alt="Редактировать" width="18px">
+                        </div>
+                    </div>
                     <div class="Bot">
-                        <div class="Label">
+                        <div class="Label"> 
                             Действие чат бота
                         </div>
                         <form action="#">
