@@ -14,34 +14,8 @@ body{
     text-align: center;
     margin-top: 10px;
 }
-.NewPanelBtn{
-    color: rgb(210, 220, 224);
-    font-family: 'Candara', 'Times New Roman';
-    margin-top: 10px;
-    margin-left: 10px;
-    border-style: none;
-    width:440px;
-    height: 40px; 
-    font-size:21px;
-    background-color: #F7F8FD ;
-    border-radius: 5px;
-    outline: none;
-}
-.NewPanelBtn:hover{
-    color: rgb(0, 142, 207);
-    background-color: rgb(231, 240, 253) ;
-    transition: 0.4s;
-}
 .Panel{
     margin-top: 10px;
-    margin-left: 10px;
-    width: 400px;
-    border-radius: 5px;
-    padding: 20px;
-    background-color: white;
-}
-.Panel1{
-    margin-top: 80px;
     margin-left: 10px;
     width: 400px;
     border-radius: 5px;
@@ -72,7 +46,7 @@ body{
     border:1px solid rgb(80, 80, 80);
     border-radius: 5px;
     width: 250px;
-    height: 23px;
+    height: 30px;
     color:  rgb(80, 80, 80);
     font-family: 'Segoe UI Light', 'Times New Roman';
     font-size:20px;
@@ -82,6 +56,15 @@ body{
 }
 .ImgPencil{
     margin-left: 5px;
+}
+.TrashImg{
+    float: right;
+    padding: 5px;
+    border-radius: 10px;
+}
+.TrashImg:hover{
+    background-color: rgb(248, 249, 252) ;
+    transition: 0.3s;
 }
 .Bot{
     border-radius: 5px;
@@ -118,4 +101,22 @@ body{
     color: white;
     background-color: rgb(0, 174, 255);
     transition: 0.3s;
+}
+.NewPanelBtn{
+    color: rgb(228, 228, 228);
+    font-family: 'Candara', 'Times New Roman';
+    margin-top: 10px;
+    margin-left: 10px;
+    border-style: none;
+    width:440px;
+    height: 40px; 
+    font-size:21px;
+    background-color: #F7F8FD ;
+    border-radius: 5px;
+    outline: none;
+}
+.NewPanelBtn:hover{
+    color: rgb(0, 142, 207);
+    background-color: rgb(231, 240, 253) ;
+    transition: 0.4s;
 }

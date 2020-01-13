@@ -26,17 +26,23 @@
             </div>
         </div>
         <div class="Constructor" id="Constructor">
-                <div class="Panel1" id="Panel 1">
-                    <div class="InputEdit" id = "InputEdit 1" style="display: none;" onclick="OnClickInputEdit(id)">
-                        <input type="text" class="Edit" id="Edit 1" maxlength="28">
+            <form id="formAddInstrumentBtn 1 0" >
+                <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
+            </form>
+                <div class="Panel" id="Panel 1 1">
+                    <div class="InputEdit" id = "InputEdit 1 1" style="display: none;" onclick="OnClickInputEdit(id)">
+                        <input type="text" class="Edit" id="Edit 1 1" maxlength="28">
                     </div>
-                    <div class="TitlePanel" id="EditNamePanel 1" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
-                        <span class="NamePanel" id="NamePanel 1">Панель 1</span>
-                        <span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1">
+                    <div class="TitlePanel" id="EditNamePanel 1 1" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
+                        <span class="NamePanel" id="NamePanel 1 1">Панель 1</span>
+                        <span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1 1">
                             <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
                         </span>
                     </div>
-                    <div class="Bot" id="Bot 1">
+                    <span class="TrashImg" id="TrashImg 1 1" title="удалить эту панель" onclick="OnClickRemovePanel(id)">
+                        <img src="source/constructor/trash.png" alt="удалить" width="16px">
+                    </span>
+                    <div class="Bot" id="Bot 1 1">
                         <div class="Label"> 
                             Действие чат бота
                         </div>
@@ -44,7 +50,7 @@
                             <input type="button" value="Добавить действие" class="AddInstrumentBtn">
                         </form>
                     </div>
-                    <div class="User" id="User 1">
+                    <div class="User" id="User 1 1">
                         <div class="Label">
                             Действие пользователя
                         </div>
