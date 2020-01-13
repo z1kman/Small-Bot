@@ -15,7 +15,7 @@ body{
     margin-top: 10px;
 }
 .NewPanelBtn{
-    color: rgb(0, 142, 207);
+    color: rgb(210, 220, 224);
     font-family: 'Candara', 'Times New Roman';
     margin-top: 10px;
     margin-left: 10px;
@@ -28,10 +28,19 @@ body{
     outline: none;
 }
 .NewPanelBtn:hover{
+    color: rgb(0, 142, 207);
     background-color: rgb(231, 240, 253) ;
     transition: 0.4s;
 }
 .Panel{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 400px;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: white;
+}
+.Panel1{
     margin-top: 80px;
     margin-left: 10px;
     width: 400px;
@@ -62,13 +71,17 @@ body{
     background-color: white;
     border:1px solid rgb(80, 80, 80);
     border-radius: 5px;
-    width: 320px;
+    width: 250px;
+    height: 23px;
     color:  rgb(80, 80, 80);
     font-family: 'Segoe UI Light', 'Times New Roman';
     font-size:20px;
     background-color: rgba(0, 174, 255, 0);
     outline: none;
     border: 1px solid rgba(1, 140, 204, 0.582);
+}
+.ImgPencil{
+    margin-left: 5px;
 }
 .Bot{
     border-radius: 5px;

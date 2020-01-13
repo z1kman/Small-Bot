@@ -25,36 +25,36 @@
                 </div>
             </div>
         </div>
-        <div class="Constructor">
-                <div class="Panel" id="Panel 1">
+        <div class="Constructor" id="Constructor">
+                <div class="Panel1" id="Panel 1">
                     <div class="InputEdit" id = "InputEdit 1" style="display: none;" onclick="OnClickInputEdit(id)">
                         <input type="text" class="Edit" id="Edit 1" maxlength="28">
                     </div>
                     <div class="TitlePanel" id="EditNamePanel 1" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
-                        <span class="NamePanel" id="NamePanel 1">Panel</span>
+                        <span class="NamePanel" id="NamePanel 1">Панель 1</span>
                         <span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1">
                             <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
                         </span>
                     </div>
-                    <div class="Bot">
+                    <div class="Bot" id="Bot 1">
                         <div class="Label"> 
                             Действие чат бота
                         </div>
-                        <form action="#">
-                            <button value="Добавить действие" class="AddInstrumentBtn">Добавить действие</button>
+                        <form>
+                            <input type="button" value="Добавить действие" class="AddInstrumentBtn">
                         </form>
                     </div>
-                    <div class="User">
+                    <div class="User" id="User 1">
                         <div class="Label">
                             Действие пользователя
                         </div>
-                        <form action="#">
-                            <button value="Добавить действие" class="AddInstrumentBtn">Добавить действие</button>
+                        <form>
+                            <input type="button" value="Добавить действие" class="AddInstrumentBtn">
                         </form>
                     </div>
                 </div>
-                <form action="#">
-                    <button value="Добавить панель" class="NewPanelBtn">Добавить панель</button>
+                <form id="formAddInstrumentBtn 1 1" >
+                    <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 1" onclick="OnClickNewPanelBtn(id)">
                 </form>
         </div>
     </body>
