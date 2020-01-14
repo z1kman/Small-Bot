@@ -8,6 +8,9 @@ function NumberOfElement(id){ //получение номера эллемент
 function SecondNumberOfElement(id){ //получение второго номера эллемента(необходимо для кнопки добавления новой панели)
     return(id.split(' ')[2]);
 }
+function ThirdNumberOfElement(id){//получение третьего номера эллемента(под элементы панели(кнопки/текст и т.д))
+    return(id.split(' ')[3]);
+}
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
@@ -138,7 +141,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divLabelBot.innerHTML="Действие чат бота";
     //----------Создание формы кнопки добавления инструмента у чат бота("Добавить действие")-----------
     divBot.append(formAddInstrumentBtnBot);
-    formAddInstrumentBtnBot.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\">";
+    formAddInstrumentBtnBot.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\" id=\"AddInstrumentBtnBot " + N + " "  + NumberOfPanels  + "\" onclick=\"OnClickAddInstrumentBtnBot(id)\">";
     //----------Создание блока действий пользователя(User)----------
     divUser.className = "User";
     divUser.setAttribute("id","User " + N  + " " + NumberOfPanels);
@@ -149,9 +152,45 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divLabelUser.innerHTML="Действие пользователя";
     //----------Создание формы кнопки добавления инструмента у пользователя("Добавить действие")-----------
     divUser.append(formAddInstrumentBtnUser);
-    formAddInstrumentBtnUser.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\">";
+    formAddInstrumentBtnUser.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\" id=\"AddInstrumentBtnUser " + N + " "  + NumberOfPanels  + " \" onclick=\"OnClickAddInstrumentBtnUser(id)\">";
     //----------Создание формы кнопки добавления новой панели(NewPanelBtn)----------
     formNewPanelBtn.setAttribute("id","formAddInstrumentBtn " + N + " " + NumberOfPanels);
     divPanel.after(formNewPanelBtn);
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
-}       
+}
+function OnClickImgExit(){//закрытие панели выбора новых действий
+    let NewInstrumentPanelBot = document.getElementById("NewInstrumentPanelBot");
+    NewInstrumentPanelBot.parentNode.removeChild(NewInstrumentPanelBot);
+}
+function OnClickAddInstrumentBtnBot(id){
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    let Constructor = document.getElementById("Constructor");
+    let divNewInstrumentPanelBot = document.createElement('div');//фиксированная панель во весь экран
+    let divAddNewInstrumentPanelBot = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
+    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let formBtn = document.createElement('form');//форма с кнопками
+
+    //----------Создание фиксированной панели-----------
+    divNewInstrumentPanelBot.className="NewInstrumentPanelBot";
+    divNewInstrumentPanelBot.setAttribute("id","NewInstrumentPanelBot");
+    Constructor.prepend(divNewInstrumentPanelBot);
+    //----------Создание панели выбора действий-----------
+    divAddNewInstrumentPanelBot.className="AddNewInstrumentPanelBot";
+    divNewInstrumentPanelBot.prepend(divAddNewInstrumentPanelBot);
+    //----------Создание кнопки закрытия панели выбора действий-----------
+    divImgExit.className="ImgExit";
+    divImgExit.setAttribute("onclick","OnClickImgExit()");
+    divAddNewInstrumentPanelBot.prepend(divImgExit);
+    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
+    //----------Создание надписи панели выбора действий-----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanelBot.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="Выберете желаемое действие для чат бота";
+    //----------Создание формы для кнопок и сами кнопки-----------
+    divAddNewInstrumentPanelBot.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Вывести текст\" class=\"AddBtnBot\" id=\"AddTextBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddTextBot(id)\"> " +
+    "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtnBot\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">"
+}

@@ -120,3 +120,46 @@ body{
     background-color: rgb(231, 240, 253) ;
     transition: 0.4s;
 }
+.NewInstrumentPanelBot{
+    width:100%;
+    height: 100%;
+    background-color:rgba(202, 202, 202, 0.685);
+    display: block;
+    position: fixed;
+}
+.AddNewInstrumentPanelBot{
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    border-radius: 20px;
+    background-color:white;
+    width:500px;
+    height: 190px;
+    padding: 20px;
+}
+#LabelAddNewInstrument{
+    margin-top: 20px;
+    color: black;
+}
+.ImgExit{
+    float: right;
+    padding: 5px;
+    border-radius: 10px;
+}
+.AddBtnBot{
+    font-family: 'Candara', 'Times New Roman';
+    margin-top: 20px;
+    margin-left: 150px;
+    border-style: none;
+    width:200px;
+    height: 30px; 
+    font-size:16px;
+    background-color: #F7F8FD ;
+    border-radius: 25px;
+    outline: none;
+    
+}
+.AddBtnBot:hover{
+    background-color: rgb(221, 221, 221) ;
+    transition: 0.5s;
+}
