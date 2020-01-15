@@ -26,17 +26,18 @@
             </div>
         </div>
         <div class="Constructor" id="Constructor">
-            <div class="NewInstrumentPanelBot" id="NewInstrumentPanelBot">
-                <div class="AddNewInstrumentPanelBot">
+            <div class="NewInstrumentPanel" id="NewInstrumentPanel">
+                <div class="AddNewTextPanel">
                     <div class="ImgExit" onclick="OnClickImgExit()"> 
                         <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
                     </div>
                     <div class="Label" id="LabelAddNewInstrument"> 
-                        Выберете желаемое действие для чат бота
+                        Введите желаемый текст
                     </div>
+                    <textarea class="NewTextTextarea" id="NewTextTextarea"></textarea>
                     <form>
-                        <input type="button" value="Вывести текст" class="AddBtnBot" id="AddTextBtnBot 1 1" onclick="OnClickAddTextBot(id)">
-                        <input type="button" value="Вывести изображение" class="AddBtnBot" id="AddImgBtnBot 1 1" onclick="OnClickAddImgBot(id)">
+                        <input type="button" value="Сохранить" class="AddBtnBot" id="NewTextSaveBtn 1 1"onclick="OnClickNewTextSaveBotBtn(id)">
+                        <input type="button" value="Отменить" class="AddBtnBot" id="CancelBot 1 1" onclick="OnClickCancelBot(id)">
                     </form>
                 </div>
             </div>
