@@ -3,6 +3,9 @@ var NumberOfPanels = 1;
 var NumberOfText = 0;
 var oldNumberOfElement = 0;//индекс предыдущего элемента(для изменения имени);
 
+function NameOfElement(id){ //получение номера эллемента
+    return(id.split(' ')[0]);
+}
 function NumberOfElement(id){ //получение номера эллемента
     return(id.split(' ')[1]);
 }
@@ -62,6 +65,24 @@ function OnMouseOutEditPanelName(id){//скрытие иконки редакт�
     var SN = SecondNumberOfElement(id);
     var ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
     ImgPencil.setAttribute("style","opacity:0;");
+}
+function OnMouseOverTextBot(id){//отображение иконки редактирования на блоках действиях(показать)
+    N = NumberOfElement(id);
+    SN = SecondNumberOfElement(id);
+    TN = ThirdNumberOfElement(id);
+    ImgPencilInstrument = document.getElementById("ImgPencil " + N + " " + SN + " " + TN);
+    TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    TrashImg.setAttribute("style","opacity: 100")
+    ImgPencilInstrument.setAttribute("style","opacity: 100");
+}
+function OnMouseOutTextBot(id){//отображение иконки редактирования на блоках действиях(скрыть)
+    N = NumberOfElement(id);
+    SN = SecondNumberOfElement(id);
+    TN = ThirdNumberOfElement(id);
+    ImgPencilInstrument = document.getElementById("ImgPencil " + N + " " + SN + " " + TN);
+    TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    TrashImg.setAttribute("style","opacity: 0")
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
 }
 function OnClickRemovePanel(id){//удаление панели
     var N = NumberOfElement(id);
@@ -141,6 +162,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divBot.append(divLabelBot);
     divLabelBot.innerHTML="Действие чат бота";
     //----------Создание формы кнопки добавления инструмента у чат бота("Добавить действие")-----------
+    formAddInstrumentBtnBot.setAttribute("id","formAddInstrumentBtnBot " + N + " " + NumberOfPanels);
     divBot.append(formAddInstrumentBtnBot);
     formAddInstrumentBtnBot.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\" id=\"AddInstrumentBtnBot " + N + " "  + NumberOfPanels  + "\" onclick=\"OnClickAddInstrumentBtnBot(id)\">";
     //----------Создание блока действий пользователя(User)----------
@@ -152,6 +174,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divUser.append(divLabelUser);
     divLabelUser.innerHTML="Действие пользователя";
     //----------Создание формы кнопки добавления инструмента у пользователя("Добавить действие")-----------
+    formAddInstrumentBtnUser.setAttribute("id","formAddInstrumentBtnUser " + N + " " + NumberOfPanels);
     divUser.append(formAddInstrumentBtnUser);
     formAddInstrumentBtnUser.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\" id=\"AddInstrumentBtnUser " + N + " "  + NumberOfPanels  + " \" onclick=\"OnClickAddInstrumentBtnUser(id)\">";
     //----------Создание формы кнопки добавления новой панели(NewPanelBtn)----------
@@ -196,7 +219,6 @@ function OnClickAddInstrumentBtnBot(id){ //создани панели выбо�
     "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtnBot\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">"
 }
 function OnClickAddTextBot(id){//создание панели добавление текста у бота
-    OnClickImgExit();//закрытие старой панели
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     let Constructor = document.getElementById("Constructor");
@@ -207,6 +229,10 @@ function OnClickAddTextBot(id){//создание панели добавлен�
     let NewTextTextarea = document.createElement('textarea');//поле ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
 
+
+    OnClickImgExit();//закрытие старой панели
+
+    
     //----------Создание фиксированной панели-----------
     divNewInstrumentPanel.className="NewInstrumentPanel";
     divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
@@ -236,4 +262,107 @@ function OnClickAddTextBot(id){//создание панели добавлен�
 function OnClickCancelBot(id){//отмена действия создания нового элемента у бота
     OnClickImgExit();//закрытие текущей панели
     OnClickAddInstrumentBtnBot(id);//генерирование предыдущей панели
+}
+function OnClickNewTextSaveBotBtn(id){//Создание нового элемента текста бота и сохранение введеного текста для нового элемента у бота
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    let formAddInstrumentBtnBot = document.getElementById("formAddInstrumentBtnBot " + N + " " + SN);
+    let TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
+    let divTextBot = document.createElement('div');//div внутри которого label,textarea и т.д
+    let divLabelTextBot = document.createElement('div');//надпись ("Вывод текста")
+    let spanTrashImg = document.createElement('span');//иконка мусорки(удаление элемента)
+    let divImgPencilInstrument = document.createElement('div');//иконка карандаша(редактирование элемента)
+    let TextBotTextarea = document.createElement('textarea');//textarea для текста
+    
+    NumberOfText++;//увеличение числа текстовых элементов
+    //----------Создание div(а) внутри которого label,textarea и т.д-----------
+    divTextBot.className = "TextBot";
+    divTextBot.setAttribute("id", "TextBot " + N + " " + SN + " " + NumberOfText );
+    divTextBot.setAttribute("onmouseover","OnMouseOverTextBot(id)");
+    divTextBot.setAttribute("onmouseout","OnMouseOutTextBot(id)");
+    formAddInstrumentBtnBot.before(divTextBot);
+    //----------Создание надписи ("Вывод текста")----------
+    divLabelTextBot.className="LabelTextBot";
+    divTextBot.append(divLabelTextBot);
+    divLabelTextBot.innerHTML = "Вывод текста";
+    //----------Создание иконки мусорки(удаление элемента)----------
+    spanTrashImg.className = "TrashImg";
+    spanTrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + NumberOfText);
+    spanTrashImg.setAttribute("style","opacity:0;");
+    spanTrashImg.setAttribute("title","удалить этот элемент");
+    spanTrashImg.setAttribute("onclick","OnClickRemoveTextBot(id)");
+    divTextBot.append(spanTrashImg);
+    spanTrashImg.innerHTML="<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание иконки карандаша(редактирование элемента)-----------
+    divImgPencilInstrument.className="ImgPencilInstrument";
+    divImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + NumberOfText);
+    divImgPencilInstrument.setAttribute("style","opacity: 0;");
+    divImgPencilInstrument.setAttribute("onclick","OnClickEditTextBot(id)");
+    divTextBot.append(divImgPencilInstrument);
+    divImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание textarea для текста  и вставка самого текста----------
+    TextBotTextarea.className = "textareaTextBot";
+    TextBotTextarea.setAttribute("id","textareaTextBot " + N + " " + SN + " " + NumberOfText);
+    divTextBot.append(TextBotTextarea);
+    TextBotTextarea.value = TextTextarea.value;//записать значения из окна создания элемента в сам элемент
+    OnClickImgExit();//закрыть окно создание элемента
+}
+function OnClickRemoveTextBot(id){//удаление элемента-текст у бота
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    var TN = ThirdNumberOfElement(id);
+    TextBot = document.getElementById("TextBot " + N + " " + SN + " " + TN);
+    TextBot.parentNode.removeChild(TextBot);
+}
+function OnClickEditTextBot(id){//редактирование текста у бота
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    var TN = ThirdNumberOfElement(id);
+    let Constructor = document.getElementById("Constructor");
+    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
+    let divAddNewTextPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
+    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let NewTextTextarea = document.createElement('textarea');//поле ввода текста
+    let formBtn = document.createElement('form');//форма с кнопками
+    
+    //----------Создание фиксированной панели-----------
+    divNewInstrumentPanel.className="NewInstrumentPanel";
+    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
+    Constructor.prepend(divNewInstrumentPanel);
+    //----------Создание панели выбора действий-----------
+    divAddNewTextPanel.className="AddNewTextPanel";
+    divNewInstrumentPanel.prepend(divAddNewTextPanel);
+    //----------Создание кнопки закрытия панели выбора действий-----------
+    divImgExit.className="ImgExit";
+    divImgExit.setAttribute("onclick","OnClickImgExit()");
+    divAddNewTextPanel.prepend(divImgExit);
+    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
+    //----------Создание надписи панели -----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewTextPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="Введите желаемый текст";
+    //----------Создание поля ввода текста -----------
+    NewTextTextarea.className="NewTextTextarea";
+    NewTextTextarea.setAttribute("id","NewTextTextarea");
+    divAddNewTextPanel.append(NewTextTextarea);
+    //----------Создание формы для кнопок и сами кнопки-----------
+    divAddNewTextPanel.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtnBot\" id=\"NewTextSaveBtn " + N + " " + SN + " " + TN + "\"onclick=\"OnClickEditTextSaveBotBtn(id)\">" +
+    "<input type=\"button\" value=\"Отменить\" class=\"AddBtnBot\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickImgExit();\">";  
+
+    //----------Вставка текста из панели в панель для редактирования-----------
+    var TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
+    var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
+    TextTextarea.value = TextBotTextarea.value;
+}
+function OnClickEditTextSaveBotBtn(id){ // Сохранение отредактированого текста у бота
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    var TN = ThirdNumberOfElement(id);
+    var TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
+    var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
+    TextBotTextarea.value = TextTextarea.value;
+    OnClickImgExit();
 }

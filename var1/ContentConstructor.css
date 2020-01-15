@@ -63,7 +63,7 @@ body{
     border-radius: 10px;
 }
 .TrashImg:hover{
-    background-color: rgb(248, 249, 252) ;
+    background-color: rgb(228, 228, 228);
     transition: 0.3s;
 }
 .Bot{
@@ -71,18 +71,10 @@ body{
     margin-top: 5px;
     border: 1px dashed rgba(1, 140, 204, 0.582);
 }
-.Bot:hover{
-    background-color: #F7F8FD ;
-    transition: 0.3s;
-}
 .User{
     margin-top: 10px;
     border-radius: 5px;
     border: 1px dashed rgba(1, 140, 204, 0.582);
-}
-.User:hover{
-    background-color: #F7F8FD ;
-    transition: 0.3s;
 }
 .AddInstrumentBtn{
     margin-left: 73px;
@@ -183,4 +175,59 @@ body{
     resize: none;
     outline: none;
     border-radius: 10px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size: 16px;
+}
+.TextBot{
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 350px;
+    border: 1px solid rgb(170, 228, 255);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+.TextBot:hover{
+    background-color: #F7F8FD ;
+    transition: 0.5s;
+}
+.LabelTextBot{
+    margin-left:10px;
+    color: black;
+    display: inline;
+}
+.textareaTextBot{
+    border-radius: 5px;
+    width: 300px;
+    margin-left: 10px;
+    margin-top: 0px;
+
+    resize: none;   
+    border: none;
+    font-size: 16px;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+    font-family: 'Segoe UI Light', 'Times New Roman';
+}
+.ImgPencilInstrument{
+    display: inline-block;
+    margin-left: 3px;
+    border-radius: 5px;
+    padding: 3px;
+}
+.ImgPencilInstrument:hover{
+    background-color: rgb(228, 228, 228);
+}  
+.JumpIndicator{
+    border-radius: 50%;
+    border: 1px solid rgb(233, 233, 233);
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-right: 5px;
+}
+.JumpIndicator:hover{
+    transition: 0.5s;
+    background-color:rgb(145, 145, 145);
 }

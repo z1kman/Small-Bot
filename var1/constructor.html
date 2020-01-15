@@ -26,21 +26,6 @@
             </div>
         </div>
         <div class="Constructor" id="Constructor">
-            <div class="NewInstrumentPanel" id="NewInstrumentPanel">
-                <div class="AddNewTextPanel">
-                    <div class="ImgExit" onclick="OnClickImgExit()"> 
-                        <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
-                    </div>
-                    <div class="Label" id="LabelAddNewInstrument"> 
-                        Введите желаемый текст
-                    </div>
-                    <textarea class="NewTextTextarea" id="NewTextTextarea"></textarea>
-                    <form>
-                        <input type="button" value="Сохранить" class="AddBtnBot" id="NewTextSaveBtn 1 1"onclick="OnClickNewTextSaveBotBtn(id)">
-                        <input type="button" value="Отменить" class="AddBtnBot" id="CancelBot 1 1" onclick="OnClickCancelBot(id)">
-                    </form>
-                </div>
-            </div>
             <form id="formAddInstrumentBtn 1 0" >
                 <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
             </form>
@@ -61,7 +46,7 @@
                         <div class="Label"> 
                             Действие чат бота
                         </div>
-                        <form>
+                        <form id="formAddInstrumentBtnBot 1 1">
                             <input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnBot 1 1" onclick="OnClickAddInstrumentBtnBot(id)">
                         </form>
                     </div>
@@ -69,7 +54,7 @@
                         <div class="Label">
                             Действие пользователя
                         </div>
-                        <form>
+                        <form id="formAddInstrumentBtnUser 1 1">
                             <input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnUser 1 1" onclick="OnClickAddInstrumentBtnUser(id)">
                         </form>
                     </div>
