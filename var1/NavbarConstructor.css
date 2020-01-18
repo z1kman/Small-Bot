@@ -37,6 +37,12 @@
     margin-top: 7px;
     float: left;
 }
+.NewVariableBtn{
+    float: left;
+    height: 100%;
+    padding-top: 15px;
+    margin-right: 20px;
+}
 .TestDiv{
     float: left;
     height: 100%;
@@ -44,7 +50,6 @@
 }
 .Btn{
     background-color: white;
-    width:140px;
     height: 40px;
     border: 2px solid rgb(0, 174, 255);
     margin: 0 auto;
@@ -52,6 +57,8 @@
     color: rgb(0, 174, 255) ; 
     font-size:20px;
     font-family: 'Candara', 'Times New Roman';
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .Btn:hover {
     background-color: rgb(0, 174, 255);

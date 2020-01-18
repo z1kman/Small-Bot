@@ -120,16 +120,6 @@ body{
     position: fixed;
     min-width: 1080px;
 }
-.AddNewInstrumentPanelBot{
-    position: absolute;
-    top: 30%;
-    left: 35%;
-    border-radius: 20px;
-    background-color:white;
-    width:500px;
-    height: 190px;
-    padding: 20px;
-}
 #LabelAddNewInstrument{
     margin-top: 20px;
     color: black;
@@ -156,7 +146,7 @@ body{
     background-color: rgb(221, 221, 221) ;
     transition: 0.5s;
 }
-.AddNewTextPanel{
+.AddNewPanel{
     position: absolute;
     display: inline-block;
     top: 25%;
@@ -164,7 +154,6 @@ body{
     border-radius: 20px;
     background-color:white;
     width:500px;
-    height: 320px;
     padding: 20px;
 }
 .NewTextTextarea{
@@ -218,7 +207,28 @@ body{
 }
 .ImgPencilInstrument:hover{
     background-color: rgb(228, 228, 228);
-}  
+}
+.NewVariable{
+    color:black;
+    margin-top: 20px;
+    margin-left: 50px;
+} 
+.Input{
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid rgb(228, 228, 228);
+    display: inline-block;
+    height: 26px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size:21px;
+    margin-left: 5px;   
+    padding: 5px;
+}
+.NewVariableValue{
+    color:black;
+    margin-top: 20px;
+    margin-left: 2px;
+}
 .JumpIndicator{
     border-radius: 50%;
     border: 1px solid rgb(233, 233, 233);
