@@ -76,8 +76,8 @@ function OnClickAddNewVariable(id){//Создание панели создан�
     //----------Создание формы с кнопками -----------
     formBtn.setAttribute("id","formBtnNewVariable")
     divAddNewPanel.append(formBtn);
-    formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtnBot\" onclick=\"OnClickNewVariableSaveBtn(id)\">" +
-    "<input type=\"button\" value=\"Отменить\" class=\"AddBtnBot\" onclick=\"OnClickImgExit();\">";
+    formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" onclick=\"OnClickNewVariableSaveBtn(id)\">" +
+    "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" onclick=\"OnClickImgExit();\">";
 
 }
 function OnClickNewVariableSaveBtn(id){ //сохранить новую переменную
@@ -325,11 +325,11 @@ function OnClickAddInstrumentBtnBot(id){ //создани панели выбо�
     divLabelAddNewInstrument.className="Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
     divAddNewInstrumentPanelBot.append(divLabelAddNewInstrument);
-    divLabelAddNewInstrument.innerHTML="Выберете желаемое действие для чат бота";
+    divLabelAddNewInstrument.innerHTML="Выберите желаемое действие для чат бота";
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewInstrumentPanelBot.append(formBtn);
-    formBtn.innerHTML="<input type=\"button\" value=\"Вывести текст\" class=\"AddBtnBot\" id=\"AddTextBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddTextBot(id)\"> " +
-    "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtnBot\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">";
+    formBtn.innerHTML="<input type=\"button\" value=\"Вывести текст\" class=\"AddBtn\" id=\"AddTextBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddTextBot(id)\"> " +
+    "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtn\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">";
 }
 function OnClickAddTextBot(id){//создание панели добавление текста у бота
     let N = NumberOfElement(id);
@@ -369,8 +369,8 @@ function OnClickAddTextBot(id){//создание панели добавлен�
     divAddNewTextPanel.append(NewTextTextarea);
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewTextPanel.append(formBtn);
-    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtnBot\" id=\"NewTextSaveBtn " + N + " " + SN + "\"onclick=\"OnClickNewTextSaveBotBtn(id)\">" +
-    "<input type=\"button\" value=\"Отменить\" class=\"AddBtnBot\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickCancelBot(id)\">";
+    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"NewTextSaveBtn " + N + " " + SN + "\"onclick=\"OnClickNewTextSaveBotBtn(id)\">" +
+    "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickCancelBot(id)\">";
 }
 function OnClickCancelBot(id){//отмена действия создания нового элемента у бота
     OnClickImgExit();//закрытие текущей панели
@@ -464,8 +464,8 @@ function OnClickEditTextBot(id){//редактирование текста у �
     divAddNewTextPanel.append(NewTextTextarea);
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewTextPanel.append(formBtn);
-    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtnBot\" id=\"NewTextSaveBtn " + N + " " + SN + " " + TN + "\"onclick=\"OnClickEditTextSaveBotBtn(id)\">" +
-    "<input type=\"button\" value=\"Отменить\" class=\"AddBtnBot\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickImgExit();\">";  
+    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"NewTextSaveBtn " + N + " " + SN + " " + TN + "\"onclick=\"OnClickEditTextSaveBotBtn(id)\">" +
+    "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickImgExit();\">";  
 
     //----------Вставка текста из панели в панель для редактирования-----------
     var TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
@@ -481,4 +481,41 @@ function OnClickEditTextSaveBotBtn(id){ // Сохранение отредакт
     TextBotTextarea.value = TextTextarea.value;
     OnClickImgExit();
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
+}
+
+function OnClickAddInstrumentBtnUser(id){
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    let Constructor = document.getElementById("Constructor");
+    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
+    let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
+    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let formBtn = document.createElement('form');//форма с кнопками
+
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    //----------Создание фиксированной панели-----------
+    divNewInstrumentPanel.className="NewInstrumentPanel";
+    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
+    Constructor.prepend(divNewInstrumentPanel);
+    //----------Создание панели выбора действий-----------
+    divAddNewInstrumentPanel.className="AddNewPanel";
+    divNewInstrumentPanel.prepend(divAddNewInstrumentPanel);
+    //----------Создание кнопки закрытия панели выбора действий-----------
+    divImgExit.className="ImgExit";
+    divImgExit.setAttribute("onclick","OnClickImgExit()");
+    divAddNewInstrumentPanel.prepend(divImgExit);
+    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
+    //----------Создание надписи панели выбора действий-----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="Выберите действе осуществляемое пользователем";
+    //----------Создание формы для кнопок и сами кнопки-----------
+    divAddNewInstrumentPanel.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Нажатие на кнопку\" class=\"AddBtn\" id=\"AddButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddButtonUser(id)\"> " +
+    "<input type=\"button\" value=\"Ввод текста\" class=\"AddBtn\" id=\"AddNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddNumberUser(id)\">" +
+    "<input type=\"button\" value=\"Ввод числа\" class=\"AddBtn\" id=\"AddTextBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddTextUser(id)\">" +
+    "<input type=\"button\" value=\"Ввод номера телефона\" class=\"AddBtn\" id=\"AddPhoneNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddPhoneNumberUser(id)\">" +
+    "<input type=\"button\" value=\"Ввод email\" class=\"AddBtn\" id=\"AddEmailBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddEmailUser(id)\">";
 }

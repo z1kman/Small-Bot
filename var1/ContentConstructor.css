@@ -131,7 +131,7 @@ body{
     padding: 5px;
     border-radius: 10px;
 }
-.AddBtnBot{
+.AddBtn{
     font-family: 'Candara', 'Times New Roman';
     margin-top: 20px;
     margin-left: 150px;
@@ -144,7 +144,7 @@ body{
     outline: none;
     
 }
-.AddBtnBot:hover{
+.AddBtn:hover{
     background-color: rgb(221, 221, 221) ;
     transition: 0.5s;
 }
