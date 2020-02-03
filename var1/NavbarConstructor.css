@@ -68,8 +68,8 @@
 }
 .Btn:disabled{
     background-color: rgb(255, 255, 255);
-    border: 2px solid rgb(145, 145, 145);
-    color: rgb(145, 145, 145);
+    border: 2px solid rgb(221, 220, 220);
+    color:  rgb(221, 220, 220);
     transition: 0.2s;
 }
 .SaveDiv{
@@ -90,8 +90,8 @@
 }
 #SaveBtn:disabled{
     transition: 0.2s;
-    background-color: rgb(145, 145, 145);
-    border: 2px solid rgb(145, 145, 145);
+    background-color: rgb(221, 220, 220);
+    border: 2px solid rgb(221, 220, 220);
     color: white;
 }
 

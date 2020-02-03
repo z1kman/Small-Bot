@@ -74,10 +74,54 @@ function OnClickAddNewVariable(id){//Создание панели создан�
     divNewVariableValue.innerHTML = "<div style=\"display:inline-block\">Значение переменной:</div>" +
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание формы с кнопками -----------
+    formBtn.setAttribute("id","formBtnNewVariable")
     divAddNewPanel.append(formBtn);
     formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtnBot\" onclick=\"OnClickNewVariableSaveBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtnBot\" onclick=\"OnClickImgExit();\">";
 
+}
+function OnClickNewVariableSaveBtn(id){ //сохранить новую переменную
+    let StrNewVariableName = document.getElementById("NewVariableName").value;//название переменной
+    let formBtnNewVariable = document.getElementById("formBtnNewVariable");//форма с кнопками сохранения и отмены(необходимо для добавления сообщения об ошибки)
+    let error = false;//наличие ошибки 
+    if(StrNewVariableName.replace(/\s+/g, '') == ""){//если только пробелы в названии переменной
+        if(document.getElementById("ErrorNewVariable") != null){//если сообщение уже высвечивалось то удалить его
+            document.getElementById("ErrorNewVariable").remove();
+        }
+        error = true;
+        let divError = document.createElement('div');//Окно с ошибкой
+        divError.className="Label";
+        divError.setAttribute("id","ErrorNewVariable");
+        formBtnNewVariable.prepend(divError);
+        divError.innerHTML="Введите название переменной";
+        return 0;
+    }
+    for(let i = 0; i < StrNewVariableName.length; i++){
+        if((StrNewVariableName[i] >= 'a' && StrNewVariableName[i] <= 'z'))
+        {
+            error = false;
+            continue
+        }
+        else
+        {
+            if(document.getElementById("ErrorNewVariable") != null){//если сообщение уже высвечивалось то удалить его
+                document.getElementById("ErrorNewVariable").remove();
+            }
+            let divError = document.createElement('div');//Окно с ошибкой
+            divError.className="Label";
+            divError.setAttribute("id","ErrorNewVariable");
+            formBtnNewVariable.prepend(divError);
+            divError.innerHTML="Имя переменной должно содержать только латинские буквы";
+            error = true;
+            break
+        }
+    }
+
+
+    if(error == false)//остальная логика по сохранению переменной
+    {
+
+    }
 }
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
     var N = NumberOfElement(id);
