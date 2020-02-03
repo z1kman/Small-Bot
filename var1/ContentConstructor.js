@@ -15,6 +15,26 @@ function SecondNumberOfElement(id){ //получение второго номе
 function ThirdNumberOfElement(id){//получение третьего номера эллемента(под элементы панели(кнопки/текст и т.д))
     return(id.split(' ')[3]);
 }
+function DisabledNavbarBtn(){//отключение кнопок находящихся в шапке сайта
+    let NewVariableBtn = document.getElementById("NewVariableBtn");//кнопка добавления новой переменной(переменная необходима для блокирования доступа к кнопке)
+    let TestBtn = document.getElementById("TestBtn");//кнопка тестирования(переменная необходима для блокирования доступа к кнопке)
+    let SaveBtn = document.getElementById("SaveBtn");//кнопка сохранения(переменная необходима для блокирования доступа к кнопке)
+
+    //----------Отключение кнопок в Navbar-----------
+    NewVariableBtn.setAttribute("disabled","disabled");
+    TestBtn.setAttribute("disabled","disabled");
+    SaveBtn.setAttribute("disabled","disabled");
+}
+function EnabledNavbarBtn(){//включение кнопок находящихся в шапке сайта
+    let NewVariableBtn = document.getElementById("NewVariableBtn");//кнопка добавления новой переменной(переменная необходима для блокирования доступа к кнопке)
+    let TestBtn = document.getElementById("TestBtn");//кнопка тестирования(переменная необходима для блокирования доступа к кнопке)
+    let SaveBtn = document.getElementById("SaveBtn");//кнопка сохранения(переменная необходима для блокирования доступа к кнопке)
+
+    //----------Включение кнопок в Navbar-----------
+    NewVariableBtn.removeAttribute("disabled");
+    TestBtn.removeAttribute("disabled");
+    SaveBtn.removeAttribute("disabled");
+}
 function OnClickAddNewVariable(id){//Создание панели создания новой переменной 
     let Constructor = document.getElementById("Constructor");
     let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
@@ -25,6 +45,7 @@ function OnClickAddNewVariable(id){//Создание панели создан�
     let divNewVariableValue = document.createElement('div');//блок с полем ввода значения новой  переменной и надписью к нему
     let formBtn = document.createElement('form');//форма с кнопками
 
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     //----------Создание фиксированной панели-----------
     divNewInstrumentPanel.className="NewInstrumentPanel";
     divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
@@ -45,12 +66,12 @@ function OnClickAddNewVariable(id){//Создание панели создан�
     //----------Создание блока ввода имени новой переменной -----------
     divNewVariable.className = "NewVariable";
     divAddNewPanel.append(divNewVariable);
-    divNewVariable.innerHTML = "<span>Имя переменной:</span>" + 
+    divNewVariable.innerHTML = "<div style=\"display:inline-block\">Имя переменной:</div>" + 
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание блока ввода значения новой переменной -----------
     divNewVariableValue.className = "NewVariableValue";
     divAddNewPanel.append(divNewVariableValue);
-    divNewVariableValue.innerHTML = "<span>Значение переменной:</span>" +
+    divNewVariableValue.innerHTML = "<div style=\"display:inline-block\">Значение переменной:</div>" +
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание формы с кнопками -----------
     divAddNewPanel.append(formBtn);
@@ -67,11 +88,13 @@ function OnClickEditPanelName(id){//редактирование имени па
     var InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
     var TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
     click++;
-    
+
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     TrashImg.setAttribute("style","display:none;");
     EditNamePanel.setAttribute("style", "display: none;");
     InputEdit.setAttribute("style", "display: block;")
     Edit.value = NamePanel.textContent;
+    
 }
 function OnClickInputEdit(id){ //редактирование имени панели(скрытие инпута, появление имени панели)
     click++;
@@ -83,6 +106,7 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     var InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
     var TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
 
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     if(click > 2 && Edit.value!=""){
         EditNamePanel.setAttribute("style", "display:inline-block;");
         InputEdit.setAttribute("style", "display: none;")
@@ -228,6 +252,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
 function OnClickImgExit(){//закрытие панели  добавления элемента
     let NewInstrumentPanel = document.getElementById("NewInstrumentPanel");
     NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel);
+    EnabledNavbarBtn();
 }
 function OnClickAddInstrumentBtnBot(id){ //создани панели выбора новых действий у бота
     var N = NumberOfElement(id);
@@ -239,6 +264,7 @@ function OnClickAddInstrumentBtnBot(id){ //создани панели выбо�
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let formBtn = document.createElement('form');//форма с кнопками
 
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     //----------Создание фиксированной панели-----------
     divNewInstrumentPanel.className="NewInstrumentPanel";
     divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
@@ -274,7 +300,7 @@ function OnClickAddTextBot(id){//создание панели добавлен�
 
 
     OnClickImgExit();//закрытие старой панели
-
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     
     //----------Создание фиксированной панели-----------
     divNewInstrumentPanel.className="NewInstrumentPanel";
@@ -348,7 +374,8 @@ function OnClickNewTextSaveBotBtn(id){//Создание нового элеме
     TextBotTextarea.setAttribute("id","textareaTextBot " + N + " " + SN + " " + NumberOfText);
     divTextBot.append(TextBotTextarea);
     TextBotTextarea.value = TextTextarea.value;//записать значения из окна создания элемента в сам элемент
-    OnClickImgExit();//закрыть окно создание элемента
+    OnClickImgExit();//закрыть окно создания элемента
+    EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
 }
 function OnClickRemoveTextBot(id){//удаление элемента-текст у бота
     var N = NumberOfElement(id);
@@ -369,6 +396,7 @@ function OnClickEditTextBot(id){//редактирование текста у �
     let NewTextTextarea = document.createElement('textarea');//поле ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
     
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     //----------Создание фиксированной панели-----------
     divNewInstrumentPanel.className="NewInstrumentPanel";
     divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
@@ -408,4 +436,5 @@ function OnClickEditTextSaveBotBtn(id){ // Сохранение отредакт
     var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
     TextBotTextarea.value = TextTextarea.value;
     OnClickImgExit();
+    EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
 }

@@ -31,12 +31,6 @@ footer{
 }
 @media (max-width: 1080px) { 
     footer{
-        width: 1200px;   
-    }
-}
-@media (orientation: portrait) { 
-    footer{
-        position: fixed;
-        bottom: 0px; 
+        width: 1200px; 
     }
 }

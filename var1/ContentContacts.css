@@ -9,6 +9,7 @@ body{
     font-size: 21px;
     margin-bottom: 80px;
     flex-grow: 1;
+    height: 150vh;
 }
 .first{
     margin-top: 2%;
@@ -43,7 +44,7 @@ body{
     justify-content: center;
 
 }
-@media (max-width: 1080px) { 
+@media screen and (max-width: 1080px) { 
     .Content{
         width: 1200px;  
     }

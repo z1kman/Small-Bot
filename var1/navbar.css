@@ -5,23 +5,27 @@ body{
     margin: 0%;
     overflow: hidden;
     background-color:white;
-    min-width: 1080px;
     height: 70px;
+    display: flex;
+    flex-direction: row;
 }
 .LogoDiv{
-    float: left;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
     width:20%;
     text-align: left;
     padding-top: 10px;
 }
 .NavPanelDiv{
-    float: left;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
     width:60%;
     text-align: center;
     padding-top: 20px;
 }
 .AutorizationDiv{
-    float: left;
     width: 20%;
     height: 100%;
     padding-top: 15px;
@@ -29,7 +33,6 @@ body{
 #LogoPng{
     width: 45px;
     margin-left: 50px;
-    float: left;
     margin-top: 3px;
 }
 #LabelLogo{
@@ -39,7 +42,6 @@ body{
     font-family: 'Segoe UI Symbol', 'Times New Roman';
     margin-left: 15px;
     margin-top: 7px;
-    float: left;
 }
 .LinkNavPanel{
     color: rgb(15, 15, 15);
@@ -73,4 +75,9 @@ body{
 .LinkNavPanel:hover{
     color: rgb(0, 174, 255) ;
     transition: .2s;
+}
+@media (max-width: 1080px) { 
+    .Navbar{
+        width: 1200px;    
+    }
 }

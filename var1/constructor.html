@@ -9,18 +9,18 @@
     <body> 
         <div class="Navbar">
             <div class="LogoDiv">
-                <a href="main.html"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
-                <a href="main.html" id="LabelLogo">Small Bot</a>
+                <a href="index.html"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
+                <a href="index.html" id="LabelLogo">Small Bot</a>
             </div>
             <div class="BtnDiv">
                 <div class="NewVariableBtn">
                     <form>
-                        <input type="button" value="Создать переменную" class="Btn" onclick="OnClickAddNewVariable()">
+                        <input type="button" value="Создать переменную" class="Btn"  id="NewVariableBtn" onclick="OnClickAddNewVariable()">
                     </form>
                 </div>
                 <div class="TestDiv">
                     <form action="#">
-                        <button value="Тестировать" class="Btn">Тестировать</button>
+                        <button value="Тестировать" class="Btn" id="TestBtn">Тестировать</button>
                     </form>
                 </div>
                 <div class="SaveDiv">
@@ -31,45 +31,6 @@
             </div>
         </div>
         <div class="Constructor" id="Constructor">
-
-            <div class="NewInstrumentPanel" id="NewInstrumentPanel">
-                <div class="AddNewPanel">
-                    <div class="ImgExit" onclick="OnClickImgExit()">
-                        <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
-                    </div>
-                    <div class="Label" id="LabelAddNewInstrument">
-                        Создание новой переменной
-                    </div>
-                    <div class="NewVariable">
-                        <span>Имя переменной:</span>
-                        <input type="text" id="NewVariableName" class="Input">
-                    </div>
-                    <div class="NewVariableValue">
-                        <span>Значение переменной:</span>
-                        <input type="text" id="NewVariableName" class="Input">
-                    </div>
-                    <form>
-                        <input type="button" value="Сохранить" class="AddBtnBot" onclick="OnClickNewVariableSaveBtn(id)">
-                        <input type="button" value="Отменить" class="AddBtnBot" id="CancelBot 1 3" onclick="OnClickCancelBot(id)">
-                    </form>
-                </div>
-
-                <div class="AddNewPanel" style="display:none;" >
-                    <div class="ImgExit" onclick="OnClickImgExit()">
-                        <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
-                    </div>
-                    <div class="Label" id="LabelAddNewInstrument">
-                        Введите желаемый текст
-                    </div>
-                    <textarea class="NewTextTextarea" id="NewTextTextarea"></textarea>
-                    <form>
-                        <input type="button" value="Добавить переменную" class="AddBtnBot" onclick="OnClickNewVariableBtn()">
-                        <input type="button" value="Сохранить" class="AddBtnBot" id="NewTextSaveBtn 1 3" onclick="OnClickNewTextSaveBotBtn(id)">
-                        <input type="button" value="Отменить" class="AddBtnBot" id="CancelBot 1 3" onclick="OnClickCancelBot(id)">
-                    </form>
-                </div>
-            </div>
-
             <form id="formAddInstrumentBtn 1 0" >
                 <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
             </form>
