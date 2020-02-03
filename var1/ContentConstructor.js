@@ -35,7 +35,7 @@ function EnabledNavbarBtn(){//включение кнопок находящих
     TestBtn.removeAttribute("disabled");
     SaveBtn.removeAttribute("disabled");
 }
-function OnClickAddNewVariable(id){//Создание панели создания новой переменной 
+function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
     let Constructor = document.getElementById("Constructor");
     let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
     let divAddNewPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
@@ -133,7 +133,6 @@ function OnClickEditPanelName(id){//редактирование имени па
     var TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
     click++;
 
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     TrashImg.setAttribute("style","display:none;");
     EditNamePanel.setAttribute("style", "display: none;");
     InputEdit.setAttribute("style", "display: block;")
@@ -150,7 +149,6 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     var InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
     var TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
 
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     if(click > 2 && Edit.value!=""){
         EditNamePanel.setAttribute("style", "display:inline-block;");
         InputEdit.setAttribute("style", "display: none;")
@@ -165,7 +163,7 @@ function OnClickInputEdit(id){ //редактирование имени пан�
         alert("Необходимо заполнить поле названия панели");
     }
 }
-function OnMouseOverEditPanelName(id){  //отображение иконки редактирования имени панели
+function OnMouseOverEditPanelName(id){ //отображение иконки редактирования имени панели
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     var ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
@@ -293,12 +291,12 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divPanel.after(formNewPanelBtn);
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
 }
-function OnClickImgExit(){//закрытие панели  добавления элемента
+function OnClickImgExit(){//закрытие всплывающего окна добавления нового элемента
     let NewInstrumentPanel = document.getElementById("NewInstrumentPanel");
     NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel);
     EnabledNavbarBtn();
 }
-function OnClickAddInstrumentBtnBot(id){ //создани панели выбора новых действий у бота
+function OnClickAddInstrumentBtnBot(id){ //Всплывающее окно выбора новых действий у бота
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     let Constructor = document.getElementById("Constructor");
@@ -331,7 +329,7 @@ function OnClickAddInstrumentBtnBot(id){ //создани панели выбо�
     formBtn.innerHTML="<input type=\"button\" value=\"Вывести текст\" class=\"AddBtn\" id=\"AddTextBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddTextBot(id)\"> " +
     "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtn\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">";
 }
-function OnClickAddTextBot(id){//создание панели добавление текста у бота
+function OnClickAddTextBot(id){//Всплывающее окно добавление текста у бота
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let Constructor = document.getElementById("Constructor");
@@ -372,11 +370,11 @@ function OnClickAddTextBot(id){//создание панели добавлен�
     formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"NewTextSaveBtn " + N + " " + SN + "\"onclick=\"OnClickNewTextSaveBotBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickCancelBot(id)\">";
 }
-function OnClickCancelBot(id){//отмена действия создания нового элемента у бота
+function OnClickCancelBot(id){//отмена действия создания нового элемента у бота(Всплывающее окно)
     OnClickImgExit();//закрытие текущей панели
     OnClickAddInstrumentBtnBot(id);//генерирование предыдущей панели
 }
-function OnClickNewTextSaveBotBtn(id){//Создание нового элемента текста бота и сохранение введеного текста для нового элемента у бота
+function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и панель. cоздание нового элемента текста бота и сохранение введеного текста для нового элемента у бота
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     let formAddInstrumentBtnBot = document.getElementById("formAddInstrumentBtnBot " + N + " " + SN);
@@ -428,7 +426,7 @@ function OnClickRemoveTextBot(id){//удаление элемента-текст
     TextBot = document.getElementById("TextBot " + N + " " + SN + " " + TN);
     TextBot.parentNode.removeChild(TextBot);
 }
-function OnClickEditTextBot(id){//редактирование текста у бота
+function OnClickEditTextBot(id){//Всплывающее окно редактирование текста у бота
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     var TN = ThirdNumberOfElement(id);
@@ -472,7 +470,7 @@ function OnClickEditTextBot(id){//редактирование текста у �
     var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
     TextTextarea.value = TextBotTextarea.value;
 }
-function OnClickEditTextSaveBotBtn(id){ // Сохранение отредактированого текста у бота
+function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно Сохранение отредактированого текста у бота
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     var TN = ThirdNumberOfElement(id);
@@ -483,7 +481,7 @@ function OnClickEditTextSaveBotBtn(id){ // Сохранение отредакт
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
 }
 
-function OnClickAddInstrumentBtnUser(id){
+function OnClickAddInstrumentBtnUser(id){ //Всплывающее окно создания новых элементов у пользователя
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     let Constructor = document.getElementById("Constructor");
