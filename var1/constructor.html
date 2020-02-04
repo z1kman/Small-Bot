@@ -38,19 +38,19 @@
                         <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
                     </div>
                     <div class="Label" id="LabelAddNewInstrument">
-                        Выберете действе осуществляемое пользователем
+                        Введите текст отображаемый на кнопке
+                    </div> 
+                    <div class="LabelBlack">
+                        <input type="text" id="NewButtonText" class="Input"  onfocus="OnFocusNewButtonText()" onblur="OnBlurNewButtonText()">
                     </div>
-                    <form>
-                        <input type="button" value="Нажатие на кнопку" class="AddBtn" id="AddButtonBtnUser 1 1" onclick="OnClickAddButtonUser(id)"> 
-                        <input type="button" value="Ввод текста" class="AddBtn" id="AddNumberBtnUser 1 1" onclick="OnClickAddNumberUser(id)">
-                        <input type="button" value="Ввод числа" class="AddBtn" id="AddTextBtnUser 1 1" onclick="OnClickAddTextUser(id)">
-                        <input type="button" value="Ввод номера телефона" class="AddBtn" id="AddPhoneNumberBtnUser 1 1" onclick="OnClickAddPhoneNumberUser(id)">
-                        <input type="button" value="Ввод email" class="AddBtn" id="AddEmailBtnUser 1 1" onclick="OnClickAddEmailUser(id)">
+                    <div class="LabelError" id="ErrorNewButton">
+                    </div>
+                    <form id="formNewButton">
+                        <input type="button" value="Сохранить" class="AddBtn" id="AddNewButtonBtnUser 1 1" onclick="OnClickSaveNewButtonUser(id)"> 
+                        <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
                     </form>
                 </div>
             </div>
-            
-            
             <form id="formAddInstrumentBtn 1 0" >
                 <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
             </form>

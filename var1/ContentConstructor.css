@@ -13,6 +13,16 @@ body{
     text-align: center;
     margin-top: 10px;
 }
+.LabelBlack{
+    margin-top: 10px;
+    text-align: center;
+    color:black;
+}
+.LabelError{
+    margin-top: 10px;
+    text-align: center;
+    color:rgb(196, 51, 51);
+} 
 #ErrorNewVariable{
     color: rgb(196, 51, 51);
 }
@@ -151,6 +161,8 @@ body{
 .AddNewPanel{
     position: absolute;
     display: inline-block;
+    justify-content: center; 
+    align-items: center; 
     top: 25%;
     left: 35%;
     border-radius: 20px;
@@ -210,11 +222,11 @@ body{
 .ImgPencilInstrument:hover{
     background-color: rgb(228, 228, 228);
 }
-.NewVariable{
+.NewName{
     color:black;
     margin-top: 20px;
     margin-left: 50px;
-} 
+}
 .Input{
     border-radius: 10px;
     outline: none;
