@@ -1,4 +1,3 @@
-var click = 0;
 var NumberOfPanels = 1;//Кол-во панелей
 var NumberOfText = 0;//кол-во текстовых элементов(Бот)
 var NumberOfButton = 0;//кол-во кнопок (Пользователь)
@@ -37,14 +36,14 @@ function EnabledNavbarBtn(){//включение кнопок находящих
     SaveBtn.removeAttribute("disabled");
 }
 function CreateWindowPanel(){ //Создание Всплывающего окна(основа)
-    let Constructor = document.getElementById("Constructor");
+    let Navbar = document.getElementById("Navbar");
     let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
     let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
     let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий  
      //----------Создание фиксированной панели-----------
      divNewInstrumentPanel.className="NewInstrumentPanel";
      divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-     Constructor.prepend(divNewInstrumentPanel);
+     Navbar.append(divNewInstrumentPanel);
      //----------Создание панели выбора действий-----------
      divAddNewInstrumentPanel.className="AddNewPanel";
      divAddNewInstrumentPanel.setAttribute("id","AddNewPanel");
@@ -56,46 +55,32 @@ function CreateWindowPanel(){ //Создание Всплывающего окн
      divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">" 
 }
 function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
-    let Constructor = document.getElementById("Constructor");
-    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
-    let divAddNewPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
-    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewVariable = document.createElement('div');//надпись
     let divNewVariable = document.createElement('div');//блок с полем ввода имени новой переменной и надписью к ней
     let divNewVariableValue = document.createElement('div');//блок с полем ввода значения новой  переменной и надписью к нему
     let formBtn = document.createElement('form');//форма с кнопками
 
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-    //----------Создание фиксированной панели-----------
-    divNewInstrumentPanel.className="NewInstrumentPanel";
-    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-    Constructor.prepend(divNewInstrumentPanel);
-    //----------Создание панели выбора действий-----------
-    divAddNewPanel.className="AddNewPanel";
-    divNewInstrumentPanel.prepend(divAddNewPanel);
-    //----------Создание кнопки закрытия панели выбора действий-----------
-    divImgExit.className="ImgExit";
-    divImgExit.setAttribute("onclick","OnClickImgExit()");
-    divAddNewPanel.prepend(divImgExit);
-    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
     //----------Создание надписи панели -----------
     divLabelAddNewVariable.className = "Label";
     divLabelAddNewVariable.setAttribute("id","LabelAddNewInstrument");
-    divAddNewPanel.append(divLabelAddNewVariable);
+    divAddNewInstrumentPanel.append(divLabelAddNewVariable);
     divLabelAddNewVariable.innerHTML="Создание новой переменной";
     //----------Создание блока ввода имени новой переменной -----------
     divNewVariable.className = "NewName";
-    divAddNewPanel.append(divNewVariable);
+    divAddNewInstrumentPanel.append(divNewVariable);
     divNewVariable.innerHTML = "<div style=\"display:inline-block\">Имя переменной:</div>" + 
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание блока ввода значения новой переменной -----------
     divNewVariableValue.className = "NewVariableValue";
-    divAddNewPanel.append(divNewVariableValue);
+    divAddNewInstrumentPanel.append(divNewVariableValue);
     divNewVariableValue.innerHTML = "<div style=\"display:inline-block\">Значение переменной:</div>" +
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание формы с кнопками -----------
     formBtn.setAttribute("id","formBtnNewVariable")
-    divAddNewPanel.append(formBtn);
+    divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" onclick=\"OnClickNewVariableSaveBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" onclick=\"OnClickImgExit();\">";
 
@@ -157,6 +142,7 @@ function OnClickEditPanelName(id){//редактирование имени па
         EditNamePanel.setAttribute("style", "display: none;");
         InputEdit.setAttribute("style", "display: block;")
         Edit.value = NamePanel.textContent;
+        
     }
     
 }
@@ -226,10 +212,10 @@ function OnClickRemovePanel(id){//удаление панели
     formAddInstrumentBtn.parentNode.removeChild(formAddInstrumentBtn);//Удаление кнопки добавления новой панели
 }
 function OnClickNewPanelBtn(id){ //создание новой панели
-    var Constructor = document.getElementById("Constructor");
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    var ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
+    let Navbar = document.getElementById("Navbar");
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
     let divPanel = document.createElement('div');//Cоздание панели (Panel)
     let divInputEdit = document.createElement('div');//Cоздание блока поля ввода имени панели (InputEdit)
     let inputEdit = document.createElement('input');//Создание поля ввода имени панели (Edit)
@@ -321,77 +307,47 @@ function OnClickImgExit(){//закрытие всплывающего окна
     NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel);
     EnabledNavbarBtn();
 }
-function OnClickAddInstrumentBtnBot(id){ //Всплывающее окно выбора новых действий у бота
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    let Constructor = document.getElementById("Constructor");
-    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
-    let divAddNewInstrumentPanelBot = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
-    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+function OnClickAddInstrumentBtnBot(id){ //Всплывающее окно. Создание новых эллементов бота
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let formBtn = document.createElement('form');//форма с кнопками
 
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-    //----------Создание фиксированной панели-----------
-    divNewInstrumentPanel.className="NewInstrumentPanel";
-    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-    Constructor.prepend(divNewInstrumentPanel);
-    //----------Создание панели выбора действий-----------
-    divAddNewInstrumentPanelBot.className="AddNewPanel";
-    divNewInstrumentPanel.prepend(divAddNewInstrumentPanelBot);
-    //----------Создание кнопки закрытия панели выбора действий-----------
-    divImgExit.className="ImgExit";
-    divImgExit.setAttribute("onclick","OnClickImgExit()");
-    divAddNewInstrumentPanelBot.prepend(divImgExit);
-    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
     //----------Создание надписи панели выбора действий-----------
     divLabelAddNewInstrument.className="Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
-    divAddNewInstrumentPanelBot.append(divLabelAddNewInstrument);
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
     divLabelAddNewInstrument.innerHTML="Выберите желаемое действие для чат бота";
     //----------Создание формы для кнопок и сами кнопки-----------
-    divAddNewInstrumentPanelBot.append(formBtn);
+    divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML="<input type=\"button\" value=\"Вывести текст\" class=\"AddBtn\" id=\"AddTextBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddTextBot(id)\"> " +
     "<input type=\"button\" value=\"Вывести изображение\" class=\"AddBtn\" id=\"AddImgBtnBot " + N + " " + SN + "\" onclick=\"OnClickAddImgBot(id)\">";
 }
-function OnClickAddTextBot(id){//Всплывающее окно добавление текста у бота
+function OnClickAddTextBot(id){//Всплывающее окно. Добавление текста у бота
+    OnClickImgExit();//закрытие предыдущего окна
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
-    let Constructor = document.getElementById("Constructor");
-    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
-    let divAddNewTextPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
-    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let NewTextTextarea = document.createElement('textarea');//поле ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
 
-
-    OnClickImgExit();//закрытие старой панели
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-    
-    //----------Создание фиксированной панели-----------
-    divNewInstrumentPanel.className="NewInstrumentPanel";
-    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-    Constructor.prepend(divNewInstrumentPanel);
-    //----------Создание панели выбора действий-----------
-    divAddNewTextPanel.className="AddNewPanel";
-    divNewInstrumentPanel.prepend(divAddNewTextPanel);
-    //----------Создание кнопки закрытия панели выбора действий-----------
-    divImgExit.className="ImgExit";
-    divImgExit.setAttribute("onclick","OnClickImgExit()");
-    divAddNewTextPanel.prepend(divImgExit);
-    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
     //----------Создание надписи панели -----------
     divLabelAddNewInstrument.className="Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
-    divAddNewTextPanel.append(divLabelAddNewInstrument);
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
     divLabelAddNewInstrument.innerHTML="Введите желаемый текст";
     //----------Создание поля ввода текста -----------
     NewTextTextarea.className="NewTextTextarea";
     NewTextTextarea.setAttribute("id","NewTextTextarea");
-    divAddNewTextPanel.append(NewTextTextarea);
+    divAddNewInstrumentPanel.append(NewTextTextarea);
     //----------Создание формы для кнопок и сами кнопки-----------
-    divAddNewTextPanel.append(formBtn);
+    divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"NewTextSaveBtn " + N + " " + SN + "\"onclick=\"OnClickNewTextSaveBotBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickCancelBot(id)\">";
 }
@@ -399,9 +355,9 @@ function OnClickCancelBot(id){//отмена действия создания �
     OnClickImgExit();//закрытие текущей панели
     OnClickAddInstrumentBtnBot(id);//генерирование предыдущей панели
 }
-function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и панель. cоздание нового элемента текста бота и сохранение введеного текста для нового элемента у бота
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
+function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и панель. Добавление текста у бота. Кнопка сохранения
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
     let formAddInstrumentBtnBot = document.getElementById("formAddInstrumentBtnBot " + N + " " + SN);
     let TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
     let divTextBot = document.createElement('div');//div внутри которого label,textarea и т.д
@@ -451,42 +407,28 @@ function OnClickRemoveTextBot(id){//удаление элемента-текст
     TextBot = document.getElementById("TextBot " + N + " " + SN + " " + TN);
     TextBot.parentNode.removeChild(TextBot);
 }
-function OnClickEditTextBot(id){//Всплывающее окно редактирование текста у бота
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    var TN = ThirdNumberOfElement(id);
-    let Constructor = document.getElementById("Constructor");
-    let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
-    let divAddNewTextPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
-    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий
+function OnClickEditTextBot(id){//Всплывающее окно. Редактирование текста у бота
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let NewTextTextarea = document.createElement('textarea');//поле ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
     
-    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-    //----------Создание фиксированной панели-----------
-    divNewInstrumentPanel.className="NewInstrumentPanel";
-    divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-    Constructor.prepend(divNewInstrumentPanel);
-    //----------Создание панели выбора действий-----------
-    divAddNewTextPanel.className="AddNewPanel";
-    divNewInstrumentPanel.prepend(divAddNewTextPanel);
-    //----------Создание кнопки закрытия панели выбора действий-----------
-    divImgExit.className="ImgExit";
-    divImgExit.setAttribute("onclick","OnClickImgExit()");
-    divAddNewTextPanel.prepend(divImgExit);
-    divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">"
     //----------Создание надписи панели -----------
     divLabelAddNewInstrument.className="Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
-    divAddNewTextPanel.append(divLabelAddNewInstrument);
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
     divLabelAddNewInstrument.innerHTML="Введите желаемый текст";
     //----------Создание поля ввода текста -----------
     NewTextTextarea.className="NewTextTextarea";
     NewTextTextarea.setAttribute("id","NewTextTextarea");
-    divAddNewTextPanel.append(NewTextTextarea);
+    divAddNewInstrumentPanel.append(NewTextTextarea);
     //----------Создание формы для кнопок и сами кнопки-----------
-    divAddNewTextPanel.append(formBtn);
+    divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"NewTextSaveBtn " + N + " " + SN + " " + TN + "\"onclick=\"OnClickEditTextSaveBotBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelBot "  + N + " " + SN + "\" onclick=\"OnClickImgExit();\">";  
 
@@ -495,7 +437,7 @@ function OnClickEditTextBot(id){//Всплывающее окно редакти
     var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
     TextTextarea.value = TextBotTextarea.value;
 }
-function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно Сохранение отредактированого текста у бота
+function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно. Редактирование текста у бота. Кнока сохранения
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
     var TN = ThirdNumberOfElement(id);
@@ -536,8 +478,8 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
-    let divLabelAddNewInstrument = document.createElement('div');//надпись
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
     let divLabelBlack = document.createElement('div');//блок с полем для ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
     //----------Создание надписи панели выбора действий-----------

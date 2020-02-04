@@ -7,7 +7,27 @@
             <link rel="stylesheet" href="ContentConstructor.css">
             <script src="ContentConstructor.js"></script>
     <body> 
-        <div class="Navbar">
+        <div class="NewInstrumentPanel" id="NewInstrumentPanel">
+            <div class="AddNewPanel">
+                <div class="ImgExit" onclick="OnClickImgExit()">
+                    <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
+                </div>
+                <div class="Label" id="LabelAddNewInstrument">
+                    Введите текст отображаемый на кнопке
+                </div> 
+                <div class="LabelBlack">
+                    <input type="text" id="NewButtonText" class="Input"  onfocus="OnFocusNewButtonText()" onblur="OnBlurNewButtonText()">
+                </div>
+                <div class="LabelError" id="ErrorNewButton">
+                </div>
+                <form id="formNewButton">
+                    <input type="button" value="Сохранить" class="AddBtn" id="AddNewButtonBtnUser 1 1" onclick="OnClickSaveNewButtonUser(id)"> 
+                    <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
+                </form>
+            </div>
+        </div>
+        
+        <div class="Navbar" id="Navbar">
             <div class="LogoDiv">
                 <a href="index.html"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
                 <a href="index.html" id="LabelLogo">Small Bot</a>
@@ -30,27 +50,10 @@
                 </div>
             </div>
         </div>
-        <div class="Constructor" id="Constructor">
 
-            <div class="NewInstrumentPanel" id="NewInstrumentPanel">
-                <div class="AddNewPanel">
-                    <div class="ImgExit" onclick="OnClickImgExit()">
-                        <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
-                    </div>
-                    <div class="Label" id="LabelAddNewInstrument">
-                        Введите текст отображаемый на кнопке
-                    </div> 
-                    <div class="LabelBlack">
-                        <input type="text" id="NewButtonText" class="Input"  onfocus="OnFocusNewButtonText()" onblur="OnBlurNewButtonText()">
-                    </div>
-                    <div class="LabelError" id="ErrorNewButton">
-                    </div>
-                    <form id="formNewButton">
-                        <input type="button" value="Сохранить" class="AddBtn" id="AddNewButtonBtnUser 1 1" onclick="OnClickSaveNewButtonUser(id)"> 
-                        <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
-                    </form>
-                </div>
-            </div>
+
+
+        <div class="Constructor" id="Constructor">
             <form id="formAddInstrumentBtn 1 0" >
                 <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
             </form>

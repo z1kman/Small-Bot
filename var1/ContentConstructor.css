@@ -1,6 +1,8 @@
 body{
     margin: 0%;
     background-color: #F7F8FD;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size:20px;
 }
 .Constructor{
     min-width: 100%;
@@ -57,8 +59,7 @@ body{
     background-color: white;
     border:1px solid rgb(80, 80, 80);
     border-radius: 5px;
-    width: 250px;
-    height: 30px;
+    width: 300px;
     color:  rgb(80, 80, 80);
     font-family: 'Segoe UI Light', 'Times New Roman';
     font-size:20px;
@@ -126,7 +127,7 @@ body{
 }
 .NewInstrumentPanel{
     width:100%;
-    height: 100%;
+    height: 120%;
     background-color:rgba(202, 202, 202, 0.685);
     display: block;
     position: fixed;
