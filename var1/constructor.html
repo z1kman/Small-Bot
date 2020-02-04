@@ -13,11 +13,16 @@
                     <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
                 </div>
                 <div class="Label" id="LabelAddNewInstrument">
-                    Введите текст отображаемый на кнопке
+                    Выберите необходимое действие
                 </div> 
-                <div class="LabelBlack">
-                    <input type="text" id="NewButtonText" class="Input"  onfocus="OnFocusNewButtonText()" onblur="OnBlurNewButtonText()">
-                </div>
+                <form class="FormRadio">
+                    <input type="radio" class="RadioButton" id="InputNumber" name="Num">
+                    <label for="InputNumber">Ввод числа</label>
+                    <input type="radio" class="RadioButton" id="RangeNumber" name="Num">
+                    <label for="RangeNumber">Ввод чисел в диапазоне</label>
+                    <input type="radio" class="RadioButton" id="MaskNumber" name="Num"> 
+                    <label for="MaskNumber">Ввод числа по маске</label>
+                 </form>
                 <div class="LabelError" id="ErrorNewButton">
                 </div>
                 <form id="formNewButton">
@@ -26,7 +31,7 @@
                 </form>
             </div>
         </div>
-        
+
         <div class="Navbar" id="Navbar">
             <div class="LogoDiv">
                 <a href="index.html"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>

@@ -3,6 +3,11 @@ var NumberOfText = 0;//кол-во текстовых элементов(Бот)
 var NumberOfButton = 0;//кол-во кнопок (Пользователь)
 var oldNumberOfElement = 0;//индекс предыдущего элемента(для изменения имени);
 
+//------Служебная часть-----
+//--------------------------
+//--------------------------
+//--------------------------
+
 function NameOfElement(id){ //получение имени эллемента
     return(id.split(' ')[0]);
 }
@@ -36,14 +41,14 @@ function EnabledNavbarBtn(){//включение кнопок находящих
     SaveBtn.removeAttribute("disabled");
 }
 function CreateWindowPanel(){ //Создание Всплывающего окна(основа)
-    let Navbar = document.getElementById("Navbar");
+    let body = document.body
     let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран
     let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
     let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий  
      //----------Создание фиксированной панели-----------
      divNewInstrumentPanel.className="NewInstrumentPanel";
      divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel");
-     Navbar.append(divNewInstrumentPanel);
+     body.prepend(divNewInstrumentPanel);
      //----------Создание панели выбора действий-----------
      divAddNewInstrumentPanel.className="AddNewPanel";
      divAddNewInstrumentPanel.setAttribute("id","AddNewPanel");
@@ -54,6 +59,12 @@ function CreateWindowPanel(){ //Создание Всплывающего окн
      divAddNewInstrumentPanel.prepend(divImgExit);
      divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">" 
 }
+
+//----Создние переменных----
+//--------------------------
+//--------------------------
+//--------------------------
+
 function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
@@ -85,7 +96,7 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" onclick=\"OnClickImgExit();\">";
 
 }
-function OnClickNewVariableSaveBtn(id){ //Всплывающее окно. Сохранение новой переменной
+function OnClickNewVariableSaveBtn(id){ //Всплывающее окно. Кнопка сохранения
     let StrNewVariableName = document.getElementById("NewVariableName").value;//название переменной
     let formBtnNewVariable = document.getElementById("formBtnNewVariable");//форма с кнопками сохранения и отмены(необходимо для добавления сообщения об ошибки)
     let error = false;//наличие ошибки 
@@ -128,6 +139,12 @@ function OnClickNewVariableSaveBtn(id){ //Всплывающее окно. Со�
 
     }
 }
+
+//----Работа с панелями-----
+//--------------------------
+//--------------------------
+//--------------------------
+
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
     var N = NumberOfElement(id);
     var SN = SecondNumberOfElement(id);
@@ -307,6 +324,13 @@ function OnClickImgExit(){//закрытие всплывающего окна
     NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel);
     EnabledNavbarBtn();
 }
+
+//------Часть чат-бота------
+//--------------------------
+//--------------------------
+//--------------------------
+
+
 function OnClickAddInstrumentBtnBot(id){ //Всплывающее окно. Создание новых эллементов бота
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
@@ -448,6 +472,10 @@ function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно. Ре�
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
 }
 
+//------Пользовательская часть------
+//----------------------------------
+//----------------------------------
+//----------------------------------
 
 
 function OnClickAddInstrumentBtnUser(id){ //Всплывающее окно. Окно создания новых элементов у пользователя
@@ -467,10 +495,14 @@ function OnClickAddInstrumentBtnUser(id){ //Всплывающее окно. О�
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML="<input type=\"button\" value=\"Нажатие на кнопку\" class=\"AddBtn\" id=\"AddButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddButtonUser(id)\"> " +
-    "<input type=\"button\" value=\"Ввод текста\" class=\"AddBtn\" id=\"AddNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddNumberUser(id)\">" +
-    "<input type=\"button\" value=\"Ввод числа\" class=\"AddBtn\" id=\"AddTextBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddTextUser(id)\">" +
+    "<input type=\"button\" value=\"Ввод текста\" class=\"AddBtn\" id=\"AddNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddTextUser(id)\">" +
+    "<input type=\"button\" value=\"Ввод числа\" class=\"AddBtn\" id=\"AddTextBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddNumberUser(id)\">" +
     "<input type=\"button\" value=\"Ввод номера телефона\" class=\"AddBtn\" id=\"AddPhoneNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddPhoneNumberUser(id)\">" +
     "<input type=\"button\" value=\"Ввод email\" class=\"AddBtn\" id=\"AddEmailBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddEmailUser(id)\">";
+}
+function CancelUser(id){//Всплывающее окно. Отмена создания какого либо элемента у пользователя
+    OnClickImgExit();
+    OnClickAddInstrumentBtnUser(id);
 }
 function OnClickAddButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки
     OnClickImgExit();
@@ -518,7 +550,6 @@ function OnFocusNewButtonText(){//Всплывающее окно. Ввод те
         ErrorNewButton.innerHTML = "";
       }
 }
-
 function OnClickSaveNewButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки. Кнопка сохранения
     InputNewButtonText = document.getElementById("NewButtonText");//Текст из Input
     formBtn = document.getElementById("formNewButton");
@@ -526,4 +557,15 @@ function OnClickSaveNewButtonUser(id){ //Всплывающее окно. Окн
         return 0;
     }
     /// остальная логика
+}
+function OnClickAddNumberUser(id){ //Всплывающее окно. Окно создания ввода числа
+    OnClickImgExit();
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let divLabelBlack = document.createElement('div');//блок с полем для ввода текста
+    let formBtn = document.createElement('form');//форма с кнопками
 }

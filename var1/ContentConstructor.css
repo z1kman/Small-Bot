@@ -243,6 +243,45 @@ body{
     margin-top: 20px;
     margin-left: 2px;
 }
+.FormRadio input[type=radio]{
+    display: none;
+}
+.FormRadio label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 0;
+	line-height: 18px;
+	user-select: none;
+}
+.FormRadio label:before {
+	content: "";
+	display: inline-block;
+	width: 17px;
+	height: 18px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	background: url(https://snipp.ru/img/radio-1.png) 0 0 no-repeat;
+}
+ 
+/* Checked */
+.FormRadio input[type=radio]:checked + label:before {
+	background: url(https://snipp.ru/img/radio-2.png) 0 0 no-repeat;
+}
+ 
+/* Hover */
+.FormRadio label:hover:before {
+	filter: brightness(120%);
+}
+ 
+/* Disabled */
+.FormRadio input[type=radio]:disabled + label:before {
+	filter: grayscale(100%);
+}
+
+
 .JumpIndicator{
     border-radius: 50%;
     border: 1px solid rgb(233, 233, 233);
