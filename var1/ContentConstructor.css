@@ -16,7 +16,6 @@ body{
     margin-top: 10px;
 }
 .LabelBlack{
-    margin-top: 10px;
     text-align: center;
     color:black;
 }
@@ -129,9 +128,11 @@ body{
     width:100%;
     height: 120%;
     background-color:rgba(202, 202, 202, 0.685);
-    display: block;
+    display: flex;
     position: fixed;
     min-width: 1080px;
+    justify-content: center; 
+    align-items: center; 
 }
 #LabelAddNewInstrument{
     margin-top: 20px;
@@ -145,27 +146,26 @@ body{
 .AddBtn{
     font-family: 'Candara', 'Times New Roman';
     margin-top: 20px;
-    margin-left: 150px;
+    margin-left: 160px;
     border-style: none;
-    width:200px;
+    width:190px;
     height: 30px; 
     font-size:16px;
-    background-color: #F7F8FD ;
+    background-color: rgb(247, 247, 247) ;
     border-radius: 25px;
+    color: rgb(68, 68, 68);
     outline: none;
+
     
 }
 .AddBtn:hover{
-    background-color: rgb(221, 221, 221) ;
-    transition: 0.5s;
+    background-color: rgb(30, 184, 255); ;
+    transition: 0.3s;
+    color:rgb(255, 255, 255);
 }
 .AddNewPanel{
     position: absolute;
-    display: inline-block;
-    justify-content: center; 
-    align-items: center; 
     top: 25%;
-    left: 35%;
     border-radius: 20px;
     background-color:white;
     width:500px;
@@ -238,16 +238,56 @@ body{
     margin-left: 5px;   
     padding: 5px;
 }
+.InputOther1{
+    border-radius: 5px;
+    outline: none;
+    height:25px;
+    width: 120px;
+    border: 1px solid rgb(228, 228, 228);
+    display: inline-block;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    font-size:16px;
+    margin-left: 5px;   
+    padding: 5px;
+}
+.InputNumber{
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 3px;
+    outline: none;
+    margin-left: 5px;
+    width:60px;
+    font-size:16px;
+ }
+ 
+.helpBtn{
+    border: none;
+    background-color: rgba(0, 174, 255, 0);
+    outline:none;
+    font-size: 14px;
+    color: rgb(209, 209, 209);
+}
+.helpBtn:hover{
+    transition: 0.3s;
+    color: rgb(59, 193, 255);
+}
+#helpBtnMask{
+    margin-top: 5px;
+}
 .NewVariableValue{
     color:black;
     margin-top: 20px;
     margin-left: 2px;
 }
+.FormRadio{
+    margin-left: 144px;
+    margin-top: 20px;
+}
 .FormRadio input[type=radio]{
     display: none;
 }
 .FormRadio label {
-	display: inline-block;
+    margin-top: 15px;
+	display: block;
 	cursor: pointer;
 	position: relative;
 	padding-left: 25px;
@@ -263,25 +303,61 @@ body{
 	position: absolute;
 	left: 0;
 	bottom: 1px;
-	background: url(https://snipp.ru/img/radio-1.png) 0 0 no-repeat;
+	background: url(source/constructor/radio-1.png) 0 0 no-repeat;
 }
- 
-/* Checked */
 .FormRadio input[type=radio]:checked + label:before {
-	background: url(https://snipp.ru/img/radio-2.png) 0 0 no-repeat;
+    background: url(source/constructor/radio-2.png) 0 0 no-repeat;
+    transition: 0.3s;
 }
- 
-/* Hover */
 .FormRadio label:hover:before {
-	filter: brightness(120%);
+    filter: brightness(90%);
+    transition: 0.2s;
 }
- 
-/* Disabled */
 .FormRadio input[type=radio]:disabled + label:before {
 	filter: grayscale(100%);
 }
+.FormCheckbox{
+    margin-left: 115px;
+    margin-top: 20px;
+    margin-block-end: 5px;
+}
+.FormCheckbox input[type=checkbox]{
+    display: none;
+}
+.FormCheckbox label:before{
+    content: "";
+	display: inline-block;
+	width: 17px;
+	height: 18px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	background: url(source/constructor/check-1.png) 0 0 no-repeat;
+}
+.FormCheckbox input[type=checkbox]:checked + label:before {
+    background: url(source/constructor/check-2.png) 0 0 no-repeat;
+    transition: 0.3s;
+}
+.FormCheckbox label{
+    margin-top: 15px;
+	display: block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 0;
+	line-height: 18px;
+	user-select: none;
+}
+.FormCheckbox label:hover:before {
+    filter: brightness(90%);
+    transition: 0.2s;
+}
 
-
+#DivIndicatedNumber{
+    width:130px;
+    margin-left:190px;
+    margin-top: 10px;
+}
 .JumpIndicator{
     border-radius: 50%;
     border: 1px solid rgb(233, 233, 233);

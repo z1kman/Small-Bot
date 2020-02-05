@@ -569,3 +569,33 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     let divLabelBlack = document.createElement('div');//блок с полем для ввода текста
     let formBtn = document.createElement('form');//форма с кнопками
 }
+function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения RadioButton
+    DivRangeNumber = document.getElementById("DivRangeNumber");
+    DivMaskNumber = document.getElementById("DivMaskNumber");
+    DivNumber = document.getElementById("DivNumber");
+    if(id === "InputNumber"){
+        DivNumber.removeAttribute("hidden");
+        DivRangeNumber.setAttribute("hidden","hidden");
+        DivMaskNumber.setAttribute("hidden","hidden");
+    }
+    else if(id === "RangeNumber"){
+        DivRangeNumber.removeAttribute("hidden");
+        DivMaskNumber.setAttribute("hidden","hidden");
+        DivNumber.setAttribute("hidden","hidden");
+    }
+    else if(id === "MaskNumber"){
+        DivMaskNumber.removeAttribute("hidden");
+        DivRangeNumber.setAttribute("hidden","hidden");
+        DivNumber.setAttribute("hidden","hidden");
+    }
+}
+function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения CheckBox
+    DivIndicatedNumber = document.getElementById("DivIndicatedNumber");
+    NumberCheckbox = document.getElementById("NumberCheckbox");
+    if(id === "NumberCheckbox" && NumberCheckbox.checked){
+        DivIndicatedNumber.removeAttribute("hidden");
+    }
+    else if(!NumberCheckbox.checked){
+        DivIndicatedNumber.setAttribute("hidden","hidden");
+    }
+}
