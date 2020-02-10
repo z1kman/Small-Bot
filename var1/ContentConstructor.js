@@ -550,7 +550,7 @@ function OnFocusNewButtonText(){//Всплывающее окно. Ввод те
         ErrorNewButton.innerHTML = "";
       }
 }
-function OnClickSaveNewButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки. Кнопка сохранения
+function OnClickSaveNewButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки. Кнопка сохранить
     InputNewButtonText = document.getElementById("NewButtonText");//Текст из Input
     formBtn = document.getElementById("formNewButton");
     if(InputNewButtonText.classList.contains('invalid')){//если есть ошибка
@@ -573,20 +573,24 @@ function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окн�
     DivRangeNumber = document.getElementById("DivRangeNumber");
     DivMaskNumber = document.getElementById("DivMaskNumber");
     DivNumber = document.getElementById("DivNumber");
+    ErrorNewNumber = document.getElementById("ErrorNewNumber");
     if(id === "InputNumber"){
         DivNumber.removeAttribute("hidden");
         DivRangeNumber.setAttribute("hidden","hidden");
         DivMaskNumber.setAttribute("hidden","hidden");
+        ErrorNewNumber.innerHTML = "";
     }
     else if(id === "RangeNumber"){
         DivRangeNumber.removeAttribute("hidden");
         DivMaskNumber.setAttribute("hidden","hidden");
         DivNumber.setAttribute("hidden","hidden");
+        ErrorNewNumber.innerHTML = "";
     }
     else if(id === "MaskNumber"){
         DivMaskNumber.removeAttribute("hidden");
         DivRangeNumber.setAttribute("hidden","hidden");
         DivNumber.setAttribute("hidden","hidden");
+        ErrorNewNumber.innerHTML = "";
     }
 }
 function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения CheckBox
@@ -598,4 +602,42 @@ function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно 
     else if(!NumberCheckbox.checked){
         DivIndicatedNumber.setAttribute("hidden","hidden");
     }
+}
+function OnClickNextNewNumberUser(id){
+    //обработка исключительных ситуаций
+    InputNumber = document.getElementById("InputNumber");//комбобокс ввод числа(возможно ввод определенного числа);
+    RangeNumber = document.getElementById("RangeNumber");//комбобокс ввод диапазона чисел
+    MaskNumber = document.getElementById("MaskNumber");//комбобокс ввод числа по маске
+    NumberCheckbox = document.getElementById("NumberCheckbox");//чекбокс ввод определенного числа
+    ErrorNewNumber = document.getElementById("ErrorNewNumber");//блок для вывода ошибок
+
+    IndicatedNumber = document.getElementById("IndicatedNumber");//поле ввода определенного числа
+    InputNumber1 = document.getElementById("InputNumber 1");//поле ввода первого диапазона
+    InputNumber2 = document.getElementById("InputNumber 2");//поле ввода второго диапазона
+    MaskInputNumber = document.getElementById("MaskInputNumber");//поле ввода маски
+    if(InputNumber.checked == true && NumberCheckbox.checked == true &&  IndicatedNumber.value == ""){
+        ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимое число";
+        IndicatedNumber.classList.add('invalid');
+    }else if(RangeNumber.checked == true && (InputNumber1.value == "" || InputNumber2.value == ""))
+    {
+        ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимый диапазон";
+        InputNumber1.classList.add('invalid');
+        InputNumber2.classList.add('invalid');
+    }
+    else if(MaskNumber.checked == true && MaskInputNumber.value == ""){
+        ErrorNewNumber.innerHTML = "Ошибка! Задайте маску";
+        MaskInputNumber.classList.add('invalid');
+    }
+    else{
+        //остальная логика
+    }
+    
+}
+function OnFocusNumberError(id){//Всплывающее окно. Ввод числа у пользователя. Фокус на поле ввода
+    NumberId = document.getElementById(id);
+    ErrorNewNumber = document.getElementById("ErrorNewNumber");
+    if (NumberId.classList.contains('invalid')) {
+        NumberId.classList.remove('invalid');
+        ErrorNewNumber.innerHTML = "";
+      }
 }

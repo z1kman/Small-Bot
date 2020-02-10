@@ -29,29 +29,29 @@
                         <label for="NumberCheckbox">Указать необходимое число</label>
                     </form>
                     <div id="DivIndicatedNumber" hidden="hidden">
-                        <label>Число:<input type="number" class="InputNumber" id="IndicatedNumber"></label>
+                        <label>Число:<input type="number" class="InputNumber" id="IndicatedNumber" onfocus="OnFocusNumberError(id)" ></label>
                     </div>
                 </div>
                 <div id="DivRangeNumber" hidden="hidden">
                     <div class="LabelBlack">
                         Укажите диапазон
                         <br/>
-                        <label>от<input type="number" class="InputNumber" id="InputNumber 1"></label>
-                        <label>до<input type="number" class="InputNumber" id="InputNumber 2"></label>
+                        <label>от<input type="number" class="InputNumber" id="InputNumber 1" onfocus="OnFocusNumberError(id)"></label>
+                        <label>до<input type="number" class="InputNumber" id="InputNumber 2" onfocus="OnFocusNumberError(id)"></label>
                     </div>
                 </div>
                 <div id="DivMaskNumber" hidden="hidden">
                     <div class="LabelBlack">
-                        <label>Введите маску:<input type="input" class="InputOther1" id="InputNumber 1"></label>
+                        <label>Введите маску:<input type="input" class="InputOther1" id="MaskInputNumber" onfocus="OnFocusNumberError(id)"></label>
                         <div>
                             <input type="button" class="helpBtn" id="helpBtnMask" value="справка" onclick="OnClickHelpBtnMask()">
                         </div>
                     </div>
                 </div>
-                <div class="LabelError" id="ErrorNewButton">
+                <div class="LabelError" id="ErrorNewNumber">
                 </div>
                 <form id="formNewButton">
-                    <input type="button" value="Далее" class="AddBtn" id="AddNewButtonBtnUser 1 1" onclick="OnClickSaveNewButtonUser(id)"> 
+                    <input type="button" value="Далее" class="AddBtn" id="AddNewButtonBtnUser 1 1" onclick="OnClickNextNewNumberUser(id)"> 
                     <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
                 </form>
                 
