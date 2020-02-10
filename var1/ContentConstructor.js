@@ -566,9 +566,73 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     let SN = SecondNumberOfElement(id);
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
-    let divLabelBlack = document.createElement('div');//блок с полем для ввода текста
+    let FormRadio = document.createElement('form');
+    let DivNumber = document.createElement('div');
+    let FormCheckbox = document.createElement('form');
+    let DivIndicatedNumber = document.createElement('div');
+    let DivRangeNumber = document.createElement('div');
+    let LabelBlack1 = document.createElement('div');
+    let DivMaskNumber = document.createElement('div');
+    let LabelBlack2 = document.createElement('div');
+    let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
-}
+    //----------------Добавление блока с надписью----------------
+    divLabelAddNewInstrument.className = "Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML = "Выберите необходимое действие";
+    //----------------Создание формы с комбобоксами---------------
+    FormRadio.className="FormRadio";
+    divAddNewInstrumentPanel.append(FormRadio);
+    FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+    "<label for=\"InputNumber\">Ввод числа</label>" +
+    "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+    "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
+    "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+    "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+    //----------------Создание блока в котором чекбокс и поле ввода определенного числа---------------
+    DivNumber.setAttribute("id","DivNumber");
+    divAddNewInstrumentPanel.append(DivNumber);
+    //----------------Создание чекбокса для ввода определенного числа---------------
+    FormCheckbox.className = "FormCheckbox";
+    DivNumber.append(FormCheckbox);
+    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
+    "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+    //----------------Создание поля для ввода определенного числа---------------
+    DivIndicatedNumber.setAttribute("id","DivIndicatedNumber");
+    DivIndicatedNumber.setAttribute("hidden","hidden");
+    DivNumber.append(DivIndicatedNumber);
+    DivIndicatedNumber.innerHTML = "<label>Число:<input type=\"number\" class=\"InputNumber\" id=\"IndicatedNumber\" onfocus=\"OnFocusNumberError(id)\" ></label>";
+    //----------------Создание блока для ввода определенного диапазона---------------
+    DivRangeNumber.setAttribute("id","DivRangeNumber");
+    DivRangeNumber.setAttribute("hidden","hidden");
+    divAddNewInstrumentPanel.append(DivRangeNumber);
+    //----------------Создание блока подписи для ввода определенного диапазона---------------
+    LabelBlack1.className = "LabelBlack";
+    DivRangeNumber.append(LabelBlack1);
+    LabelBlack1.innerHTML = "Укажите диапазон" + 
+    "<br/>" + 
+    "<label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
+    "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
+     //----------------Создание блока для ввода маски---------------
+     DivMaskNumber.setAttribute("id","DivMaskNumber");
+     DivMaskNumber.setAttribute("hidden","hidden");
+     divAddNewInstrumentPanel.append(DivMaskNumber);
+     //----------------Создание подписи блока для ввода маски---------------
+     LabelBlack2.className = "LabelBlack";
+     DivMaskNumber.append(LabelBlack2);
+     LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
+     "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";
+     //----------------Создание подписи блока вывода ошибки---------------     
+     LabelError.className = "LabelError";
+     LabelError.setAttribute("id","ErrorNewNumber");
+     divAddNewInstrumentPanel.append(LabelError);
+     //----------------Создание формы с кнопками---------------    
+     formBtn.setAttribute("id","formNewNumber")
+     divAddNewInstrumentPanel.append(formBtn);
+     formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickNextNewNumberUser(id)\">"+ 
+     "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }
 function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения RadioButton
     DivRangeNumber = document.getElementById("DivRangeNumber");
     DivMaskNumber = document.getElementById("DivMaskNumber");
@@ -603,7 +667,7 @@ function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно 
         DivIndicatedNumber.setAttribute("hidden","hidden");
     }
 }
-function OnClickNextNewNumberUser(id){
+function OnClickNextNewNumberUser(id){//Всплывающее окно. Действие добавление числа. Кнопка далее
     //обработка исключительных ситуаций
     InputNumber = document.getElementById("InputNumber");//комбобокс ввод числа(возможно ввод определенного числа);
     RangeNumber = document.getElementById("RangeNumber");//комбобокс ввод диапазона чисел
