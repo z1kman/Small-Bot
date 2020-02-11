@@ -497,12 +497,17 @@ function OnClickAddInstrumentBtnUser(id){ //Всплывающее окно. О�
     formBtn.innerHTML="<input type=\"button\" value=\"Нажатие на кнопку\" class=\"AddBtn\" id=\"AddButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddButtonUser(id)\"> " +
     "<input type=\"button\" value=\"Ввод текста\" class=\"AddBtn\" id=\"AddNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddTextUser(id)\">" +
     "<input type=\"button\" value=\"Ввод числа\" class=\"AddBtn\" id=\"AddTextBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddNumberUser(id)\">" +
-    "<input type=\"button\" value=\"Ввод номера телефона\" class=\"AddBtn\" id=\"AddPhoneNumberBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddPhoneNumberUser(id)\">" +
     "<input type=\"button\" value=\"Ввод email\" class=\"AddBtn\" id=\"AddEmailBtnUser " + N + " " + SN + "\" onclick=\"OnClickAddEmailUser(id)\">";
 }
 function CancelUser(id){//Всплывающее окно. Отмена создания какого либо элемента у пользователя
+    
+    if( NameOfElement(id) == "CancelUserNewNumber"){
+        OnClickAddNumberUser(id);
+    }
+    else{
     OnClickImgExit();
     OnClickAddInstrumentBtnUser(id);
+    }
 }
 function OnClickAddButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки
     OnClickImgExit();
@@ -522,7 +527,7 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     //----------Создание блока с полем для ввода текста-----------
     divLabelBlack.className = "LabelBlack";
     divAddNewInstrumentPanel.append(divLabelBlack);
-    divLabelBlack.innerHTML = "<input type=\"text\" id=\"NewButtonText\" class=\"Input\" onfocus=\"OnFocusNewButtonText()\" onblur=\"OnBlurNewButtonText()\">"
+    divLabelBlack.innerHTML = "<label>Текст:<input type=\"text\" id=\"NewButtonText\" class=\"InputOther1\" onfocus=\"OnFocusNewButtonText()\" onblur=\"OnBlurNewButtonText()\" style=\"margin-top:20px;\"></label>"
     //----------Создание формы для кнопок и сами кнопки-----------
     formBtn.setAttribute("id","formNewButton");
     divAddNewInstrumentPanel.append(formBtn);
@@ -693,9 +698,62 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         MaskInputNumber.classList.add('invalid');
     }
     else{
-        //остальная логика
+        OnClickImgExit();
+        DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+        CreateWindowPanel()//создание основы всплывающего меню
+        let N = NumberOfElement(id);
+        let SN = SecondNumberOfElement(id);
+        let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+        let divLabelAddNewInstrument = document.createElement('div');//надпись
+        let DivRecInVariableNumber = document.createElement('div');
+        let FormCheckbox = document.createElement('form');
+        let DivIndicatedVariableNumber = document.createElement('div');
+        let LabelError = document.createElement('div');
+        let formBtn = document.createElement('form');//форма с кнопками
+
+         //----------------Добавление блока с надписью----------------
+        divLabelAddNewInstrument.className = "Label";
+        divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+        divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+        divLabelAddNewInstrument.innerHTML = "Записать введеное пользователем число в переменную?";
+         //----------------Создание блока в котором чекбокс и поле выбора переменной---------------
+         DivRecInVariableNumber.setAttribute("id","DivRecInVariableNumber");
+         divAddNewInstrumentPanel.append(DivRecInVariableNumber);
+        //----------------Создание чекбокса для выбора переменной---------------
+        FormCheckbox.className = "FormCheckbox";
+        DivRecInVariableNumber.append(FormCheckbox);
+        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+        "<label for=\"RecInVariableNumber\">Да, записать</label>";
+        //----------------Создание поля для ввода определенного числа---------------
+        DivIndicatedVariableNumber.setAttribute("id","DivIndicatedVariableNumber");
+        DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+        DivRecInVariableNumber.append(DivIndicatedVariableNumber);
+        DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
+        "<select class=\"Select\">" + 
+        "<option>Number</option>" +
+        "</select>"+
+        "</label>";
+        //----------------Создание подписи блока вывода ошибки---------------     
+        LabelError.className = "LabelError";
+        LabelError.setAttribute("id","ErrorNewNumber");
+        divAddNewInstrumentPanel.append(LabelError);
+        //----------------Создание формы с кнопками---------------    
+        formBtn.setAttribute("id","formNewNumber")
+        divAddNewInstrumentPanel.append(formBtn);
+        formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewNumberUser(id)\">" + 
+        "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
     }
     
+}
+function OnChangeCheckboxRecInVariableNumber(id){
+    RecInVariableNumber = document.getElementById("RecInVariableNumber");
+    DivIndicatedVariableNumber = document.getElementById("DivIndicatedVariableNumber");
+    
+    if(RecInVariableNumber.checked == true){
+        DivIndicatedVariableNumber.removeAttribute("hidden");
+    }else{
+        DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+    }
 }
 function OnFocusNumberError(id){//Всплывающее окно. Ввод числа у пользователя. Фокус на поле ввода
     NumberId = document.getElementById(id);

@@ -24,6 +24,11 @@ body{
     text-align: center;
     color:rgb(196, 51, 51);
 } 
+.SubLabel{
+    text-align: center;
+    font-size: 18px;
+    color:rgb(54, 54, 54);
+}
 #ErrorNewVariable{
     color: rgb(196, 51, 51);
 }
@@ -258,6 +263,14 @@ body{
     width:60px;
     font-size:16px;
  }
+ .Select{
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 3px;
+    outline: none;
+    margin-left: 5px;
+    width:120px;
+    font-size:16px;
+ }
  
 .helpBtn{
     border: none;
@@ -357,6 +370,15 @@ body{
     width:130px;
     margin-left:190px;
     margin-top: 10px;
+}
+#DivRecInVariableNumber{
+    width:300px;
+    margin-left:70px;
+    margin-top: 10px;
+}
+#DivIndicatedVariableNumber{
+    width:400px;
+    margin-left:30px;
 }
 .JumpIndicator{
     border-radius: 50%;

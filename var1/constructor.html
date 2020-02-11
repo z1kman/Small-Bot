@@ -13,46 +13,26 @@
                     <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
                 </div>
                 <div class="Label" id="LabelAddNewInstrument">
-                    Выберите необходимое действие
+                    Записать введеное пользователем число в переменную?
                 </div> 
-                <form class="FormRadio">
-                    <input type="radio" checked="checked" class="RadioButton" id="InputNumber" name="Num" onchange="OnChangeCheckRadioNumber(id)">
-                    <label for="InputNumber">Ввод числа</label>
-                    <input type="radio" class="RadioButton" id="RangeNumber" name="Num" onchange="OnChangeCheckRadioNumber(id)">
-                    <label for="RangeNumber">Ввод числа в диапазоне</label>
-                    <input type="radio" class="RadioButton" id="MaskNumber" name="Num" onchange="OnChangeCheckRadioNumber(id)"> 
-                    <label for="MaskNumber">Ввод числа по маске</label>
-                </form>
-                <div id="DivNumber">
+                <div id="DivRecInVariableNumber">
                     <form class="FormCheckbox">
-                        <input type="checkbox" class="Checkbox" id="NumberCheckbox" onchange="OnChangeCheckboxNumber(id)">
-                        <label for="NumberCheckbox">Указать необходимое число</label>
+                        <input type="checkbox" class="Checkbox" id="RecInVariableNumber" onchange="OnChangeCheckboxRecInVariableNumber(id)">
+                        <label for="RecInVariableNumber">Да, записать</label>
                     </form>
-                    <div id="DivIndicatedNumber" hidden="hidden">
-                        <label>Число:<input type="number" class="InputNumber" id="IndicatedNumber" onfocus="OnFocusNumberError(id)" ></label>
-                    </div>
-                </div>
-                <div id="DivRangeNumber" hidden="hidden">
-                    <div class="LabelBlack">
-                        Укажите диапазон
-                        <br/>
-                        <label>от<input type="number" class="InputNumber" id="InputNumber 1" onfocus="OnFocusNumberError(id)"></label>
-                        <label>до<input type="number" class="InputNumber" id="InputNumber 2" onfocus="OnFocusNumberError(id)"></label>
-                    </div>
-                </div>
-                <div id="DivMaskNumber" hidden="hidden">
-                    <div class="LabelBlack">
-                        <label>Введите маску:<input type="input" class="InputOther1" id="MaskInputNumber" onfocus="OnFocusNumberError(id)"></label>
-                        <div>
-                            <input type="button" class="helpBtn" id="helpBtnMask" value="справка" onclick="OnClickHelpBtnMask()">
-                        </div>
+                    <div id="DivIndicatedVariableNumber" hidden="hidden">
+                        <label>Выберите переменную:
+                            <select class="Select"> 
+                                <option>Number</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
                 <div class="LabelError" id="ErrorNewNumber">
                 </div>
                 <form id="formNewNumber">
-                    <input type="button" value="Далее" class="AddBtn" id="NextNewNumberUser 1 1" onclick="OnClickNextNewNumberUser(id)"> 
-                    <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
+                    <input type="button" value="Далее" class="AddBtn" id="SaveNewNumberUser 1 1" onclick="OnClickSaveNewNumberUser(id)"> 
+                    <input type="button" value="Назад" class="AddBtn" id="CancelUserNewNumber 1 1" onclick="CancelUser(id)">
                 </form>
                 
             </div>
