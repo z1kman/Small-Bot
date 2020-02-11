@@ -1,8 +1,7 @@
 var NumberOfPanels = 1;//Кол-во панелей
 var NumberOfText = 0;//кол-во текстовых элементов(Бот)
 var NumberOfButton = 0;//кол-во кнопок (Пользователь)
-var oldNumberOfElement = 0;//индекс предыдущего элемента(для изменения имени);
-
+var NumberOfSection = 1;//кол-во боковых секций
 //------Служебная часть-----
 //--------------------------
 //--------------------------
@@ -233,6 +232,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
+    let Constructor = document.getElementById("Constructor");
     let divPanel = document.createElement('div');//Cоздание панели (Panel)
     let divInputEdit = document.createElement('div');//Cоздание блока поля ввода имени панели (InputEdit)
     let inputEdit = document.createElement('input');//Создание поля ввода имени панели (Edit)
@@ -248,7 +248,19 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     let formAddInstrumentBtnUser = document.createElement('form');//Создание формы кнопки добавления инструмента у пользователя("Добавить действие")
     let formNewPanelBtn = document.createElement('form');//Создание формы кнопки добавления новой панели(NewPanelBtn)
     NumberOfPanels++;//увеличение кол-ва панелей
+    let flag = false;
 
+   /* for(let i = 0; i <= NumberOfPanels; i++){
+        if(document.getElementById("Panel " + N + " " + i) != null){
+            flag = true;
+            break;
+        }
+    }
+    if(flag == true){
+        let Section = document.createElement("div");
+        Constructor.append(Section);
+    }
+    */
    //----------Создание панели (Panel)-----------
     divPanel.className="Panel";
     divPanel.setAttribute("id","Panel " + N  + " " + NumberOfPanels)
