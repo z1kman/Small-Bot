@@ -221,14 +221,28 @@ function OnMouseOutTextBot(id){//отображение иконки редак�
     ImgPencilInstrument.setAttribute("style","opacity: 0");
 }
 function OnClickRemovePanel(id){//удаление панели
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
+    let N = NumberOfElement(id);
+
+    let ParentNewPanelBtn = document.getElementById("ParentNewPanelBtn " + N + " 0");
+    let SN = SecondNumberOfElement(id);
+    let flag = false;
     formAddInstrumentBtn = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
     document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
     formAddInstrumentBtn.parentNode.removeChild(formAddInstrumentBtn);//Удаление кнопки добавления новой панели
+    for(let i = 0; i <= NumberOfPanels; i++){
+        if(document.getElementById("Panel " + N + " " + i ) != null){
+            flag = true;
+            break;
+        }
+    }
+
+    if(flag == false){//если в секции нет панелей
+        ParentNewPanelBtn.classList.remove('active');//удалить флаг
+        document.getElementById("Section " + N).remove(); //удалить секцию
+    }
+
 }
 function OnClickNewPanelBtn(id){ //создание новой панели
-    let Navbar = document.getElementById("Navbar");
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
@@ -248,19 +262,27 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     let formAddInstrumentBtnUser = document.createElement('form');//Создание формы кнопки добавления инструмента у пользователя("Добавить действие")
     let formNewPanelBtn = document.createElement('form');//Создание формы кнопки добавления новой панели(NewPanelBtn)
     NumberOfPanels++;//увеличение кол-ва панелей
-    let flag = false;
+    let ParentNewPanelBtn = document.getElementById(id);
 
-   /* for(let i = 0; i <= NumberOfPanels; i++){
-        if(document.getElementById("Panel " + N + " " + i) != null){
-            flag = true;
-            break;
-        }
-    }
-    if(flag == true){
-        let Section = document.createElement("div");
+
+    if(NameOfElement(id) == "ParentNewPanelBtn" && !ParentNewPanelBtn.classList.contains("active")){ //добавление новой секции
+        let Section = document.createElement('div');
+        let formAddInstrumentBtn = document.createElement('form');
+        ParentNewPanelBtn.classList.add("active");
+
+        //----------Создание новой секции-----------
+        NumberOfSection++;//увеличение кол-ва секций
+        Section.className = "Section";
+        Section.setAttribute("id","Section " + NumberOfSection);
         Constructor.append(Section);
+        //----------Создание новой формы с кнопкой добавления новых панелей-----------
+        formAddInstrumentBtn.setAttribute("id","formAddInstrumentBtn " + NumberOfSection + " " + "0" );
+        formAddInstrumentBtn.className = "FormAddInstrumentBtn";
+        Section.append(formAddInstrumentBtn);
+        formAddInstrumentBtn.innerHTML =  "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"ParentNewPanelBtn " + NumberOfSection + " " + "0\" onclick=\"OnClickNewPanelBtn(id)\">";
+
     }
-    */
+
    //----------Создание панели (Panel)-----------
     divPanel.className="Panel";
     divPanel.setAttribute("id","Panel " + N  + " " + NumberOfPanels)
