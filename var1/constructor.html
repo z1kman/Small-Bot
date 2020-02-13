@@ -13,28 +13,21 @@
                     <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
                 </div>
                 <div class="Label" id="LabelAddNewInstrument">
-                    Записать введеное пользователем число в переменную?
+                    Выберите переменную в которую необходимо записать введеный email
                 </div> 
-                <div id="DivRecInVariableNumber">
-                    <form class="FormCheckbox">
-                        <input type="checkbox" class="Checkbox" id="RecInVariableNumber" onchange="OnChangeCheckboxRecInVariableNumber(id)">
-                        <label for="RecInVariableNumber">Да, записать</label>
-                    </form>
-                    <div id="DivIndicatedVariableNumber" hidden="hidden">
-                        <label>Выберите переменную:
-                            <select class="Select"> 
-                                <option>Number</option>
-                            </select>
-                        </label>
-                    </div>
+                <div class="LabelBlack">
+                    <label>Выберите переменную:
+                        <select class="Select"> 
+                            <option>Email</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="LabelError" id="ErrorNewNumber">
                 </div>
-                <form id="formNewNumber">
-                    <input type="button" value="Далее" class="AddBtn" id="SaveNewNumberUser 1 1" onclick="OnClickSaveNewNumberUser(id)"> 
-                    <input type="button" value="Назад" class="AddBtn" id="CancelUserNewNumber 1 1" onclick="CancelUser(id)">
-                </form>
-                
+                <form>
+                    <input type="button" value="Далее" class="AddBtn" id="AddNewEmailUser 1 1" onclick="OnClickSaveNewEmailUser(id)"> 
+                    <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
+                </form> 
             </div>
         </div>
 

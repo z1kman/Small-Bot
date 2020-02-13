@@ -552,6 +552,7 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let divLabelBlack = document.createElement('div');//блок с полем для ввода текста
+    let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
     //----------Создание надписи панели выбора действий-----------
     divLabelAddNewInstrument.className="Label";
@@ -568,7 +569,6 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"AddNewButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewButtonUser(id)\">" + 
     "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
     //----------Окно для ошибки-----------
-    LabelError = document.createElement('div');
     LabelError.className = "LabelError";
     LabelError.setAttribute("id","ErrorNewButton");
     formBtn.prepend(LabelError);
@@ -796,4 +796,38 @@ function OnFocusNumberError(id){//Всплывающее окно. Ввод чи
         NumberId.classList.remove('invalid');
         ErrorNewNumber.innerHTML = "";
       }
+}
+function OnClickAddEmailUser(id){
+    OnClickImgExit();
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    var N = NumberOfElement(id);
+    var SN = SecondNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let LabelBlack = document.createElement('div');
+    let LabelError = document.createElement('div');
+    let formBtn = document.createElement('form');//форма с кнопками
+
+    //----------Создание надписи панели выбора действий-----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="Выберите переменную в которую необходимо записать введеный email";
+    //----------Создание блока для выбора переменной-----------
+    LabelBlack.className = "LabelBlack";
+    divAddNewInstrumentPanel.append(LabelBlack);
+    LabelBlack.innerHTML = "<label>Выберите переменную:" +
+        "<select class=\"Select\">" + 
+        "<option>Email</option>" +
+        "</select>" + 
+        "</label>";
+    //----------Создание формы для кнопок и сами кнопки-----------
+    divAddNewInstrumentPanel.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"AddNewEmailUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewEmailUser(id)\">" + 
+    "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    //----------Окно для ошибки-----------
+    LabelError.className = "LabelError";
+    LabelError.setAttribute("id","ErrorNewEmail");
+    formBtn.prepend(LabelError);
 }
