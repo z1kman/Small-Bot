@@ -831,3 +831,49 @@ function OnClickAddEmailUser(id){
     LabelError.setAttribute("id","ErrorNewEmail");
     formBtn.prepend(LabelError);
 }
+
+function OnFocusTextError(id){ // Всплывающее меню. Создание текста. Ошибка. Фокус на поле ввода
+    let ErrorNewNumber= document.getElementById("ErrorNewNumber");
+    ErrorNewNumber.innerHTML="";
+}
+function OnChangeCheckboxText(id){// Всплывающее меню. Создание текста. Чекбокс: "указать необходимое слово/текст"
+    let ErrorNewNumber= document.getElementById("ErrorNewNumber");
+    let TextCheckbox = document.getElementById("TextCheckbox");
+    let DivIndicatedText = document.getElementById("DivIndicatedText");
+
+    ErrorNewNumber.innerHTML="";
+    if(TextCheckbox.checked == true){
+        DivIndicatedText.removeAttribute("hidden");
+    }else
+        DivIndicatedText.setAttribute("hidden","hidden");
+}
+function OnClickNextNewTextUser(id){//Всплывающее меню. Создание текста. Кнопка далее
+    let ErrorNewNumber= document.getElementById("ErrorNewNumber");
+    let InputText = document.getElementById("InputText");
+    let TextCheckbox = document.getElementById("TextCheckbox");
+    let IndicatedText = document.getElementById("IndicatedText");
+
+    if(TextCheckbox.checked == true && IndicatedText.value.length > 30 && InputText.classList.contains('active') ){
+        ErrorNewNumber.innerHTML = "Ошибка! Слово или текст не должно превышать 30 символов"
+    }
+}
+function OnChangeCheckRadioText(id){//Всплывающее меню. Создание текста. Изменение радио 
+    let InputText = document.getElementById("InputText");
+    let DivText = document.getElementById("DivText");
+    let TagText = document.getElementById("TagText");
+    let ErrorNewNumber= document.getElementById("ErrorNewNumber");
+    
+    ErrorNewNumber.innerHTML="";
+    if(id == "InputText"){
+        DivText.removeAttribute("hidden");  
+        InputText.classList.add('active');
+        TagText.classList.remove('active')
+    }else if(id == "TagText"){
+        DivText.setAttribute("hidden","hidden");
+        InputText.classList.remove('active');  
+        TagText.classList.add('active');
+    }
+}
+function OnClickTag(id){
+    alert();
+}

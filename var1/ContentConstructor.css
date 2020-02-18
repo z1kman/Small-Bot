@@ -165,13 +165,14 @@ body{
 }
 .NewInstrumentPanel{
     width:100%;
-    height: 120%;
+    height: 100%;
     background-color:rgba(202, 202, 202, 0.685);
     display: flex;
     position: fixed;
     min-width: 1080px;
     justify-content: center; 
     align-items: center; 
+    overflow: auto;
 }
 #LabelAddNewInstrument{
     margin-top: 20px;
@@ -204,7 +205,6 @@ body{
 }
 .AddNewPanel{
     position: absolute;
-    top: 25%;
     border-radius: 20px;
     background-color:white;
     width:500px;
@@ -320,13 +320,26 @@ body{
 #helpBtnMask{
     margin-top: 5px;
 }
+.BtnOther{
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(59, 193, 255);
+    font-size: 16px;
+    border-radius: 5px;
+    outline:none;
+}
+.BtnOther:hover{
+    background-color:  rgb(59, 193, 255);
+    color: white;
+    transition: 0.3s;
+}
 .NewVariableValue{
     color:black;
     margin-top: 20px;
     margin-left: 2px;
 }
 .FormRadio{
-    margin-left: 144px;
+    margin-left: 140px;
     margin-top: 20px;
 }
 .FormRadio input[type=radio]{
@@ -405,6 +418,17 @@ body{
     margin-left:190px;
     margin-top: 10px;
 }
+#DivIndicatedText{
+    margin-left:100px;
+    margin-top: 10px;
+}
+#DivTagText{
+    width: 320px;
+    margin-left:120px;
+    margin-top: 10px;
+    text-align: center;
+}
+
 #DivRecInVariableNumber{
     width:300px;
     margin-left:70px;
@@ -413,6 +437,34 @@ body{
 #DivIndicatedVariableNumber{
     width:400px;
     margin-left:30px;
+}
+.Tag{
+    margin-top: 2px;
+    display: inline-block;
+    border-radius: 5px;
+    color: white;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 18px;
+    background-color: rgb(184, 184, 184);
+}
+.Tag:hover{
+    background-color: rgb(143, 143, 143);
+    transition: 0.3s;
+}
+.DeleteTag{
+    margin-top: 2px;
+    margin-left: 2px;
+    display: inline-block;
+    border-radius: 5px;
+    color: white;
+    padding-left: 5px;
+    padding-right: 3px;
+    font-size: 18px;
+    background-color: rgb(0, 142, 207)
+}
+.DeleteTag:hover{
+    background-color: rgb(0, 116, 170)
 }
 .JumpIndicator{
     border-radius: 50%;
