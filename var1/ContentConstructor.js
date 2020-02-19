@@ -539,6 +539,9 @@ function CancelUser(id){//Всплывающее окно. Отмена созд
     if( NameOfElement(id) == "CancelUserNewNumber"){
         OnClickAddNumberUser(id);
     }
+    if( NameOfElement(id) == "CancelUserNewText"){
+        OnClickAddTextUser(id);
+    }
     else{
     OnClickImgExit();
     OnClickAddInstrumentBtnUser(id);
@@ -832,7 +835,63 @@ function OnClickAddEmailUser(id){
     LabelError.setAttribute("id","ErrorNewEmail");
     formBtn.prepend(LabelError);
 }
-
+function OnClickAddTextUser(id){ //Всплывающее меню. Функция создания меню создания текста
+    OnClickImgExit();
+    CreateWindowPanel();
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let FormRadio = document.createElement('form');
+    let DivText = document.createElement('div');
+    let FormCheckbox = document.createElement('form');
+    let DivIndicatedText = document.createElement('div');
+    let DivTagText = document.createElement('div');
+    let LabelError = document.createElement('div');
+    let formBtn = document.createElement('form');//форма с кнопками
+    //----------------Добавление блока с надписью----------------
+    divLabelAddNewInstrument.className = "Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML = "Выберите необходимое действие";
+    //----------------Создание формы с комбобоксами---------------
+    FormRadio.className="FormRadio";
+    divAddNewInstrumentPanel.append(FormRadio);
+    FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton active\" id=\"InputText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">"+
+    "<label for=\"InputText\">Ввод текста</label>" +
+    "<input type=\"radio\" class=\"RadioButton\" id=\"TagText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">" +
+    "<label for=\"TagText\">Ввод текста(чтение по тегам)</label>";
+    //----------------Создание блока в котором чекбокс и поле ввода определенного текста--------------
+    DivText.setAttribute("id","DivText");
+    divAddNewInstrumentPanel.append(DivText);
+    //----------------Создание чекбокса для ввода определенного слова---------------
+    FormCheckbox.className = "FormCheckbox";
+    DivText.append(FormCheckbox);
+    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
+    "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>";
+    //----------------Создание поля для ввода определенного текста---------------
+    DivIndicatedText.setAttribute("id","DivIndicatedText");
+    DivIndicatedText.setAttribute("hidden","hidden");
+    DivText.append(DivIndicatedText);
+    DivIndicatedText.innerHTML = "<label>Введите слово или текст:<input type=\"input\" class=\"InputOther1\" id=\"IndicatedText\" onfocus=\"OnFocusTextError(id)\"></label>";
+     //----------------Создание блока для ввода тегов---------------
+     DivTagText.setAttribute("id","DivTagText");
+     DivTagText.setAttribute("hidden","hidden");
+     divAddNewInstrumentPanel.append(DivTagText);
+     DivTagText.innerHTML = "<label>Введите тег:<input type=\"input\" class=\"InputOther1\" id=\"InputTagText\" onfocus=\"OnFocusTextError(id)\">"+
+     "<input type=\"button\" class=\"BtnOther\" id=\"AddNewTag 1\" value=\"Ок\" onclick=\"OnClickAddNewTag(id)\"></label>" +
+     "<div class=\"LabelBlack\" id=\"TagBlock\" hidden=\"hidden\"> Ваши теги:<br /></div>";
+     //----------------Создание подписи блока вывода ошибки---------------     
+     LabelError.className = "LabelError";
+     LabelError.setAttribute("id","ErrorNewNumber");
+     divAddNewInstrumentPanel.append(LabelError);
+     //----------------Создание формы с кнопками---------------    
+     formBtn.setAttribute("id","formNewNumber")
+     divAddNewInstrumentPanel.append(formBtn);
+     formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewTextUser " + N + " " + SN + "\" onclick=\"OnClickNextNewTextUser(id)\">"+ 
+     "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+}
 function OnFocusTextError(id){ // Всплывающее меню. Создание текста. Ошибка. Фокус на поле ввода
     let ErrorNewNumber= document.getElementById("ErrorNewNumber");
     ErrorNewNumber.innerHTML="";
@@ -855,14 +914,61 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
     let IndicatedText = document.getElementById("IndicatedText");
     let TagText = document.getElementById("TagText");
     TagKol = 0;//обнуление кол-ва тегов
-    if(InputTagText.value.replace(/\s+/g, '') == "" && TextCheckbox.checked == true && InputText.classList.contains('active')){
+    if(IndicatedText.value.replace(/\s+/g, '') == "" && TextCheckbox.checked == true && InputText.classList.contains('active')){
         ErrorNewNumber.innerHTML = "Ошибка! Введите необходимое слово или текст";
+        return 0;
     }else if(TextCheckbox.checked == true && IndicatedText.value.length > 30 && InputText.classList.contains('active') ){
         ErrorNewNumber.innerHTML = "Ошибка! Слово или текст не должно превышать 30 символов"
+        return 0;
     }
     else if(((document.getElementsByClassName('TagDiv')).length) == 0 && TagText.checked == true){
         ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимые теги"
+        return 0;
     }
+    OnClickImgExit();
+    DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
+    CreateWindowPanel()//создание основы всплывающего меню
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let DivRecInVariableNumber = document.createElement('div');
+    let FormCheckbox = document.createElement('form');
+    let DivIndicatedVariableNumber = document.createElement('div');
+    let LabelError = document.createElement('div');
+    let formBtn = document.createElement('form');//форма с кнопками
+
+     //----------------Добавление блока с надписью----------------
+    divLabelAddNewInstrument.className = "Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML = "Записать введеное пользователем слово или текст в переменную?";
+     //----------------Создание блока в котором чекбокс и поле выбора переменной---------------
+     DivRecInVariableNumber.setAttribute("id","DivRecInVariableNumber");
+     divAddNewInstrumentPanel.append(DivRecInVariableNumber);
+    //----------------Создание чекбокса для выбора переменной---------------
+    FormCheckbox.className = "FormCheckbox";
+    DivRecInVariableNumber.append(FormCheckbox);
+    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+    "<label for=\"RecInVariableNumber\">Да, записать</label>";
+    //----------------Создание поля для ввода определенного числа---------------
+    DivIndicatedVariableNumber.setAttribute("id","DivIndicatedVariableNumber");
+    DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+    DivRecInVariableNumber.append(DivIndicatedVariableNumber);
+    DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
+    "<select class=\"Select\">" + 
+    "<option>Text</option>" +
+    "</select>"+
+    "</label>";
+    //----------------Создание подписи блока вывода ошибки---------------     
+    LabelError.className = "LabelError";
+    LabelError.setAttribute("id","ErrorNewNumber");
+    divAddNewInstrumentPanel.append(LabelError);
+    //----------------Создание формы с кнопками---------------    
+    formBtn.setAttribute("id","formNewNumber")
+    divAddNewInstrumentPanel.append(formBtn);
+    formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewTextUser(id)\">" + 
+    "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewText " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
 }
 function OnChangeCheckRadioText(id){//Всплывающее меню. Создание текста. Изменение радио 
     let InputText = document.getElementById("InputText");
@@ -889,11 +995,14 @@ function OnClickAddNewTag(id){//Всплывающее меню. Создани�
     let TagBlock = document.getElementById("TagBlock");
     let InputTagText = document.getElementById("InputTagText");
     let ErrorNewNumber = document.getElementById("ErrorNewNumber");
-
-    let TagDiv = document.createElement('div');
-    let Tag = document.createElement('div');
+    if(InputTagText.value.length > 30){
+        ErrorNewNumber.innerHTML = "Ошибка!Длина текста не должна превышать 30 символов";
+        return 0;
+    }
     if(InputTagText.value.replace(/\s+/g, '') != ""){//если нет пробелов
         ErrorNewNumber.innerHTML = "";
+        let TagDiv = document.createElement('div');
+        let Tag = document.createElement('div');
         if(!Name.classList.contains('notfirst')){
             Name.classList.add('notfirst');        
             TagBlock.removeAttribute('hidden');
@@ -950,7 +1059,7 @@ function OnClickTag(id){//Всплывающее меню. Создание те
         Name.classList.remove('active');
     }
 }
-function OnClickDeleteTag(id){////Всплывающее меню. Создание текста. удаление тега
+function OnClickDeleteTag(id){//Всплывающее меню. Создание текста. удаление тега
     let flag = false;
     let N = NumberOfElement(id);
     let TagDiv = document.getElementById("TagDiv " + N);
@@ -966,3 +1075,5 @@ function OnClickDeleteTag(id){////Всплывающее меню. Создан�
         AddNewTag[0].classList.remove('notfirst');
     }
 }
+
+

@@ -7,48 +7,6 @@
             <link rel="stylesheet" href="ContentConstructor.css">
             <script src="ContentConstructor.js"></script>
     <body> 
-        <div class="NewInstrumentPanel" id="NewInstrumentPanel">
-            <div class="AddNewPanel" id="AddNewPanel">
-                <div class="ImgExit" onclick="OnClickImgExit()">
-                    <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
-                </div>
-                <div class="Label" id="LabelAddNewInstrument">Выберите необходимое действие</div>
-                <form class="FormRadio">
-                    <input type="radio" checked="checked" class="RadioButton active" id="InputText" name="Text" onchange="OnChangeCheckRadioText(id)">
-                    <label for="InputText">Ввод текста</label>
-                    <input type="radio" class="RadioButton" id="TagText" name="Text" onchange="OnChangeCheckRadioText(id)">
-                    <label for="TagText">Ввод текста(чтение по тегам)</label>
-                </form>
-                <div id="DivText">
-                        <form class="FormCheckbox">
-                            <input type="checkbox" class="Checkbox" id="TextCheckbox" onchange="OnChangeCheckboxText(id)">
-                            <label for="TextCheckbox">Указать необходимое слово/текст</label>
-                        </form>
-                        <div id="DivIndicatedText" hidden="hidden">
-                                <label>Введите слово или текст:
-                                    <input type="input" class="InputOther1" id="IndicatedText" onfocus="OnFocusTextError(id)">
-                                </label>
-                        </div>
-                </div>
-                <div id="DivTagText" hidden="hidden">
-                    <label>Введите тег:
-                        <input type="input" class="InputOther1" id="InputTagText" onfocus="OnFocusTextError(id)">
-                        <input type="button" class="BtnOther" id="AddNewTag 1" value="Ок" onclick="OnClickAddNewTag(id)">
-                    </label>
-                    <div class="LabelBlack" id="TagBlock">
-                        Ваши теги:
-                        <br />
-                    </div>
-                </div>
-                        <div class="LabelError" id="ErrorNewNumber">
-                        </div>
-                        <form id="formNewNumber">
-                            <input type="button" value="Далее" class="AddBtn" id="NextNewTextUser 1 1" onclick="OnClickNextNewTextUser(id)">
-                            <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 1" onclick="CancelUser(id)">
-                        </form>
-                    </div>
-                </div>
-            </div>
 
         <div class="Navbar" id="Navbar">
             <div class="LogoDiv">
