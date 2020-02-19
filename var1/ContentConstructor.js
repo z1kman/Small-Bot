@@ -2,6 +2,7 @@ var NumberOfPanels = 1;//Кол-во панелей
 var NumberOfText = 0;//кол-во текстовых элементов(Бот)
 var NumberOfButton = 0;//кол-во кнопок (Пользователь)
 var NumberOfSection = 1;//кол-во боковых секций
+var TagKol = 0;//кол-во тегов
 //------Служебная часть-----
 //--------------------------
 //--------------------------
@@ -852,9 +853,15 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
     let InputText = document.getElementById("InputText");
     let TextCheckbox = document.getElementById("TextCheckbox");
     let IndicatedText = document.getElementById("IndicatedText");
-
-    if(TextCheckbox.checked == true && IndicatedText.value.length > 30 && InputText.classList.contains('active') ){
+    let TagText = document.getElementById("TagText");
+    TagKol = 0;//обнуление кол-ва тегов
+    if(InputTagText.value.replace(/\s+/g, '') == "" && TextCheckbox.checked == true && InputText.classList.contains('active')){
+        ErrorNewNumber.innerHTML = "Ошибка! Введите необходимое слово или текст";
+    }else if(TextCheckbox.checked == true && IndicatedText.value.length > 30 && InputText.classList.contains('active') ){
         ErrorNewNumber.innerHTML = "Ошибка! Слово или текст не должно превышать 30 символов"
+    }
+    else if(((document.getElementsByClassName('TagDiv')).length) == 0 && TagText.checked == true){
+        ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимые теги"
     }
 }
 function OnChangeCheckRadioText(id){//Всплывающее меню. Создание текста. Изменение радио 
@@ -862,18 +869,100 @@ function OnChangeCheckRadioText(id){//Всплывающее меню. Созд�
     let DivText = document.getElementById("DivText");
     let TagText = document.getElementById("TagText");
     let ErrorNewNumber= document.getElementById("ErrorNewNumber");
-    
+    let DivTagText = document.getElementById("DivTagText");
+
     ErrorNewNumber.innerHTML="";
     if(id == "InputText"){
         DivText.removeAttribute("hidden");  
         InputText.classList.add('active');
         TagText.classList.remove('active')
+        DivTagText.setAttribute("hidden","hidden");
     }else if(id == "TagText"){
         DivText.setAttribute("hidden","hidden");
+        DivTagText.removeAttribute("hidden");
         InputText.classList.remove('active');  
         TagText.classList.add('active');
     }
 }
-function OnClickTag(id){
-    alert();
+function OnClickAddNewTag(id){//Всплывающее меню. Создание текста. Создание тега 
+    let Name = document.getElementById(id);
+    let TagBlock = document.getElementById("TagBlock");
+    let InputTagText = document.getElementById("InputTagText");
+    let ErrorNewNumber = document.getElementById("ErrorNewNumber");
+
+    let TagDiv = document.createElement('div');
+    let Tag = document.createElement('div');
+    if(InputTagText.value.replace(/\s+/g, '') != ""){//если нет пробелов
+        ErrorNewNumber.innerHTML = "";
+        if(!Name.classList.contains('notfirst')){
+            Name.classList.add('notfirst');        
+            TagBlock.removeAttribute('hidden');
+
+            TagDiv.className = "TagDiv";
+            TagDiv.setAttribute("id","TagDiv 1");
+            TagBlock.append(TagDiv);
+
+            Tag.className = "Tag";
+            Tag.setAttribute("id","Tag 1");
+            Tag.setAttribute("onclick","OnClickTag(id)")
+            TagDiv.append(Tag);
+            Tag.innerHTML=InputTagText.value;
+            TagKol++;
+            Name.setAttribute("id","AddNewTag 1");
+        }else if(TagKol < 10){
+            let N = Number(NumberOfElement(id));
+            N++;    
+            TagDiv.className = "TagDiv";
+            TagDiv.setAttribute("id","TagDiv " + N);
+            TagBlock.append(TagDiv);
+
+            Tag.className = "Tag";
+            Tag.setAttribute("id","Tag " + N);
+            Tag.setAttribute("onclick","OnClickTag(id)")
+            TagDiv.append(Tag);
+            Tag.innerHTML=InputTagText.value;
+            TagKol++;
+            Name.setAttribute("id","AddNewTag " + N);
+        }else if(TagKol == 10){
+            ErrorNewNumber.innerHTML = "Ошибка!Кол-во тегов на один элемент не может превышать 10"
+        }
+        InputTagText.value = "";
+    }else{//вывод ошибки если есть пробелы в поле ввода тегов
+        ErrorNewNumber.innerHTML = "Ошибка! Пожалуйста, введите необходимое слово или текст";
+    }
+}
+function OnClickTag(id){//Всплывающее меню. Создание текста. клик по тегу
+    let Name = document.getElementById(id);
+    let N = NumberOfElement(id);
+    let TagDiv = document.getElementById("TagDiv " + N);
+
+    if(!Name.classList.contains('active')){
+        let DeleteTag = document.createElement('div');
+        DeleteTag.setAttribute("id","DeleteTag " + N);
+        DeleteTag.className = "DeleteTag";
+        DeleteTag.setAttribute("onclick","OnClickDeleteTag(id)");
+        TagDiv.append(DeleteTag);
+        DeleteTag.innerHTML = "Удалить";
+        Name.classList.add('active');
+    }else{
+        let DeleteTag = document.getElementById("DeleteTag " + N);
+        DeleteTag.remove();
+        Name.classList.remove('active');
+    }
+}
+function OnClickDeleteTag(id){////Всплывающее меню. Создание текста. удаление тега
+    let flag = false;
+    let N = NumberOfElement(id);
+    let TagDiv = document.getElementById("TagDiv " + N);
+    let AddNewTag = document.getElementsByClassName('BtnOther');
+    TagDiv.remove();
+    if(((document.getElementsByClassName('TagDiv')).length) != 0){
+        flag = true;
+    }
+    TagKol--;
+    if(flag == false){
+        let TagBlock = document.getElementById("TagBlock");
+        TagBlock.setAttribute("hidden","hidden");
+        AddNewTag[0].classList.remove('notfirst');
+    }
 }

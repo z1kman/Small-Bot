@@ -30,33 +30,16 @@
                                 </label>
                         </div>
                 </div>
-                <div id="DivTagText">
+                <div id="DivTagText" hidden="hidden">
                     <label>Введите тег:
                         <input type="input" class="InputOther1" id="InputTagText" onfocus="OnFocusTextError(id)">
-                        <input type="button" class="BtnOther" id="IndicatedText" value="Ок" onfocus="OnFocusTextError(id)">
+                        <input type="button" class="BtnOther" id="AddNewTag 1" value="Ок" onclick="OnClickAddNewTag(id)">
                     </label>
-                    <div class="LabelBlack">
+                    <div class="LabelBlack" id="TagBlock">
                         Ваши теги:
                         <br />
-                        <div class = "TagDiv">
-                            <div class="Tag" id="Tag 1" onclick="OnClickTag(id)">wwwwwwwwwwwwwwwwwwww</div>
-                            <div class="DeleteTag">Удалить</div>
-                        </div>
-                        <div class = "TagDiv">
-                            <div class="Tag">43</div>
-                            <div class="DeleteTag">Удалить</div>
-                        </div>
-                        <div class="Tag">w54</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
-                        <div class="Tag">wwwwwwwwwwwwwwwwwwww</div>
                     </div>
                 </div>
-
                         <div class="LabelError" id="ErrorNewNumber">
                         </div>
                         <form id="formNewNumber">
