@@ -1075,5 +1075,24 @@ function OnClickDeleteTag(id){//Всплывающее меню. Создани�
         AddNewTag[0].classList.remove('notfirst');
     }
 }
+function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN );
+    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
+    TrashImg.setAttribute("style","opacity: 100;");
+    ImgPencil.setAttribute("style","opacity: 100;");
+}
 
-
+function OnMouseOutUserPanel(id){ //Панель. Мышь не над элементом
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
+    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN )
+    TrashImg.setAttribute("style","opacity: 0;");
+    ImgPencil.setAttribute("style","opacity: 0;");
+}

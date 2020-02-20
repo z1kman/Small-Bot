@@ -35,6 +35,11 @@ body{
     text-align: center;
     color:black;
 }
+.LabelOther{
+    color:black;
+    float: left;
+    margin-left: 10px;
+}
 .LabelError{
     margin-top: 10px;
     text-align: center;
@@ -111,6 +116,19 @@ body{
 }
 .FormAddInstrumentBtn{
     width:450px;
+}
+.ButtonUser{
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    background-color:  rgb(59, 193, 255);
+    color: white;
+    margin-top: 10px;
+    outline: none;
+}
+.FormButton{
+    margin:0;
+    padding:0;
 }
 .AddInstrumentBtn{
     margin-left: 73px;
@@ -240,6 +258,11 @@ body{
     color: black;
     display: inline;
 }
+.LabelElementUser{
+    margin-left:10px;
+    color: black;
+    display: inline; 
+}
 .textareaTextBot{
     border-radius: 5px;
     width: 300px;
@@ -259,9 +282,16 @@ body{
     border-radius: 5px;
     padding: 3px;
 }
-.ImgPencilInstrument:hover{
+.ImgPencilInstrument2{
+    float:left;
+    margin-left: 3px;
+    border-radius: 5px;
+    padding: 3px;
+}
+.ImgPencilInstrument:hover,.ImgPencilInstrument2:hover{
     background-color: rgb(228, 228, 228);
 }
+
 .NewName{
     color:black;
     margin-top: 20px;
@@ -473,15 +503,39 @@ body{
 .DeleteTag:hover{
     background-color: rgb(0, 116, 170)
 }
+.DivUserButton{
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 350px;
+    border: 1px solid rgb(170, 228, 255);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+.DivUserButton:hover{
+    background-color: #F7F8FD ;
+    transition: 0.5s;
+}
+.DivJumpIndicator{
+    display: flex;
+    justify-content: flex-end;
+}
 .JumpIndicator{
     border-radius: 50%;
-    border: 1px solid rgb(233, 233, 233);
+    border: 1px solid rgb(59, 193, 255);
     width: 20px;
     height: 20px;
-    float: right;
-    margin-right: 5px;
+    display: flex;
+    justify-content: flex-end;
+
 }
 .JumpIndicator:hover{
     transition: 0.5s;
-    background-color:rgb(145, 145, 145);
+    background-color:rgb(59, 193, 255);
+}
+.DivFormUser{
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
