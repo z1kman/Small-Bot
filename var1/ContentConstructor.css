@@ -118,9 +118,13 @@ body{
     width:450px;
 }
 .ButtonUser{
+    font-family: 'Segoe UI Light', 'Times New Roman';
     border: none;
-    border-radius: 15px;
-    padding: 10px;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color:  rgb(59, 193, 255);
     color: white;
     margin-top: 10px;

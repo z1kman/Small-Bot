@@ -1,5 +1,5 @@
 var NumberOfPanels = 1;//Кол-во панелей
-var NumberOfText = 0;//кол-во текстовых элементов(Бот)
+var ElementKol = 0;//кол-во элементов
 var NumberOfButton = 0;//кол-во кнопок (Пользователь)
 var NumberOfSection = 1;//кол-во боковых секций
 var TagKol = 0;//кол-во тегов
@@ -425,10 +425,10 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     let divImgPencilInstrument = document.createElement('div');//иконка карандаша(редактирование элемента)
     let TextBotTextarea = document.createElement('textarea');//textarea для текста
     
-    NumberOfText++;//увеличение числа текстовых элементов
+    ElementKol++;//увеличение числа текстовых элементов
     //----------Создание div(а) внутри которого label,textarea и т.д-----------
     divTextBot.className = "TextBot";
-    divTextBot.setAttribute("id", "TextBot " + N + " " + SN + " " + NumberOfText );
+    divTextBot.setAttribute("id", "TextBot " + N + " " + SN + " " + ElementKol );
     divTextBot.setAttribute("onmouseover","OnMouseOverTextBot(id)");
     divTextBot.setAttribute("onmouseout","OnMouseOutTextBot(id)");
     formAddInstrumentBtnBot.before(divTextBot);
@@ -438,7 +438,7 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     divLabelTextBot.innerHTML = "Вывод текста";
     //----------Создание иконки мусорки(удаление элемента)----------
     spanTrashImg.className = "TrashImg";
-    spanTrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + NumberOfText);
+    spanTrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + ElementKol);
     spanTrashImg.setAttribute("style","opacity:0;");
     spanTrashImg.setAttribute("title","удалить этот элемент");
     spanTrashImg.setAttribute("onclick","OnClickRemoveTextBot(id)");
@@ -446,14 +446,14 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     spanTrashImg.innerHTML="<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
     //----------Создание иконки карандаша(редактирование элемента)-----------
     divImgPencilInstrument.className="ImgPencilInstrument";
-    divImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + NumberOfText);
+    divImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + ElementKol);
     divImgPencilInstrument.setAttribute("style","opacity: 0;");
     divImgPencilInstrument.setAttribute("onclick","OnClickEditTextBot(id)");
     divTextBot.append(divImgPencilInstrument);
     divImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
     //----------Создание textarea для текста  и вставка самого текста----------
     TextBotTextarea.className = "textareaTextBot";
-    TextBotTextarea.setAttribute("id","textareaTextBot " + N + " " + SN + " " + NumberOfText);
+    TextBotTextarea.setAttribute("id","textareaTextBot " + N + " " + SN + " " + ElementKol);
     divTextBot.append(TextBotTextarea);
     TextBotTextarea.value = TextTextarea.value;//записать значения из окна создания элемента в сам элемент
     OnClickImgExit();//закрыть окно создания элемента
@@ -1081,7 +1081,6 @@ function OnMouseOverUserPanel(id){ //Панель. Мышь над элемен�
     let TN = ThirdNumberOfElement(id);
     let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
     let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN );
-    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
     TrashImg.setAttribute("style","opacity: 100;");
     ImgPencil.setAttribute("style","opacity: 100;");
 }
@@ -1095,4 +1094,64 @@ function OnMouseOutUserPanel(id){ //Панель. Мышь не над элем�
     let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN )
     TrashImg.setAttribute("style","opacity: 0;");
     ImgPencil.setAttribute("style","opacity: 0;");
+}
+function OnClickSaveNewButtonUser(id){//Всплывающая панель.Создание кнопки.Кнопка сохранения
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let NewButtonText = document.getElementById("NewButtonText").value;
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserButton = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivFormUser = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    OnClickImgExit();
+
+    ElementKol++;
+    //----------Создание блока в котором размещается кнопка и весь элемент кнопки------
+    DivUserButton.className = "DivUserButton";
+    DivUserButton.setAttribute("id","DivUserButton " + N + " " + SN + " " + ElementKol);
+    DivUserButton.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserButton.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserButton);
+     //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserButton.append(LabelElementUser);
+    LabelElementUser.innerHTML = "Нажатие на кнопку";
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + ElementKol);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveButtonUser(id)");
+    DivUserButton.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + ElementKol);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickEditButtonUser(id)");
+    DivUserButton.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока самой кнопки------
+    DivFormUser.className = "DivFormUser";
+    DivUserButton.append(DivFormUser);
+    DivFormUser.innerHTML = "<form class=\"FormButton\">" +
+    "<input type=\"button\" name=\"button\" class=\"ButtonUser\" id=\"ButtonUser " + N + " " + SN + " " + ElementKol  + "\" value=\"" + NewButtonText + "\">" +
+    "</form>";
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivUserButton.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+}
+function OnClickRemoveButtonUser(id){
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivUserButton = document.getElementById("DivUserButton " + N + " " + SN + " " + TN);
+    DivUserButton.remove();
+    ElementKol--;
 }
