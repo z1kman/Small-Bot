@@ -1,6 +1,5 @@
 var NumberOfPanels = 1;//Кол-во панелей
-var ElementKol = 0;//кол-во элементов
-var NumberOfButton = 0;//кол-во кнопок (Пользователь)
+var ElementKol = 0;//кол-во элементов(для индексации - неотражает реальное кол-во элементов)
 var NumberOfSection = 1;//кол-во боковых секций
 var TagKol = 0;//кол-во тегов
 //------Служебная часть-----
@@ -548,7 +547,10 @@ function CancelUser(id){//Всплывающее окно. Отмена созд
     }
 }
 function OnClickAddButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки
-    OnClickImgExit();
+    let Name = NameOfElement(id);
+    if(Name == "AddButtonBtnUser"){
+        OnClickImgExit();
+    }
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
@@ -570,8 +572,15 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     //----------Создание формы для кнопок и сами кнопки-----------
     formBtn.setAttribute("id","formNewButton");
     divAddNewInstrumentPanel.append(formBtn);
-    formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"AddNewButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewButtonUser(id)\">" + 
-    "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    if(Name == "AddButtonBtnUser"){
+        formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"AddNewButtonBtnUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewButtonUser(id)\">" + 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }
+    else if(Name == "ImgPencil"){
+        let TN = ThirdNumberOfElement(id);
+        formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveEditButtonBtnUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickSaveEditButtonUser(id)\">" + 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"OnClickImgExit()\">";
+    }
     //----------Окно для ошибки-----------
     LabelError.className = "LabelError";
     LabelError.setAttribute("id","ErrorNewButton");
@@ -580,9 +589,9 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
 function OnBlurNewButtonText(){ //Всплывающее окно. Ввод текста кнопки. Расфокус на поле ввода
     NewButtonText = document.getElementById("NewButtonText");
     ErrorNewButton = document.getElementById("ErrorNewButton");
-    if (NewButtonText.value.length > 30) {
+    if (NewButtonText.value.length > 15) {
         NewButtonText.classList.add('invalid');
-        ErrorNewButton.innerHTML = "Максимальная длина текста не должна превышать 30 символов";
+        ErrorNewButton.innerHTML = "Максимальная длина текста не должна превышать 15 символов";
       }
 }
 function OnFocusNewButtonText(){//Всплывающее окно. Ввод текста кнопки. Фокус на поле ввода
@@ -593,14 +602,7 @@ function OnFocusNewButtonText(){//Всплывающее окно. Ввод те
         ErrorNewButton.innerHTML = "";
       }
 }
-function OnClickSaveNewButtonUser(id){ //Всплывающее окно. Окно создания новой кнопки. Кнопка сохранить
-    InputNewButtonText = document.getElementById("NewButtonText");//Текст из Input
-    formBtn = document.getElementById("formNewButton");
-    if(InputNewButtonText.classList.contains('invalid')){//если есть ошибка
-        return 0;
-    }
-    /// остальная логика
-}
+
 function OnClickAddNumberUser(id){ //Всплывающее окно. Окно создания ввода числа
     OnClickImgExit();
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
@@ -1096,6 +1098,10 @@ function OnMouseOutUserPanel(id){ //Панель. Мышь не над элем�
     ImgPencil.setAttribute("style","opacity: 0;");
 }
 function OnClickSaveNewButtonUser(id){//Всплывающая панель.Создание кнопки.Кнопка сохранения
+    let NewButtonText1 = document.getElementById("NewButtonText");
+    if(NewButtonText1.classList.contains('invalid')){//если есть ошибка
+        return 0;
+    }
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let NewButtonText = document.getElementById("NewButtonText").value;
@@ -1109,6 +1115,8 @@ function OnClickSaveNewButtonUser(id){//Всплывающая панель.Со
     OnClickImgExit();
 
     ElementKol++;
+
+    /// остальная логика
     //----------Создание блока в котором размещается кнопка и весь элемент кнопки------
     DivUserButton.className = "DivUserButton";
     DivUserButton.setAttribute("id","DivUserButton " + N + " " + SN + " " + ElementKol);
@@ -1147,11 +1155,25 @@ function OnClickSaveNewButtonUser(id){//Всплывающая панель.Со
     DivUserButton.append(DivJumpIndicator);
     DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
 }
-function OnClickRemoveButtonUser(id){
+function OnClickRemoveButtonUser(id){//Панель. Удаление кнопки
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserButton = document.getElementById("DivUserButton " + N + " " + SN + " " + TN);
     DivUserButton.remove();
-    ElementKol--;
+}
+function OnClickEditButtonUser(id){//Панель. Редактирование кнопки
+    OnClickAddButtonUser(id);//Создание всплывающей панели редактирования
+}
+function OnClickSaveEditButtonUser(id){//Всплывающая панель. Редактирование кнопки
+    let NewButtonText = document.getElementById("NewButtonText");
+    if(NewButtonText.classList.contains('invalid')){//если есть ошибка
+        return 0;
+    }
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let ButtonUser = document.getElementById("ButtonUser " + N + " " + SN + " " + TN);
+    ButtonUser.setAttribute("value","" + NewButtonText.value);
+    OnClickImgExit();
 }

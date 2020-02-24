@@ -129,6 +129,7 @@ body{
     color: white;
     margin-top: 10px;
     outline: none;
+    width: 200px;
 }
 .FormButton{
     margin:0;
