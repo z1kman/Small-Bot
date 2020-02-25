@@ -323,6 +323,7 @@ body{
     font-size:16px;
     margin-left: 5px;   
     padding: 5px;
+    background-color: rgba(255, 255, 255, 0);
 }
 .InputNumber{
     border: 1px solid rgb(228, 228, 228);
@@ -339,6 +340,7 @@ body{
     margin-left: 5px;
     width:120px;
     font-size:16px;
+    appearance: none;
  }
  
 .helpBtn{
@@ -522,6 +524,20 @@ body{
     background-color: #F7F8FD ;
     transition: 0.5s;
 }
+.DivUserElement{
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 350px;
+    border: 1px solid rgb(170, 228, 255);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+.DivUserElement:hover{
+    background-color: #F7F8FD ;
+    transition: 0.5s;
+}
 .DivJumpIndicator{
     display: flex;
     justify-content: flex-end;
@@ -543,4 +559,7 @@ body{
     display: flex;
     width: 100%;
     justify-content: center;
+}
+.DivUserEmailVariable{
+    width:100%;
 }

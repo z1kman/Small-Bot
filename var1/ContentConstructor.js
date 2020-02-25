@@ -803,8 +803,11 @@ function OnFocusNumberError(id){//Всплывающее окно. Ввод чи
         ErrorNewNumber.innerHTML = "";
       }
 }
-function OnClickAddEmailUser(id){
-    OnClickImgExit();
+function OnClickAddEmailUser(id){//Всплывающее меню. Создание Email
+    let Name = NameOfElement(id);
+    if(Name == "AddEmailBtnUser"){
+        OnClickImgExit();
+    }
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
     var N = NumberOfElement(id);
@@ -824,14 +827,21 @@ function OnClickAddEmailUser(id){
     LabelBlack.className = "LabelBlack";
     divAddNewInstrumentPanel.append(LabelBlack);
     LabelBlack.innerHTML = "<label>Выберите переменную:" +
-        "<select class=\"Select\">" + 
+        "<select class=\"Select\" id=\"Select\">" + 
         "<option>Email</option>" +
+        "<option>Email2 </option>" +
         "</select>" + 
         "</label>";
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewInstrumentPanel.append(formBtn);
-    formBtn.innerHTML="<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"AddNewEmailUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewEmailUser(id)\">" + 
-    "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    if(Name == "AddEmailBtnUser"){
+        formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"AddNewEmailUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewEmailUser(id)\">" + 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }else if(Name == "ImgPencil"){
+        let TN = ThirdNumberOfElement(id);
+        formBtn.innerHTML="<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"AddNewEmailUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickSaveEditEmailUser(id)\">" + 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"OnClickImgExit()\">";
+    }
     //----------Окно для ошибки-----------
     LabelError.className = "LabelError";
     LabelError.setAttribute("id","ErrorNewEmail");
@@ -1086,7 +1096,6 @@ function OnMouseOverUserPanel(id){ //Панель. Мышь над элемен�
     TrashImg.setAttribute("style","opacity: 100;");
     ImgPencil.setAttribute("style","opacity: 100;");
 }
-
 function OnMouseOutUserPanel(id){ //Панель. Мышь не над элементом
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
@@ -1176,4 +1185,70 @@ function OnClickSaveEditButtonUser(id){//Всплывающая панель. Р
     let ButtonUser = document.getElementById("ButtonUser " + N + " " + SN + " " + TN);
     ButtonUser.setAttribute("value","" + NewButtonText.value);
     OnClickImgExit();
+}
+function OnClickRemoveEmailUser(id){//Панель. Удаление Email
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivUserEmail = document.getElementById("DivUserEmail " + N + " " + SN + " " + TN);
+    DivUserEmail.remove();
+}
+function OnClickSaveEditEmailUser(id){//Всплывающая панель. Редактирование Email. Кнопка сохранить
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let Select = document.getElementById("Select");
+    let UserEmailVariable = document.getElementById("UserEmailVariable " + N + " " + SN + " " + TN);
+    UserEmailVariable.value = Select.options[Select.selectedIndex].value;
+    OnClickImgExit();
+}
+function OnClickSaveNewEmailUser(id){//Всплывающая панель. Создание Email. Кнопка сохранить
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserElement = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivUserEmailVariable = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    OnClickImgExit();
+
+    ElementKol++;
+
+    //----------Создание блока в котором размещается кнопка и весь элемент------
+    DivUserElement.className = "DivUserElement";
+    DivUserElement.setAttribute("id","DivUserEmail " + N + " " + SN + " " + ElementKol);
+    DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserElement);
+    //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserElement.append(LabelElementUser);
+    LabelElementUser.innerHTML = "Ввод email";
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + ElementKol);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveEmailUser(id)");
+    DivUserElement.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + ElementKol);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickAddEmailUser(id)");
+    DivUserElement.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока с переменной------
+    DivUserEmailVariable.className = "DivFormUser";
+    DivUserElement.append(DivUserEmailVariable);
+    DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"Email\" readonly=\"readonly\"></div>"
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivUserElement.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
 }
