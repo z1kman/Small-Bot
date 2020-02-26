@@ -63,19 +63,32 @@
                                 <div class="Label">
                                     Действие пользователя
                                 </div>
-                                <div class="DivUserElement" id="DivUserEmail 1 1 1" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)">
+                                <div class="DivUserElement" id="DivUserText 1 1 1" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)">
                                     <div class="LabelElementUser">
-                                        Ввод email
+                                        Ввод текста (поиск по тегам)
                                     </div>
-                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 0;" title="удалить этот элемент" onclick="OnClickRemoveEmailUser(id)">
+                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 0;" title="удалить этот элемент" onclick="OnClickRemoveTextUser(id)">
                                         <img src="source/constructor/trash.png" alt="удалить" width="16px">
                                     </span>
-                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 0;" title="Редактировать этот элемент" onclick="OnClickAddEmailUser(id)">
+                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 0;" title="Редактировать этот элемент" onclick="OnClickAddTextUser(id)">
                                         <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
                                     </div>
-                                    <div class="DivUserEmailVariable">
+                                    <div class = "TagTextUser" id="TagTextUser 1 1 1">
+                                        <div class="LabelBlack" id="TagLabel 1 1 1">
+                                            Теги:
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                            <div class="TagOnPanel">fwerf</div>
+                                        </div>
+                                    </div>
+                                    <div class="DivUserTextVariable">
                                         <div class="LabelBlack">
-                                            Запомнить в:<input type="input" class="InputOther1" id="UserEmailVariable 1 1 1" value="Email" readonly="readonly">
+                                            Запомнить в:<input type="input" class="InputOther1" id="UserTextVariable 1 1 1" value="Text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="DivJumpIndicator" id="DivJumpIndicator 1 1 1">

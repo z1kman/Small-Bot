@@ -1,5 +1,5 @@
 var NumberOfPanels = 1;//Кол-во панелей
-var ElementKol = 0;//кол-во элементов(для индексации - неотражает реальное кол-во элементов)
+var ElementKol = 1;//кол-во элементов(для индексации - неотражает реальное кол-во элементов)
 var NumberOfSection = 1;//кол-во боковых секций
 var TagKol = 0;//кол-во тегов
 //------Служебная часть-----
@@ -184,7 +184,7 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     }
     else if(Edit.value == "") //если не указано никакое имя
     {
-        alert("Необходимо заполнить поле названия панели");
+            ("Необходимо заполнить поле названия панели");
     }
     if(InputEdit.classList.contains('visible') && !InputEdit.classList.contains('click')){
         InputEdit.classList.add('click');
@@ -357,6 +357,7 @@ function OnClickImgExit(){//закрытие всплывающего окна
     let NewInstrumentPanel = document.getElementById("NewInstrumentPanel");
     NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel);
     EnabledNavbarBtn();
+    TagKol = 0;
 }
 
 //------Часть чат-бота------
@@ -539,7 +540,10 @@ function CancelUser(id){//Всплывающее окно. Отмена созд
         OnClickAddNumberUser(id);
     }
     if( NameOfElement(id) == "CancelUserNewText"){
-        OnClickAddTextUser(id);
+        let AddNewPanel = document.getElementById("AddNewPanel");
+        AddNewPanel.removeAttribute("hidden");
+        let AddNewPanel1 = document.getElementById("AddNewPanel1");
+        AddNewPanel1.remove();
     }
     else{
     OnClickImgExit();
@@ -848,7 +852,12 @@ function OnClickAddEmailUser(id){//Всплывающее меню. Создан
     formBtn.prepend(LabelError);
 }
 function OnClickAddTextUser(id){ //Всплывающее меню. Функция создания меню создания текста
-    OnClickImgExit();
+    let Name = NameOfElement(id);
+    let Element = "";
+    if(Name == "AddNumberBtnUser"){
+        OnClickImgExit();
+    }
+
     CreateWindowPanel();
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     let N = NumberOfElement(id);
@@ -862,6 +871,30 @@ function OnClickAddTextUser(id){ //Всплывающее меню. Функци
     let DivTagText = document.createElement('div');
     let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
+
+    if(Name == "ImgPencil") //определение какого типа элемент
+    {
+        let TN = ThirdNumberOfElement(id);
+        let DivUserText  = document.getElementById("DivUserText " + N + " " + SN + " " + TN);
+        for(let i = 0; i < DivUserText.childNodes.length; i++ ){
+            if(DivUserText.childNodes[i] != "[object Text]"){
+                if(DivUserText.childNodes[i].hasAttribute('class')){
+                    if(DivUserText.childNodes[i].getAttribute('class') == "TagTextUser"){
+                        Element = "TagTextUser";
+                        break;
+                    }
+                    else if(DivUserText.childNodes[i].getAttribute('class') == "IndicatedTextUser"){
+                        Element = "IndicatedTextUser";
+                        break;
+                    }
+                    else{
+                        Element = "Text";
+                    }
+                }
+            }
+        }
+    }
+
     //----------------Добавление блока с надписью----------------
     divLabelAddNewInstrument.className = "Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
@@ -870,30 +903,112 @@ function OnClickAddTextUser(id){ //Всплывающее меню. Функци
     //----------------Создание формы с комбобоксами---------------
     FormRadio.className="FormRadio";
     divAddNewInstrumentPanel.append(FormRadio);
-    FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton active\" id=\"InputText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">"+
-    "<label for=\"InputText\">Ввод текста</label>" +
-    "<input type=\"radio\" class=\"RadioButton\" id=\"TagText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">" +
-    "<label for=\"TagText\">Ввод текста(чтение по тегам)</label>";
+    if(Name == "AddNumberBtnUser"){
+        FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton active\" id=\"InputText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">"+
+        "<label for=\"InputText\">Ввод текста</label>" +
+        "<input type=\"radio\" class=\"RadioButton\" id=\"TagText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">" +
+        "<label for=\"TagText\">Ввод текста(чтение по тегам)</label>";
+    }
+    else if(Name == "ImgPencil"){
+        if(Element == "Text" || Element == "IndicatedTextUser"){
+            FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton active\" checked=\"checked\" id=\"InputText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">"+
+            "<label for=\"InputText\">Ввод текста</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"TagText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">" +
+            "<label for=\"TagText\">Ввод текста(чтение по тегам)</label>";
+        }
+        else if(Element == "TagTextUser"){
+            FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton\" id=\"InputText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">"+
+            "<label for=\"InputText\">Ввод текста</label>" +
+            "<input type=\"radio\" class=\"RadioButton active\" checked=\"checked\" id=\"TagText\" name=\"Text\" onchange=\"OnChangeCheckRadioText(id)\">" +
+            "<label for=\"TagText\">Ввод текста(чтение по тегам)</label>";
+        }
+    }
     //----------------Создание блока в котором чекбокс и поле ввода определенного текста--------------
     DivText.setAttribute("id","DivText");
+    if(Name == "ImgPencil"){//Если открыт режим редактирования
+        if(Element == "TagTextUser"){
+            DivText.setAttribute("hidden","hidden");
+        }
+    }
     divAddNewInstrumentPanel.append(DivText);
     //----------------Создание чекбокса для ввода определенного слова---------------
     FormCheckbox.className = "FormCheckbox";
     DivText.append(FormCheckbox);
-    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
-    "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>";
+    if(Name == "ImgPencil"){//Если открыт режим редактирования
+        if(Element == "Text")
+        {
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
+            "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>";
+        }
+        else if(Element == "IndicatedTextUser"){
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" checked=\"checked\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
+            "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>";
+        }
+        else{
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
+            "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>"; 
+        }
+    }else{
+        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"TextCheckbox\" onchange=\"OnChangeCheckboxText(id)\">"+
+        "<label for=\"TextCheckbox\">Указать необходимое слово/текст</label>";
+    }
     //----------------Создание поля для ввода определенного текста---------------
     DivIndicatedText.setAttribute("id","DivIndicatedText");
-    DivIndicatedText.setAttribute("hidden","hidden");
     DivText.append(DivIndicatedText);
-    DivIndicatedText.innerHTML = "<label>Введите слово или текст:<input type=\"input\" class=\"InputOther1\" id=\"IndicatedText\" onfocus=\"OnFocusTextError(id)\"></label>";
+    if(Name == "ImgPencil"){//Если открыт режим редактирования
+        if(Element == "IndicatedTextUser"){
+            let TN = ThirdNumberOfElement(id);
+            let UserTextIdicated = document.getElementById("UserTextIdicated " + N + " " + SN + " " + TN);
+            DivIndicatedText.innerHTML = "<label>Введите слово или текст:<input type=\"input\" class=\"InputOther1\" id=\"IndicatedText\" value = \"" + UserTextIdicated.value + "\" onfocus=\"OnFocusTextError(id)\"></label>";
+        }else{
+            DivIndicatedText.setAttribute("hidden","hidden");
+            DivIndicatedText.innerHTML = "<label>Введите слово или текст:<input type=\"input\" class=\"InputOther1\" id=\"IndicatedText\" onfocus=\"OnFocusTextError(id)\"></label>";
+        }
+    }else{
+        DivIndicatedText.setAttribute("hidden","hidden");
+        DivIndicatedText.innerHTML = "<label>Введите слово или текст:<input type=\"input\" class=\"InputOther1\" id=\"IndicatedText\" onfocus=\"OnFocusTextError(id)\"></label>";
+    }
+   
      //----------------Создание блока для ввода тегов---------------
      DivTagText.setAttribute("id","DivTagText");
-     DivTagText.setAttribute("hidden","hidden");
      divAddNewInstrumentPanel.append(DivTagText);
      DivTagText.innerHTML = "<label>Введите тег:<input type=\"input\" class=\"InputOther1\" id=\"InputTagText\" onfocus=\"OnFocusTextError(id)\">"+
      "<input type=\"button\" class=\"BtnOther\" id=\"AddNewTag 1\" value=\"Ок\" onclick=\"OnClickAddNewTag(id)\"></label>" +
      "<div class=\"LabelBlack\" id=\"TagBlock\" hidden=\"hidden\"> Ваши теги:<br /></div>";
+     if(Name == "ImgPencil"){//Если открыт режим редактирования
+        if(Element == "TagTextUser"){//Если редактируется текст с тегами
+            let TN = ThirdNumberOfElement(id);
+            let TagLabel = document.getElementById("TagLabel " + N + " " + SN + " " + TN);
+            let TagBlock = document.getElementById("TagBlock");
+            let AddNewTag1 = document.getElementById("AddNewTag 1");
+            TagBlock.removeAttribute('hidden');
+            AddNewTag1.classList.add('notfirst');  
+            for(let i = 0; i < TagLabel.childNodes.length; i++){
+                if(TagLabel.childNodes[i] != "[object Text]"){
+                    if(TagLabel.childNodes[i].getAttribute('class') == "TagOnPanel"){
+                        let TagDiv = document.createElement('div');
+                        let Tag = document.createElement('div');
+                        TagDiv.className = "TagDiv";
+                        TagDiv.setAttribute("id","TagDiv " + i);
+                        TagBlock.append(TagDiv);
+
+                        Tag.className = "Tag";
+                        Tag.setAttribute("id","Tag " + i);
+                        Tag.setAttribute("onclick","OnClickTag(id)");
+                        TagDiv.append(Tag);
+                        Tag.innerHTML = TagLabel.childNodes[i].innerHTML;
+                        TagKol++;
+                    }
+                }
+            }
+        }
+        else
+        {
+            DivTagText.setAttribute("hidden","hidden");
+        }
+     }else{
+        DivTagText.setAttribute("hidden","hidden");
+     }
      //----------------Создание подписи блока вывода ошибки---------------     
      LabelError.className = "LabelError";
      LabelError.setAttribute("id","ErrorNewNumber");
@@ -901,8 +1016,14 @@ function OnClickAddTextUser(id){ //Всплывающее меню. Функци
      //----------------Создание формы с кнопками---------------    
      formBtn.setAttribute("id","formNewNumber")
      divAddNewInstrumentPanel.append(formBtn);
-     formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewTextUser " + N + " " + SN + "\" onclick=\"OnClickNextNewTextUser(id)\">"+ 
-     "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+     if(Name == "AddNumberBtnUser"){
+        formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewTextUser " + N + " " + SN + "\" onclick=\"OnClickNextNewTextUser(id)\">"+ 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }else if(Name == "ImgPencil"){
+        let TN = ThirdNumberOfElement(id);
+        formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextEditTextUser " + N + " " + SN + " " + TN  + "\" onclick=\"OnClickNextNewTextUser(id)\">"+ 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"OnClickImgExit()\">";
+    }
 }
 function OnFocusTextError(id){ // Всплывающее меню. Создание текста. Ошибка. Фокус на поле ввода
     let ErrorNewNumber= document.getElementById("ErrorNewNumber");
@@ -920,12 +1041,14 @@ function OnChangeCheckboxText(id){// Всплывающее меню. Созда
         DivIndicatedText.setAttribute("hidden","hidden");
 }
 function OnClickNextNewTextUser(id){//Всплывающее меню. Создание текста. Кнопка далее
+    let Name = NameOfElement(id);
     let ErrorNewNumber= document.getElementById("ErrorNewNumber");
     let InputText = document.getElementById("InputText");
     let TextCheckbox = document.getElementById("TextCheckbox");
     let IndicatedText = document.getElementById("IndicatedText");
     let TagText = document.getElementById("TagText");
-    TagKol = 0;//обнуление кол-ва тегов
+    let NewInstrumentPanel = document.getElementById("NewInstrumentPanel");
+    let AddNewPanel = document.getElementById("AddNewPanel");
     if(IndicatedText.value.replace(/\s+/g, '') == "" && TextCheckbox.checked == true && InputText.classList.contains('active')){
         ErrorNewNumber.innerHTML = "Ошибка! Введите необходимое слово или текст";
         return 0;
@@ -937,18 +1060,29 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
         ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимые теги"
         return 0;
     }
-    OnClickImgExit();
+    AddNewPanel.setAttribute("hidden","hidden");
+
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-    CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
-    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let DivRecInVariableNumber = document.createElement('div');
     let FormCheckbox = document.createElement('form');
     let DivIndicatedVariableNumber = document.createElement('div');
     let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
+
+    let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
+    let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий  
+     //----------Создание панели выбора действий-----------
+     divAddNewInstrumentPanel.className="AddNewPanel";
+     divAddNewInstrumentPanel.setAttribute("id","AddNewPanel1");
+     NewInstrumentPanel.prepend(divAddNewInstrumentPanel);
+     //----------Создание кнопки закрытия панели выбора действий-----------
+     divImgExit.className="ImgExit";
+     divImgExit.setAttribute("onclick","OnClickImgExit()");
+     divAddNewInstrumentPanel.prepend(divImgExit);
+     divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">" 
 
      //----------------Добавление блока с надписью----------------
     divLabelAddNewInstrument.className = "Label";
@@ -961,15 +1095,25 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
     //----------------Создание чекбокса для выбора переменной---------------
     FormCheckbox.className = "FormCheckbox";
     DivRecInVariableNumber.append(FormCheckbox);
-    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
-    "<label for=\"RecInVariableNumber\">Да, записать</label>";
+    if(InputText.checked && !TextCheckbox.checked){
+        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" disabled=\"disabled\" checked=\"checked\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+        "<label for=\"RecInVariableNumber\">Да, записать</label>"; 
+    }
+    else{
+        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+        "<label for=\"RecInVariableNumber\">Да, записать</label>";
+    }
     //----------------Создание поля для ввода определенного числа---------------
     DivIndicatedVariableNumber.setAttribute("id","DivIndicatedVariableNumber");
-    DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+    if(InputText.checked && !TextCheckbox.checked || TagText.checked){
+    }else{
+        DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+    }
     DivRecInVariableNumber.append(DivIndicatedVariableNumber);
     DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
-    "<select class=\"Select\">" + 
+    "<select class=\"Select\" id=\"Select\">" + 
     "<option>Text</option>" +
+    "<option>Text2</option>" +
     "</select>"+
     "</label>";
     //----------------Создание подписи блока вывода ошибки---------------     
@@ -979,8 +1123,15 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
     //----------------Создание формы с кнопками---------------    
     formBtn.setAttribute("id","formNewNumber")
     divAddNewInstrumentPanel.append(formBtn);
-    formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewTextUser(id)\">" + 
-    "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewText " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    if(Name == "NextEditTextUser"){
+        let TN = ThirdNumberOfElement(id);
+        formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveEditTextUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickSaveEditTextUser(id)\">" + 
+        "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewText " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }
+    else{
+        formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewTextUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewTextUser(id)\">" + 
+        "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewText " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+    }
 }
 function OnChangeCheckRadioText(id){//Всплывающее меню. Создание текста. Изменение радио 
     let InputText = document.getElementById("InputText");
@@ -1044,7 +1195,7 @@ function OnClickAddNewTag(id){//Всплывающее меню. Создани�
             Tag.innerHTML=InputTagText.value;
             TagKol++;
             Name.setAttribute("id","AddNewTag " + N);
-        }else if(TagKol == 10){
+        }else if(TagKol >= 10){
             ErrorNewNumber.innerHTML = "Ошибка!Кол-во тегов на один элемент не может превышать 10"
         }
         InputTagText.value = "";
@@ -1081,6 +1232,7 @@ function OnClickDeleteTag(id){//Всплывающее меню. Создани�
         flag = true;
     }
     TagKol--;
+    alert(TagKol);
     if(flag == false){
         let TagBlock = document.getElementById("TagBlock");
         TagBlock.setAttribute("hidden","hidden");
@@ -1212,7 +1364,6 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     let ImgPencilInstrument = document.createElement('div');
     let DivUserEmailVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
-    OnClickImgExit();
 
     ElementKol++;
 
@@ -1243,12 +1394,221 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     DivUserElement.append(ImgPencilInstrument);
     ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
     //----------Создание блока с переменной------
+    let Select = document.getElementById("Select");
     DivUserEmailVariable.className = "DivFormUser";
     DivUserElement.append(DivUserEmailVariable);
-    DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"Email\" readonly=\"readonly\"></div>"
+    DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
     DivUserElement.append(DivJumpIndicator);
     DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    OnClickImgExit();
+}
+function OnClickSaveNewTextUser(id){//Всплывающая панель.Создание текста. Кнопка сохранить
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserElement = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivUserEmailVariable = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    
+    let InputText = document.getElementById("InputText");
+    let TextCheckbox = document.getElementById("TextCheckbox");
+    let IndicatedText = document.getElementById("IndicatedText");
+    let RecInVariableNumber = document.getElementById("RecInVariableNumber");
+    let TagText = document.getElementById("TagText");
+
+    ElementKol++;
+
+    //----------Создание блока в котором размещается кнопка и весь элемент------
+    DivUserElement.className = "DivUserElement";
+    DivUserElement.setAttribute("id","DivUserText " + N + " " + SN + " " + ElementKol);
+    DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserElement);
+    //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserElement.append(LabelElementUser);
+    if(InputText.checked && TextCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод указанного текста";
+    }
+    else if(InputText.checked){
+        LabelElementUser.innerHTML = "Ввод текста";
+    }
+    else if(TagText.checked){
+        LabelElementUser.innerHTML = "Ввод текста (Чтение по тегам)";
+    }
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + ElementKol);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveTextUser(id)");
+    DivUserElement.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + ElementKol);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickAddTextUser(id)");
+    DivUserElement.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока с указанным словом------
+    if(InputText.checked && TextCheckbox.checked){
+        let IndicatedTextUser = document.createElement('div');
+        IndicatedTextUser.className = "IndicatedTextUser";
+        IndicatedTextUser.setAttribute("id","IndicatedTextUser " + N + " " + SN + " " + ElementKol);
+        DivUserElement.append(IndicatedTextUser);
+        IndicatedTextUser.innerHTML = "<div class=\"LabelBlack\">" +
+         "Текст:<input type=\"input\" class=\"InputOther1\" id=\"UserTextIdicated " + N + " " + SN + " " + ElementKol + "\" value=\"" + IndicatedText.value + "\" readonly=\"readonly\"></div>";
+    }
+    //----------Создание блока с тегами------
+    if(TagText.checked){
+        let TagTextUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        //сам блок
+        TagTextUser.className="TagTextUser";
+        TagTextUser.setAttribute("id","TagTextUser " + N + " " + SN + " " + ElementKol);
+        DivUserElement.append(TagTextUser);
+        //надпись
+        LabelBlack.className = "LabelBlack";
+        LabelBlack.setAttribute("id","TagLabel " + N + " " + SN + " " + ElementKol);
+        TagTextUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Теги: ";
+        //теги
+        let Tag = document.getElementsByClassName("Tag");
+        for(let i = 0; i < Tag.length;i++){
+            let TagOnPanel = document.createElement('div');
+            TagOnPanel.className = "TagOnPanel";
+            TagOnPanel.setAttribute("id","TagOnPanel " + N + " " + SN + " " + ElementKol + " " + i);
+            LabelBlack.append(TagOnPanel);
+            TagOnPanel.innerHTML = Tag[i].innerHTML;
+        }
+    }
+    //----------Создание блока с переменной------
+    if(RecInVariableNumber.checked){
+        let Select = document.getElementById("Select");
+        DivUserEmailVariable.className = "DivFormUser";
+        DivUserElement.append(DivUserEmailVariable);
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    }
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivUserElement.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    OnClickImgExit();
+}
+function OnClickSaveEditTextUser(id){//Всплывающая панель. Редактирование текста. Кнопка сохранить
+    TagKol = 0;
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserElement = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivUserEmailVariable = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    let DivUserText = document.getElementById("DivUserText " + N + " " + SN + " " + TN);
+    DivUserText.remove();
+
+    let InputText = document.getElementById("InputText");
+    let TextCheckbox = document.getElementById("TextCheckbox");
+    let IndicatedText = document.getElementById("IndicatedText");
+    let RecInVariableNumber = document.getElementById("RecInVariableNumber");
+    let TagText = document.getElementById("TagText");
+
+    //----------Создание блока в котором размещается кнопка и весь элемент------
+    DivUserElement.className = "DivUserElement";
+    DivUserElement.setAttribute("id","DivUserText " + N + " " + SN + " " + TN);
+    DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserElement);
+    //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserElement.append(LabelElementUser);
+    if(InputText.checked && TextCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод указанного текста";
+    }
+    else if(InputText.checked){
+        LabelElementUser.innerHTML = "Ввод текста";
+    }
+    else if(TagText.checked){
+        LabelElementUser.innerHTML = "Ввод текста (Чтение по тегам)";
+    }
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + TN);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveTextUser(id)");
+    DivUserElement.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + TN);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickAddTextUser(id)");
+    DivUserElement.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока с указанным словом------
+    if(InputText.checked && TextCheckbox.checked){
+        let IndicatedTextUser = document.createElement('div');
+        IndicatedTextUser.className = "IndicatedTextUser";
+        IndicatedTextUser.setAttribute("id","IndicatedTextUser " + N + " " + SN + " " + TN);
+        DivUserElement.append(IndicatedTextUser);
+        IndicatedTextUser.innerHTML = "<div class=\"LabelBlack\">" +
+         "Текст:<input type=\"input\" class=\"InputOther1\" id=\"UserTextIdicated " + N + " " + SN + " " + TN + "\" value=\"" + IndicatedText.value + "\" readonly=\"readonly\"></div>";
+    }
+    //----------Создание блока с тегами------
+    if(TagText.checked){
+        let TagTextUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        //сам блок
+        TagTextUser.className="TagTextUser";
+        TagTextUser.setAttribute("id","TagTextUser " + N + " " + SN + " " + TN);
+        DivUserElement.append(TagTextUser);
+        //надпись
+        LabelBlack.className = "LabelBlack";
+        LabelBlack.setAttribute("id","TagLabel " + N + " " + SN + " " + TN);
+        TagTextUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Теги: ";
+        //теги
+        let Tag = document.getElementsByClassName("Tag");
+        for(let i = 0; i < Tag.length;i++){
+            let TagOnPanel = document.createElement('div');
+            TagOnPanel.className = "TagOnPanel";
+            TagOnPanel.setAttribute("id","TagOnPanel " + N + " " + SN + " " + TN + " " + i);
+            LabelBlack.append(TagOnPanel);
+            TagOnPanel.innerHTML = Tag[i].innerHTML;
+        }
+    }
+    //----------Создание блока с переменной------
+    if(RecInVariableNumber.checked){
+        let Select = document.getElementById("Select");
+        DivUserEmailVariable.className = "DivFormUser";
+        DivUserElement.append(DivUserEmailVariable);
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    }
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + TN);
+    DivUserElement.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    OnClickImgExit();
+}
+function OnClickRemoveTextUser(id){//Панель. Пользователь. Удаление элемента текста
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivUserText = document.getElementById("DivUserText " + N + " " + SN  + " " + TN);
+    DivUserText.remove();
 }
