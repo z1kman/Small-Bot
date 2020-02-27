@@ -605,12 +605,16 @@ function OnFocusNewButtonText(){//Всплывающее окно. Ввод те
 }
 
 function OnClickAddNumberUser(id){ //Всплывающее окно. Окно создания ввода числа
-    OnClickImgExit();
+    let Name = NameOfElement(id);
+    let Element = "";
+    if(Name == "AddTextBtnUser"){
+        OnClickImgExit();
+    }
+
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
-    let Name = NameOfElement(id);
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let FormRadio = document.createElement('form');
@@ -623,6 +627,34 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     let LabelBlack2 = document.createElement('div');
     let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
+
+    
+    if(Name == "ImgPencil") //определение какого типа элемент
+    {
+        let TN = ThirdNumberOfElement(id);
+        let DivUserNumber  = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN);
+        for(let i = 0; i < DivUserNumber.childNodes.length; i++ ){
+            if(DivUserNumber.childNodes[i] != "[object Text]"){
+                if(DivUserNumber.childNodes[i].hasAttribute('class')){
+                    if(DivUserNumber.childNodes[i].getAttribute('class') == "IndicatedNumberUser"){
+                        Element = "IndicatedNumberUser";
+                        break;
+                    }
+                    else if(DivUserNumber.childNodes[i].getAttribute('class') == "RangeNumberUser"){
+                        Element = "RangeNumberUser";
+                        break;
+                    }else if(DivUserNumber.childNodes[i].getAttribute('class') == "MaskNumberUser"){
+                        Element = "MaskNumberUser";
+                        break;
+                    }
+                    else{
+                        Element = "Number";
+                    }
+                }
+            }
+        }
+    }
+
     
     //----------------Добавление блока с надписью----------------
     divLabelAddNewInstrument.className = "Label";
@@ -632,45 +664,143 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     //----------------Создание формы с комбобоксами---------------
     FormRadio.className="FormRadio";
     divAddNewInstrumentPanel.append(FormRadio);
-    FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
-    "<label for=\"InputNumber\">Ввод числа</label>" +
-    "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
-    "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
-    "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
-    "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+    if(Name == "ImgPencil"){
+        if(Element == "Number" || Element == "IndicatedNumberUser"){
+            FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"InputNumber\">Ввод числа</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+            "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+        }else if(Element == "RangeNumberUser"){
+            FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"InputNumber\">Ввод числа</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" checked=\"checked\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+            "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+        }else if(Element == "MaskNumberUser"){
+            FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"InputNumber\">Ввод числа</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
+            "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" checked=\"checked\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+            "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+        }
+    }else{
+        FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+        "<label for=\"InputNumber\">Ввод числа</label>" +
+        "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
+        "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
+        "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+        "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+    }
     //----------------Создание блока в котором чекбокс и поле ввода определенного числа---------------
     DivNumber.setAttribute("id","DivNumber");
     divAddNewInstrumentPanel.append(DivNumber);
     //----------------Создание чекбокса для ввода определенного числа---------------
     FormCheckbox.className = "FormCheckbox";
     DivNumber.append(FormCheckbox);
-    FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
-    "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+    if(Name == "ImgPencil"){
+        if(Element == "IndicatedNumberUser"){
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" checked=\"checked\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
+        "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+        }else if(Element == "Number"){
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
+        "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+        }else{
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
+        "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+            DivNumber.setAttribute("hidden","hidden");
+        }
+    }else{
+        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"NumberCheckbox\" onchange=\"OnChangeCheckboxNumber(id)\">" +
+        "<label for=\"NumberCheckbox\">Указать необходимое число</label>";
+    }
     //----------------Создание поля для ввода определенного числа---------------
     DivIndicatedNumber.setAttribute("id","DivIndicatedNumber");
-    DivIndicatedNumber.setAttribute("hidden","hidden");
     DivNumber.append(DivIndicatedNumber);
-    DivIndicatedNumber.innerHTML = "<label>Число:<input type=\"number\" class=\"InputNumber\" id=\"IndicatedNumber\" onfocus=\"OnFocusNumberError(id)\" ></label>";
+    if(Name == "ImgPencil"){
+        if(Element == "IndicatedNumberUser"){
+            let TN = ThirdNumberOfElement(id);
+            let UserNumberIdicated = document.getElementById("UserNumberIdicated " + N + " " + SN + " " + TN);
+            DivIndicatedNumber.innerHTML = "<label>Число:<input type=\"number\" class=\"InputNumber\" id=\"IndicatedNumber\" value=\"" + UserNumberIdicated.value + "\"onfocus=\"OnFocusNumberError(id)\" ></label>";  
+        }
+        else{
+            DivIndicatedNumber.setAttribute("hidden","hidden");
+            DivIndicatedNumber.innerHTML = "<label>Число:<input type=\"number\" class=\"InputNumber\" id=\"IndicatedNumber\" onfocus=\"OnFocusNumberError(id)\" ></label>";
+        }
+    }else{
+        DivIndicatedNumber.setAttribute("hidden","hidden");
+        DivIndicatedNumber.innerHTML = "<label>Число:<input type=\"number\" class=\"InputNumber\" id=\"IndicatedNumber\" onfocus=\"OnFocusNumberError(id)\" ></label>";
+    }
     //----------------Создание блока для ввода определенного диапазона---------------
     DivRangeNumber.setAttribute("id","DivRangeNumber");
-    DivRangeNumber.setAttribute("hidden","hidden");
+    if(Name == "ImgPencil"){
+        if(Element == "RangeNumberUser"){
+        }
+        else{
+            DivRangeNumber.setAttribute("hidden","hidden");
+        }
+    }else{
+        DivRangeNumber.setAttribute("hidden","hidden");
+    }
     divAddNewInstrumentPanel.append(DivRangeNumber);
     //----------------Создание блока подписи для ввода определенного диапазона---------------
     LabelBlack1.className = "LabelBlack";
     DivRangeNumber.append(LabelBlack1);
-    LabelBlack1.innerHTML = "Укажите диапазон" + 
-    "<br/>" + 
-    "<label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
-    "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
+    if(Name == "ImgPencil"){
+        if(Element == "RangeNumberUser"){
+            let TN = ThirdNumberOfElement(id);
+            let InputNumberUserOne = document.getElementById("InputNumberUserOne " + N + " " + SN + " " + TN);
+            let InputNumberUserTwo = document.getElementById("InputNumberUserTwo " + N + " " + SN + " " + TN);
+            LabelBlack1.innerHTML = "Укажите диапазон" + 
+            "<br/>" + 
+            "<label>от<input type=\"number\"  value=\"" + InputNumberUserOne.value + "\"class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
+            "<label>до<input type=\"number\" value=\"" + InputNumberUserTwo.value + "\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
+        }
+        else{
+            LabelBlack1.innerHTML = "Укажите диапазон" + 
+            "<br/>" + 
+            "<label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
+            "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
+        }
+    }else{
+        LabelBlack1.innerHTML = "Укажите диапазон" + 
+        "<br/>" + 
+        "<label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
+        "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
+    }
      //----------------Создание блока для ввода маски---------------
+     if(Name == "ImgPencil"){
+        if(Element == "MaskNumberUser"){
+        }
+        else{
+            DivMaskNumber.setAttribute("hidden","hidden");  
+        }
+     }else{
+        DivMaskNumber.setAttribute("hidden","hidden");  
+     }
      DivMaskNumber.setAttribute("id","DivMaskNumber");
-     DivMaskNumber.setAttribute("hidden","hidden");
      divAddNewInstrumentPanel.append(DivMaskNumber);
      //----------------Создание подписи блока для ввода маски---------------
      LabelBlack2.className = "LabelBlack";
      DivMaskNumber.append(LabelBlack2);
-     LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
-     "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";
+     if(Name == "ImgPencil"){
+        if(Element == "MaskNumberUser"){
+            let TN = ThirdNumberOfElement(id);
+            let MaskInputNumberUser = document.getElementById("MaskInputNumberUser " + N + " " + SN + " " + TN);
+            LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" value=\"" + MaskInputNumberUser.value + "\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
+        "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";
+        }else{
+            LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
+            "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";  
+        }
+     }
+     else{
+        LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
+        "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";
+     }
      //----------------Создание подписи блока вывода ошибки---------------     
      LabelError.className = "LabelError";
      LabelError.setAttribute("id","ErrorNewNumber");
@@ -729,7 +859,6 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
     NumberCheckbox = document.getElementById("NumberCheckbox");//чекбокс ввод определенного числа
     ErrorNewNumber = document.getElementById("ErrorNewNumber");//блок для вывода ошибок
 
-    IndicatedNumber = document.getElementById("IndicatedNumber");//поле ввода определенного числа
     InputNumber1 = document.getElementById("InputNumber 1");//поле ввода первого диапазона
     InputNumber2 = document.getElementById("InputNumber 2");//поле ввода второго диапазона
     MaskInputNumber = document.getElementById("MaskInputNumber");//поле ввода маски
@@ -785,14 +914,23 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         //----------------Создание чекбокса для выбора переменной---------------
         FormCheckbox.className = "FormCheckbox";
         DivRecInVariableNumber.append(FormCheckbox);
-        FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
-        "<label for=\"RecInVariableNumber\">Да, записать</label>";
+        if(InputNumber.checked && !NumberCheckbox.checked){
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+            "<label for=\"RecInVariableNumber\">Да, записать</label>";
+        }
+        else{
+            FormCheckbox.innerHTML = "<input type=\"checkbox\" class=\"Checkbox\" id=\"RecInVariableNumber\" onchange=\"OnChangeCheckboxRecInVariableNumber(id)\">" +
+            "<label for=\"RecInVariableNumber\">Да, записать</label>";
+        }
         //----------------Создание поля для ввода определенного числа---------------
         DivIndicatedVariableNumber.setAttribute("id","DivIndicatedVariableNumber");
-        DivIndicatedVariableNumber.setAttribute("hidden","hidden");
+        if(InputNumber.checked && !NumberCheckbox.checked){
+        }else{
+            DivIndicatedVariableNumber.setAttribute("hidden","hidden"); 
+        }
         DivRecInVariableNumber.append(DivIndicatedVariableNumber);
         DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
-        "<select class=\"Select\">" + 
+        "<select class=\"Select\" id=\"Select\">" + 
         "<option>Number</option>" +
         "</select>"+
         "</label>";
@@ -808,7 +946,7 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
             "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
         }else if(Name == "NextEditNumberUser"){
             let TN = ThirdNumberOfElement(id);
-            formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickSaveNewNumberUser(id)\">" + 
+            formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickNextEditNumberUser(id)\">" + 
             "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + " " + TN + "\" onclick=\"CancelUser(id)\">";
         }
     }
@@ -1638,6 +1776,225 @@ function OnClickRemoveTextUser(id){//Панель. Пользователь. У�
     let DivUserText = document.getElementById("DivUserText " + N + " " + SN  + " " + TN);
     DivUserText.remove();
 }
+
+function OnClickSaveNewNumberUser(id){//Всплывающее окно. Создание элемента числа. Кнопка сохранить
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let Name = NameOfElement(id);
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserElement = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivUserNumberVariable = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    
+    let InputNumber = document.getElementById("InputNumber");//радио ввода числа и указанного числа
+    let NumberCheckbox = document.getElementById("NumberCheckbox");//чек-бокс указанного числа
+    let RangeNumber = document.getElementById("RangeNumber");//радио ввода диапазона
+    let MaskNumber = document.getElementById("MaskNumber");//радио ввода числа по маске
+    let RecInVariableNumber = document.getElementById("RecInVariableNumber");//чекбокс сохранения числа в переменную
+
+    ElementKol++;
+
+    //----------Создание блока в котором размещается кнопка и весь элемент------
+    DivUserElement.className = "DivUserElement";
+    DivUserElement.setAttribute("id","DivUserNumber " + N + " " + SN + " " + ElementKol);
+    DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserElement);
+    //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserElement.append(LabelElementUser);
+    if(InputNumber.checked && !NumberCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод числа";
+    }
+    else if(InputNumber.checked && NumberCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод указанного числа";
+    }
+    else if(RangeNumber.checked){
+        LabelElementUser.innerHTML = "Ввод числа в диапазоне";
+    }
+    else if(MaskNumber.checked){
+        LabelElementUser.innerHTML = "Ввод числа по маске";
+    }
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + ElementKol);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveNumberUser(id)");
+    DivUserElement.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + ElementKol);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickAddNumberUser(id)");
+    DivUserElement.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока элемента ввода определенного числа------
+    if(InputNumber.checked && NumberCheckbox.checked){
+        let IndicatedNumberUser = document.createElement('div');
+        let IndicatedNumber = document.getElementById("IndicatedNumber");//поле ввода определенного числа в окне
+        IndicatedNumberUser.className = "IndicatedNumberUser";
+        IndicatedNumberUser.setAttribute("id","IndicatedNumberUser " + N + " " + SN + " " + ElementKol);
+        DivUserElement.append(IndicatedNumberUser);
+        IndicatedNumberUser.innerHTML = "<div class=\"LabelBlack\">" +
+         "Число:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberIdicated " + N + " " + SN + " " + ElementKol + "\" value=\"" + IndicatedNumber.value + "\" readonly=\"readonly\"></div>";
+    }else if(RangeNumber.checked){//----------Создание блока элемента ввода числа в диапазоне------
+        let RangeNumberUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        let InputNumber1 = document.getElementById("InputNumber 1");//Поле ввода первого диапазона
+        let InputNumber2 = document.getElementById("InputNumber 2");//Поле ввода второго диапазона
+        RangeNumberUser.className = "RangeNumberUser";
+        RangeNumberUser.setAttribute("id","RangeNumberUser " + N + " " + SN + " " + ElementKol)
+        DivUserElement.append(RangeNumberUser);
+        LabelBlack.className = "LabelBlack";
+        RangeNumberUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Диапазон: <label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserOne " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + InputNumber1.value + "\"></label>" +
+         "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserTwo " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + InputNumber2.value + "\"></label>";
+    }else if(MaskNumber.checked){//----------Создание блока элемента ввода числа по маске------
+        let MaskNumberUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        let MaskInputNumber = document.getElementById("MaskInputNumber");//Поле ввода маски
+        MaskNumberUser.className = "MaskNumberUser";
+        MaskNumberUser.setAttribute("id","MaskNumberUser " + N + " " + SN + " " + ElementKol)
+        DivUserElement.append(MaskNumberUser);
+        LabelBlack.className = "LabelBlack";
+        MaskNumberUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Маска:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumberUser " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + MaskInputNumber.value + "\">";
+    }
+    //----------Создание блока с переменной------
+    if(RecInVariableNumber.checked){
+        let Select = document.getElementById("Select");
+        DivUserNumberVariable.className = "DivFormUser";
+        DivUserElement.append(DivUserNumberVariable);
+        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    }
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivUserElement.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    OnClickImgExit();
+}
+function OnClickNextEditNumberUser(id){//Всплывающее окно. Редактирование элемента числа. Кнопка сохранить
+    OnClickRemoveNumberUser(id)
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let formAddInstrumentBtnUser = document.getElementById("formAddInstrumentBtnUser " + N + " " + SN);
+    let DivUserElement = document.createElement('div');
+    let LabelElementUser = document.createElement('div');
+    let TrashImg = document.createElement('span');
+    let ImgPencilInstrument = document.createElement('div');
+    let DivUserNumberVariable = document.createElement('div');
+    let DivJumpIndicator = document.createElement('div');
+    
+    let InputNumber = document.getElementById("InputNumber");//радио ввода числа и указанного числа
+    let NumberCheckbox = document.getElementById("NumberCheckbox");//чек-бокс указанного числа
+    let RangeNumber = document.getElementById("RangeNumber");//радио ввода диапазона
+    let MaskNumber = document.getElementById("MaskNumber");//радио ввода числа по маске
+    let RecInVariableNumber = document.getElementById("RecInVariableNumber");//чекбокс сохранения числа в переменную
+
+    //----------Создание блока в котором размещается кнопка и весь элемент------
+    DivUserElement.className = "DivUserElement";
+    DivUserElement.setAttribute("id","DivUserNumber " + N + " " + SN + " " + TN);
+    DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
+    DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    formAddInstrumentBtnUser.before(DivUserElement);
+    //----------Создание блока надписи названия элемента------
+    LabelElementUser.className = "LabelElementUser";
+    DivUserElement.append(LabelElementUser);
+    if(InputNumber.checked && !NumberCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод числа";
+    }
+    else if(InputNumber.checked && NumberCheckbox.checked){
+        LabelElementUser.innerHTML = "Ввод указанного числа";
+    }
+    else if(RangeNumber.checked){
+        LabelElementUser.innerHTML = "Ввод числа в диапазоне";
+    }
+    else if(MaskNumber.checked){
+        LabelElementUser.innerHTML = "Ввод числа по маске";
+    }
+    //----------Создание блока мусорки(удаления элемента) и самой мусорки------
+    TrashImg.className = "TrashImg";
+    TrashImg.setAttribute("id","TrashImg " + N + " " + SN + " " + TN);
+    TrashImg.setAttribute("style","opacity: 0");
+    TrashImg.setAttribute("title","удалить этот элемент");
+    TrashImg.setAttribute("onclick","OnClickRemoveNumberUser(id)");
+    DivUserElement.append(TrashImg);
+    TrashImg.innerHTML = "<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">";
+    //----------Создание блока карандаша(редактирования элемента)------
+    ImgPencilInstrument.className = "ImgPencilInstrument";
+    ImgPencilInstrument.setAttribute("id","ImgPencil " + N + " " + SN + " " + TN);
+    ImgPencilInstrument.setAttribute("style","opacity: 0");
+    ImgPencilInstrument.setAttribute("title","Редактировать этот элемент");
+    ImgPencilInstrument.setAttribute("onclick","OnClickAddNumberUser(id)");
+    DivUserElement.append(ImgPencilInstrument);
+    ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока элемента ввода определенного числа------
+    if(InputNumber.checked && NumberCheckbox.checked){
+        let IndicatedNumberUser = document.createElement('div');
+        let IndicatedNumber = document.getElementById("IndicatedNumber");//поле ввода определенного числа в окне
+        IndicatedNumberUser.className = "IndicatedNumberUser";
+        IndicatedNumberUser.setAttribute("id","IndicatedNumberUser " + N + " " + SN + " " + TN);
+        DivUserElement.append(IndicatedNumberUser);
+        IndicatedNumberUser.innerHTML = "<div class=\"LabelBlack\">" +
+         "Число:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberIdicated " + N + " " + SN + " " + TN + "\" value=\"" + IndicatedNumber.value + "\" readonly=\"readonly\"></div>";
+    }else if(RangeNumber.checked){//----------Создание блока элемента ввода числа в диапазоне------
+        let RangeNumberUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        let InputNumber1 = document.getElementById("InputNumber 1");//Поле ввода первого диапазона
+        let InputNumber2 = document.getElementById("InputNumber 2");//Поле ввода второго диапазона
+        RangeNumberUser.className = "RangeNumberUser";
+        RangeNumberUser.setAttribute("id","RangeNumberUser " + N + " " + SN + " " + TN)
+        DivUserElement.append(RangeNumberUser);
+        LabelBlack.className = "LabelBlack";
+        RangeNumberUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Диапазон: <label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserOne " + N + " " + SN + " " + TN + "\" readonly=\"readonly\" value=\"" + InputNumber1.value + "\"></label>" +
+         "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserTwo " + N + " " + SN + " " + TN + "\" readonly=\"readonly\" value=\"" + InputNumber2.value + "\"></label>";
+    }else if(MaskNumber.checked){//----------Создание блока элемента ввода числа по маске------
+        let MaskNumberUser = document.createElement('div');
+        let LabelBlack = document.createElement('div');
+        let MaskInputNumber = document.getElementById("MaskInputNumber");//Поле ввода маски
+        MaskNumberUser.className = "MaskNumberUser";
+        MaskNumberUser.setAttribute("id","MaskNumberUser " + N + " " + SN + " " + TN)
+        DivUserElement.append(MaskNumberUser);
+        LabelBlack.className = "LabelBlack";
+        MaskNumberUser.append(LabelBlack);
+        LabelBlack.innerHTML = "Маска:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumberUser " + N + " " + SN + " " + TN + "\" readonly=\"readonly\" value=\"" + MaskInputNumber.value + "\">";
+    }
+    //----------Создание блока с переменной------
+    if(RecInVariableNumber.checked){
+        let Select = document.getElementById("Select");
+        DivUserNumberVariable.className = "DivFormUser";
+        DivUserElement.append(DivUserNumberVariable);
+        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberVariable " + N + " " + SN + " " + TN + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    }
+    //----------Создание розетки(джампера)------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + TN);
+    DivUserElement.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    OnClickImgExit();   
+    
+}
+function OnClickRemoveNumberUser(id){//Панель. Удаление числового элемента
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivUserNumber = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN);
+    DivUserNumber.remove();
+}
+
+
+//---------------Тесты----------------
+//------------------------------------
+//------------------------------------
 function OnClickJump(id){
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);

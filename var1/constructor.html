@@ -63,39 +63,32 @@
                                 <div class="Label">
                                     Действие пользователя
                                 </div>
-                                <div class="DivUserElement" id="DivUserText 1 1 1" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)">
-                                    <div class="LabelElementUser">
-                                        Ввод текста (поиск по тегам)
-                                    </div>
-                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 0;" title="удалить этот элемент" onclick="OnClickRemoveTextUser(id)">
+                              <!-- 11-->
+                                <div class="DivUserElement" id="DivUserNumber 1 1 1" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)">
+                                    <div class="LabelElementUser">Ввод текста в диапазоне</div>
+                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 100;" title="удалить этот элемент" onclick="OnClickRemoveNumberUser(id)">
                                         <img src="source/constructor/trash.png" alt="удалить" width="16px">
                                     </span>
-                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 0;" title="Редактировать этот элемент" onclick="OnClickAddTextUser(id)">
+                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 100;" title="Редактировать этот элемент" onclick="OnClickAddNumberUser(id)">
                                         <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
                                     </div>
-                                    <div class = "TagTextUser" id="TagTextUser 1 1 1">
-                                        <div class="LabelBlack" id="TagLabel 1 1 1">
-                                            Теги:
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
-                                            <div class="TagOnPanel">fwerf</div>
+                                        <div class ="RangeNumberUser">
+                                            <div class="LabelBlack">Диапазон:
+                                                <label>от<input type="number" class="InputNumber" id="InputNumberUserOne 1 1 1" readonly="readonly" ></label>
+                                                <label>до<input type="number" class="InputNumber" id="InputNumberUserTwo 1 1 1" readonly="readonly"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="DivUserTextVariable">
-                                        <div class="LabelBlack">
-                                            Запомнить в:<input type="input" class="InputOther1" id="UserTextVariable 1 1 1" value="Text" readonly="readonly">
-                                        </div>
+                                    <div class="DivFormUser">
+                                            <div class="LabelBlack">Запомнить в:
+                                                <input type="input" class="InputOther1" id="UserNumberVariable 1 1 1" value="Text" readonly="readonly">
+                                            </div>
                                     </div>
                                     <div class="DivJumpIndicator" id="DivJumpIndicator 1 1 1">
-                                            <div class="JumpIndicator" id="JumpIndicator 1 1 1" onclick="OnClickJump(id)">
-                                            <canvas id="canvas"></canvas></div>
+                                        <div class="JumpIndicator" id="JumpIndicator 1 1 1">
+                                        </div>
                                     </div>
                                 </div>
+                              <!--11-->
                                 <form id="formAddInstrumentBtnUser 1 1">
                                     <input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnUser 1 1" onclick="OnClickAddInstrumentBtnUser(id)">
                                 </form>
