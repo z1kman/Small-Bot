@@ -536,10 +536,7 @@ function OnClickAddInstrumentBtnUser(id){ //Всплывающее окно. О�
 }
 function CancelUser(id){//Всплывающее окно. Отмена создания какого либо элемента у пользователя
     
-    if( NameOfElement(id) == "CancelUserNewNumber"){
-        OnClickAddNumberUser(id);
-    }
-    if( NameOfElement(id) == "CancelUserNewText"){
+    if( NameOfElement(id) == "CancelUserNewText" || NameOfElement(id) == "CancelUserNewNumber"){
         let AddNewPanel = document.getElementById("AddNewPanel");
         AddNewPanel.removeAttribute("hidden");
         let AddNewPanel1 = document.getElementById("AddNewPanel1");
@@ -613,6 +610,7 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     CreateWindowPanel()//создание основы всплывающего меню
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
+    let Name = NameOfElement(id);
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewInstrument = document.createElement('div');//надпись
     let FormRadio = document.createElement('form');
@@ -625,6 +623,7 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     let LabelBlack2 = document.createElement('div');
     let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
+    
     //----------------Добавление блока с надписью----------------
     divLabelAddNewInstrument.className = "Label";
     divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
@@ -679,8 +678,14 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
      //----------------Создание формы с кнопками---------------    
      formBtn.setAttribute("id","formNewNumber")
      divAddNewInstrumentPanel.append(formBtn);
-     formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickNextNewNumberUser(id)\">"+ 
-     "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+     if(Name == "AddTextBtnUser" || Name == "CancelUserNewNumber"){//если открыто из окна создания нового элемента
+        formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickNextNewNumberUser(id)\">"+ 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+     }else if(Name == "ImgPencil"){//если открыто через кнопку редактирования
+        let TN = ThirdNumberOfElement(id);
+        formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextEditNumberUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickNextNewNumberUser(id)\">"+ 
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN +  " " + TN + "\" onclick=\"CancelUser(id)\">";
+     }
     }
 function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения RadioButton
     DivRangeNumber = document.getElementById("DivRangeNumber");
@@ -742,18 +747,32 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         MaskInputNumber.classList.add('invalid');
     }
     else{
-        OnClickImgExit();
+        let Name = NameOfElement(id);
         DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
-        CreateWindowPanel()//создание основы всплывающего меню
         let N = NumberOfElement(id);
         let SN = SecondNumberOfElement(id);
-        let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
         let divLabelAddNewInstrument = document.createElement('div');//надпись
         let DivRecInVariableNumber = document.createElement('div');
         let FormCheckbox = document.createElement('form');
         let DivIndicatedVariableNumber = document.createElement('div');
         let LabelError = document.createElement('div');
-        let formBtn = document.createElement('form');//форма с кнопками
+        let formBtn = document.createElement('form');//форма с кнопками\
+        
+        let AddNewPanel = document.getElementById("AddNewPanel");
+        let divNewInstrumentPanel = document.getElementById("NewInstrumentPanel");        
+        let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
+        let divImgExit = document.createElement('div');//кнопка закрытия панели выбора действий 
+        
+        AddNewPanel.setAttribute("hidden","hidden");
+         //----------Создание панели выбора действий-----------
+         divAddNewInstrumentPanel.className="AddNewPanel";
+         divAddNewInstrumentPanel.setAttribute("id","AddNewPanel1");
+         divNewInstrumentPanel.prepend(divAddNewInstrumentPanel);
+         //----------Создание кнопки закрытия панели выбора действий-----------
+         divImgExit.className="ImgExit";
+         divImgExit.setAttribute("onclick","OnClickImgExit()");
+         divAddNewInstrumentPanel.prepend(divImgExit);
+         divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">" 
 
          //----------------Добавление блока с надписью----------------
         divLabelAddNewInstrument.className = "Label";
@@ -784,8 +803,14 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         //----------------Создание формы с кнопками---------------    
         formBtn.setAttribute("id","formNewNumber")
         divAddNewInstrumentPanel.append(formBtn);
-        formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewNumberUser(id)\">" + 
-        "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+        if(Name == "NextNewNumberUser"){
+            formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + "\" onclick=\"OnClickSaveNewNumberUser(id)\">" + 
+            "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + "\" onclick=\"CancelUser(id)\">";
+        }else if(Name == "NextEditNumberUser"){
+            let TN = ThirdNumberOfElement(id);
+            formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" id=\"SaveNewNumberUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickSaveNewNumberUser(id)\">" + 
+            "<input type=\"button\" value=\"Назад\" class=\"AddBtn\" id=\"CancelUserNewNumber " + N + " " + SN + " " + TN + "\" onclick=\"CancelUser(id)\">";
+        }
     }
     
 }
