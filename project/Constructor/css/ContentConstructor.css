@@ -12,6 +12,7 @@ body{
     color: rgb(1, 140, 204);
     font-size:20px;
     overflow:auto;
+    position: absolute;
 }
 .Constructor{
     min-width: 100%;
@@ -19,6 +20,8 @@ body{
     color: rgb(1, 140, 204);
     font-size:20px;
     display: flex;
+    position: absolute;
+    z-index: 2;
 }
 .Section{ 
     float: left;
@@ -162,7 +165,7 @@ body{
     width:440px;
     height: 40px; 
     font-size:21px;
-    background-color: #F7F8FD ;
+    background-color: rgba(247, 248, 253, 0.836) ;
     border-radius: 5px;
     outline: none;
     display: inline-block;
@@ -196,6 +199,7 @@ body{
     justify-content: center; 
     align-items: center; 
     overflow: auto;
+    z-index: 3;
 }
 #LabelAddNewInstrument{
     margin-top: 20px;
@@ -590,4 +594,12 @@ body{
     margin-top:5px;
     width: 100%;
     margin-bottom: 5px;
+}
+.JumpContainer{
+    position: absolute;
+    z-index: 1;
+    background-color: blanchedalmond;
+}
+.canvas{
+    position: absolute;
 }
