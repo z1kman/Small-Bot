@@ -59,7 +59,7 @@ function Jump(id){
 
                 canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
             }else if(mouse.x < mouse.Xold && mouse.y < mouse.Yold){
-                canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 20) - Number(Panel.offsetLeft - 60));
+                canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
 
                 canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(Panel.offsetLeft - 20) + ";");
@@ -103,18 +103,27 @@ function Jump(id){
                 ctxArrow.fill();
             }else if(mouse.x > mouse.Xold && mouse.y < mouse.Yold){
                 ctx.moveTo(canvas.offsetWidth - 20,10);
-                ctx.lineTo(0,canvas.offsetHeight);
+                ctx.bezierCurveTo(0, 0, canvas.offsetWidth ,canvas.offsetHeight,0,canvas.offsetHeight - 10)
+                //ctx.lineTo(0,canvas.offsetHeight);
                 ctx.stroke();
+                
 
+                var ctxArrow = canvas.getContext('2d');//стрелка
+                ctxArrow.fillStyle = "rgb(143, 143, 143)";
+                ctxArrow.beginPath();
                 ctxArrow.moveTo(canvas.offsetWidth,10);
                 ctxArrow.lineTo(canvas.offsetWidth - 20 , 0);
                 ctxArrow.lineTo(canvas.offsetWidth - 20, 20);
                 ctxArrow.fill();
             }else if(mouse.x < mouse.Xold && mouse.y < mouse.Yold){
-                ctx.moveTo(canvas.offsetWidth,canvas.offsetHeight);
-                ctx.lineTo(0,10);
+                ctx.moveTo(canvas.offsetWidth - 60,canvas.offsetHeight);
+                ctx.bezierCurveTo(canvas.offsetWidth + 110, 0, 0 ,canvas.offsetHeight,5,10)
+                //ctx.lineTo(0,10);
                 ctx.stroke();
 
+                var ctxArrow = canvas.getContext('2d');//стрелка
+                ctxArrow.fillStyle = "rgb(143, 143, 143)";
+                ctxArrow.beginPath();
                 ctxArrow.moveTo(20,10);
                 ctxArrow.lineTo(0,0);
                 ctxArrow.lineTo(0,20);
