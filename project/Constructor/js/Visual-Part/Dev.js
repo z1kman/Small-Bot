@@ -49,10 +49,10 @@ function Jump(id){
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
             }else if(mouse.x < mouse.Xold && mouse.y > mouse.Yold){
-                canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 80));
+                canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
-                canvas.setAttribute("style","top:" + JumpIndicator.offsetTop + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
+                canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
             }else if(mouse.x > mouse.Xold + 48 && mouse.y < mouse.Yold){
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
@@ -74,25 +74,29 @@ function Jump(id){
 
             let ctx = canvas.getContext("2d");//линия
             ctx.strokeStyle = "rgb(143, 143, 143)";
-
-            var ctxArrow = canvas.getContext('2d');//стрелка
-            ctxArrow.fillStyle = "rgb(143, 143, 143)";
-            ctxArrow.beginPath();
             ctx.beginPath();
             if(mouse.x > mouse.Xold && mouse.y > mouse.Yold){//рисование самого отрезка
                 ctx.moveTo(0,0);
-                ctx.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight - 10);
+                ctx.bezierCurveTo(canvas.offsetWidth, 0, 0,canvas.offsetHeight,canvas.offsetWidth - 20,canvas.offsetHeight - 10)
+                //ctx.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight - 10);
                 ctx.stroke();
 
+                var ctxArrow = canvas.getContext('2d');//стрелка
+                ctxArrow.fillStyle = "rgb(143, 143, 143)";
+                ctxArrow.beginPath();
                 ctxArrow.moveTo(canvas.offsetWidth,canvas.offsetHeight - 10);
                 ctxArrow.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight -20);
                 ctxArrow.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight);
                 ctxArrow.fill();
             }else if(mouse.x < mouse.Xold && mouse.y > mouse.Yold){
-                ctx.moveTo(canvas.offsetWidth,0);
-                ctx.lineTo(0,canvas.offsetHeight - 10);
+                ctx.moveTo(canvas.offsetWidth - 30,0);
+                ctx.bezierCurveTo(canvas.offsetWidth + 110,canvas.offsetHeight, 0,0,5,canvas.offsetHeight - 10);
+                //ctx.lineTo(0,canvas.offsetHeight - 10);
                 ctx.stroke();
 
+                var ctxArrow = canvas.getContext('2d');//стрелка
+                ctxArrow.fillStyle = "rgb(143, 143, 143)";
+                ctxArrow.beginPath();
                 ctxArrow.moveTo(20,canvas.offsetHeight - 10);
                 ctxArrow.lineTo(0,canvas.offsetHeight -20);
                 ctxArrow.lineTo(0,canvas.offsetHeight);
