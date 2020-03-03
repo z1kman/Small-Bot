@@ -207,4 +207,5 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     formNewPanelBtn.setAttribute("id","formAddInstrumentBtn " + N + " " + NumberOfPanels);
     divPanel.after(formNewPanelBtn);
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
+    RefreshArrows();
 }
