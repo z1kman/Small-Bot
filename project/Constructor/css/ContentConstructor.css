@@ -574,6 +574,12 @@ body{
     transition: 0.5s;
     background-color:rgb(59, 193, 255);
 }
+.ActiveJumpIndicator{
+    background-color:rgb(59, 193, 255);
+}
+.ActiveJumpIndicator:hover{
+    background-color:rgb(56, 176, 231);
+}
 .DivFormUser{
     display: flex;
     width: 100%;
@@ -597,9 +603,9 @@ body{
 }
 .JumpContainer{
     position: absolute;
-    z-index: 1;
     background-color: blanchedalmond;
 }
 .canvas{
     position: absolute;
+
 }
