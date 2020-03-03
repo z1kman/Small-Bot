@@ -44,22 +44,22 @@ function Jump(id){
             canvas.className = "canvas";
             canvas.setAttribute("id","canvas");
             if(mouse.x > mouse.Xold + 48 && mouse.y > mouse.Yold){ //создание канвы и ее позиционирование
-                canvas.setAttribute("width",Panel.offsetLeft - JumpIndicator.offsetLeft);
+                canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
-                canvas.setAttribute("style","top:" + JumpIndicator.offsetTop + ";left:" + JumpIndicator.offsetLeft + ";");
+                canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
             }else if(mouse.x < mouse.Xold && mouse.y > mouse.Yold){
-                canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft));
+                canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 80));
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
-                canvas.setAttribute("style","top:" + JumpIndicator.offsetTop + ";left:" + (Number(Panel.offsetLeft) - Number(20)) + ";");
+                canvas.setAttribute("style","top:" + JumpIndicator.offsetTop + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
             }else if(mouse.x > mouse.Xold + 48 && mouse.y < mouse.Yold){
-                canvas.setAttribute("width",Panel.offsetLeft - JumpIndicator.offsetLeft);
+                canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
 
-                canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + JumpIndicator.offsetLeft + ";");
+                canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
             }else if(mouse.x < mouse.Xold && mouse.y < mouse.Yold){
-                canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 20) - Number(Panel.offsetLeft));
+                canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 20) - Number(Panel.offsetLeft - 60));
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
 
                 canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(Panel.offsetLeft - 20) + ";");
