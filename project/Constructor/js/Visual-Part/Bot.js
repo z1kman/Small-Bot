@@ -90,6 +90,7 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     TextBotTextarea.value = TextTextarea.value;//записать значения из окна создания элемента в сам элемент
     OnClickImgExit();//закрыть окно создания элемента
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
+    RefreshArrows()//перерисовка стрелок
 }
 function OnClickRemoveTextBot(id){//удаление элемента-текст у бота
     var N = NumberOfElement(id);
@@ -97,6 +98,7 @@ function OnClickRemoveTextBot(id){//удаление элемента-текст
     var TN = ThirdNumberOfElement(id);
     TextBot = document.getElementById("TextBot " + N + " " + SN + " " + TN);
     TextBot.parentNode.removeChild(TextBot);
+    RefreshArrows()//перерисовка стрелок
 }
 function OnClickEditTextBot(id){//Всплывающее окно. Редактирование текста у бота
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
@@ -135,7 +137,7 @@ function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно. Ре�
     var TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
     var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
     TextBotTextarea.value = TextTextarea.value;
-    alert(N + " " + SN + " " + TN)
     OnClickImgExit();
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
+    RefreshArrows()//перерисовка стрелок
 }

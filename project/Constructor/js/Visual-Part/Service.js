@@ -6,6 +6,9 @@ var TagKol = 0;//кол-во тегов
 function NameOfElement(id){ //получение имени эллемента
     return(id.split(' ')[0]);
 }
+function NumberOfConnect(id){ //получение номера подключения
+    return(id.split('-')[2]);
+}
 function NumberOfElement(id){ //получение номера элемента
     return(id.split(' ')[1]);
 }

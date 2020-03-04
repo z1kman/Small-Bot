@@ -29,12 +29,12 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     if(InputEdit.classList.contains('visible') && InputEdit.classList.contains('click') && Edit.value!=""){
         InputEdit.classList.remove('click');
         InputEdit.classList.remove('visible');
-        EditNamePanel.setAttribute("style", "display:inline-block;");
+        EditNamePanel.removeAttribute("style");
         InputEdit.setAttribute("style", "display: none;")
         click = 0;
         NamePanel.innerHTML = Edit.value; //имя панели = имя отредактированного имени
         EditNamePanel.style.width = NamePanel.width + 30; //ширина панели
-        TrashImg.setAttribute("style","display:inline;");
+        TrashImg.removeAttribute("style");
         oldNumberOfElement = N;
     }
     else if(Edit.value == "") //если не указано никакое имя
@@ -77,33 +77,58 @@ function OnMouseOutTextBot(id){//отображение иконки редак�
 }
 function OnClickRemovePanel(id){//удаление панели
     let N = NumberOfElement(id);
-
     let ParentNewPanelBtn = document.getElementById("ParentNewPanelBtn " + N + " 0");
     let SN = SecondNumberOfElement(id);
     let flag = false;
-    let Panel = document.getElementById("Panel " + N + " " + SN)
-        
-    if(Panel.hasAttribute('data-connect') == true){//проверка на подключение к другой панели или элементу
-        alert();
-        let IdConnect = Panel.getAttribute('data-connect');
-        let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(IdConnect) + " " + SecondNumberOfElement(IdConnect) + " " + ThirdNumberOfElement(IdConnect));
-        OnClickRemoveConnect(RemoveConnect.getAttribute('id'));
-        document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
-    }else{
-        document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
-        RefreshArrows();
+    let Panel = document.getElementById("Panel " + N + " " + SN);
+    let Null = false;//Проверка на наличие бывших подключений
+    let Connect = true;//наличие подключения
+    let Canvases = document.getElementsByClassName("canvas");
+    let CanvasesNumber = Canvases.length;
+    let arrCanvas = [];
+    for(let i=0; i<CanvasesNumber;i++){//запись всех элементов в массив
+        arrCanvas[i] = Canvases[i];
     }
+    //удаление кнопки "Добавить панель"
     formAddInstrumentBtn = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
-    formAddInstrumentBtn.parentNode.removeChild(formAddInstrumentBtn);//Удаление кнопки добавления новой панели
-    for(let i = 0; i <= NumberOfPanels; i++){
+    formAddInstrumentBtn.parentNode.removeChild(formAddInstrumentBtn);//Удаление кнопки добавления новой панели 
+    for (let i = 0; i<CanvasesNumber; i++){
+            if(SecondNumberOfElement(arrCanvas[i].getAttribute('id')) == SecondNumberOfElement(id))
+            {
+                let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(arrCanvas[i].getAttribute('id')) + " " + SecondNumberOfElement(arrCanvas[i].getAttribute('id')) + " " + ThirdNumberOfElement(arrCanvas[i].getAttribute('id')));
+                OnClickRemoveConnect(RemoveConnect.getAttribute('id'));
+            }
+    }
+
+    while(Connect == true){//Поиск подключений
+        if(Panel.hasAttribute('data-connect-0') == true){//проверка на подключение к другой панели или элементу
+            let IdConnect = Panel.getAttribute('data-connect-0');
+            let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(IdConnect) + " " + SecondNumberOfElement(IdConnect) + " " + ThirdNumberOfElement(IdConnect));
+            OnClickRemoveConnect(RemoveConnect.getAttribute('id'));
+            Connect == true;
+            Null == true;  
+
+        }else{//если подключения есть, то удаляются
+            document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели      
+            Connect = false;
+            RefreshArrows();   
+        }
+    }
+
+    if(Null == true){//если были хоть какие то подключения, то панель удаляется
+        document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
+    }
+    for(let i = 0; i <= NumberOfPanels; i++){//поиск панелей в секции
         if(document.getElementById("Panel " + N + " " + i ) != null){
             flag = true;
+            RefreshArrows();  
             break;
         }
     }
     if(flag == false){//если в секции нет панелей
         ParentNewPanelBtn.classList.remove('active');//удалить флаг
         document.getElementById("Section " + N).remove(); //удалить секцию
+        RefreshArrows();  
     }
 
 }
@@ -218,4 +243,23 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     divPanel.after(formNewPanelBtn);
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
     RefreshArrows();
+}
+function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN );
+    TrashImg.setAttribute("style","opacity: 100;");
+    ImgPencil.setAttribute("style","opacity: 100;");
+}
+function OnMouseOutUserPanel(id){ //Панель. Мышь не над элементом
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
+    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
+    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN )
+    TrashImg.setAttribute("style","opacity: 0;");
+    ImgPencil.setAttribute("style","opacity: 0;");
 }

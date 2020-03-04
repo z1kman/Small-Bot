@@ -52,6 +52,7 @@ function Jump(id){//Создание стрелок между элементо�
         let N = NumberOfElement(IdOfParentJump);
         let SN = SecondNumberOfElement(IdOfParentJump);
         let TN = ThirdNumberOfElement(IdOfParentJump);
+        let Connect = true;//проверка на подключение
         if(click == 1){//если нажали первый раз
             mouse.Xold = event.pageX + Scroll.scrollLeft;
             mouse.Yold = event.pageY  - 70  + Scroll.scrollTop;//70 - высота навбара
@@ -177,7 +178,15 @@ function Jump(id){//Создание стрелок между элементо�
                 ctxArrow.lineTo(0,20);
                 ctxArrow.fill();
             }
-            Panel.setAttribute('data-connect',canvas.getAttribute('id'));
+            for(let i = 0; Connect == true; i++){//запись подключения в панель
+                if(Panel.hasAttribute("data-connect-" + i) == true)
+                {
+                    Connect = true;
+                }else{
+                    Panel.setAttribute("data-connect-" + i ,canvas.getAttribute('id'));
+                    Connect = false;
+                }
+            }
             click = 1;
             flag = false;
         }
@@ -301,12 +310,10 @@ function OnClickRemoveConnect(id){//удаление связи
     let TN = ThirdNumberOfElement(id);
 
     let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-    let ConnectCanvasId = Canvas.getAttribute('data-connect');
     let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN + " " + TN);
     let RemoveConnect = document.getElementById(id);
-    let Panel = document.getElementById(ConnectCanvasId);
-    Panel.removeAttribute('data-connect');
-
+    ReplaceAttribute(id)//замена имени у атрибутов зависимых панелей
+    //удаление флагов на джампере
     if(JumpIndicator.classList.contains('ActiveJumpIndicator'))
     {
         JumpIndicator.classList.remove('ActiveJumpIndicator')
@@ -316,4 +323,36 @@ function OnClickRemoveConnect(id){//удаление связи
     }
     Canvas.remove();
     RemoveConnect.remove();
+}
+
+function ReplaceAttribute(id){//замена имени у атрибутов зависимых панелей
+    let Connect = true;
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+    let ConnectCanvasId = Canvas.getAttribute('data-connect');
+    let Panel = document.getElementById(ConnectCanvasId);
+    //удаление атрибутов у зависимой панели
+    for(let i = 0; Connect == true; i++){//проход по всем атрибутам data-connect на панели
+        if(Panel.hasAttribute("data-connect-" + i) == true){
+            if(Panel.getAttribute("data-connect-" + i) == Canvas.getAttribute("id")){//сравнение только тех, которые имеют только те же иднексы что и канва
+                let OldConnect = true;
+                Connect = false;
+                Panel.removeAttribute('data-connect-' + i);//удалить атрибут
+                for(let j = i + 1; OldConnect == true; j++){//поиск последующих атрибутов
+                    if(Panel.hasAttribute("data-connect-" + j) == true){//если последующие атрибуты есть
+                        Panel.setAttribute("data-connect-" + Number(j-1),Panel.getAttribute('data-connect-' + j));//заменить индекс атрибута на удаленный
+                        Panel.removeAttribute("data-connect-" + j);//удалить последний последний атрибут
+                        OldConnect = true;
+                    }else{
+                        OldConnect = false;
+                    }
+                }
+            }else{
+                Connect == true;
+            }
+            
+        }
+    }
 }

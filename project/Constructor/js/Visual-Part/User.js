@@ -436,7 +436,7 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
     }
     
 }
-function OnChangeCheckboxRecInVariableNumber(id){
+function OnChangeCheckboxRecInVariableNumber(id){//Всплывающее окно. Проверка чек бокса на запись значения элемента в переменную
     RecInVariableNumber = document.getElementById("RecInVariableNumber");
     DivIndicatedVariableNumber = document.getElementById("DivIndicatedVariableNumber");
     
@@ -880,32 +880,13 @@ function OnClickDeleteTag(id){//Всплывающее меню. Создани�
         flag = true;
     }
     TagKol--;
-    alert(TagKol);
     if(flag == false){
         let TagBlock = document.getElementById("TagBlock");
         TagBlock.setAttribute("hidden","hidden");
         AddNewTag[0].classList.remove('notfirst');
     }
 }
-function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
-    let N = NumberOfElement(id);
-    let SN = SecondNumberOfElement(id);
-    let TN = ThirdNumberOfElement(id);
-    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN );
-    TrashImg.setAttribute("style","opacity: 100;");
-    ImgPencil.setAttribute("style","opacity: 100;");
-}
-function OnMouseOutUserPanel(id){ //Панель. Мышь не над элементом
-    let N = NumberOfElement(id);
-    let SN = SecondNumberOfElement(id);
-    let TN = ThirdNumberOfElement(id);
-    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
-    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN )
-    TrashImg.setAttribute("style","opacity: 0;");
-    ImgPencil.setAttribute("style","opacity: 0;");
-}
+
 function OnClickSaveNewButtonUser(id){//Всплывающая панель.Создание кнопки.Кнопка сохранения
     let NewButtonText1 = document.getElementById("NewButtonText");
     if(NewButtonText1.classList.contains('invalid')){//если есть ошибка
@@ -922,7 +903,6 @@ function OnClickSaveNewButtonUser(id){//Всплывающая панель.Со
     let DivFormUser = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
     OnClickImgExit();
-
     ElementKol++;
 
     /// остальная логика
@@ -961,15 +941,36 @@ function OnClickSaveNewButtonUser(id){//Всплывающая панель.Со
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserButton.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickRemoveButtonUser(id){//Панель. Удаление кнопки
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserButton = document.getElementById("DivUserButton " + N + " " + SN + " " + TN);
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN + " " + TN);
+
+        
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
+        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
+        if(JumpIndicator.classList.contains('Active')){
+            JumpIndicator.classList.remove('Active')
+        }
+        ReplaceAttribute(id);
+        Panel.removeAttribute('data-connect');
+        RemoveConnect.remove();
+        Canvas.remove();
+        JumpIndicator.classList.remove('ActiveJumpIndicator');
+    }
     DivUserButton.remove();
+    RefreshArrows(); 
+    
 }
 function OnClickEditButtonUser(id){//Панель. Редактирование кнопки
     OnClickAddButtonUser(id);//Создание всплывающей панели редактирования
@@ -985,13 +986,31 @@ function OnClickSaveEditButtonUser(id){//Всплывающая панель. Р
     let ButtonUser = document.getElementById("ButtonUser " + N + " " + SN + " " + TN);
     ButtonUser.setAttribute("value","" + NewButtonText.value);
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickRemoveEmailUser(id){//Панель. Удаление Email
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserEmail = document.getElementById("DivUserEmail " + N + " " + SN + " " + TN);
+
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
+        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
+        if(JumpIndicator.classList.contains('Active')){
+            JumpIndicator.classList.remove('Active')
+        }
+        ReplaceAttribute(id);
+        Panel.removeAttribute('data-connect');
+        RemoveConnect.remove();
+        Canvas.remove();
+        JumpIndicator.classList.remove('ActiveJumpIndicator');
+    }
+
     DivUserEmail.remove();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickSaveEditEmailUser(id){//Всплывающая панель. Редактирование Email. Кнопка сохранить
     let N = NumberOfElement(id);
@@ -1001,6 +1020,7 @@ function OnClickSaveEditEmailUser(id){//Всплывающая панель. Р�
     let UserEmailVariable = document.getElementById("UserEmailVariable " + N + " " + SN + " " + TN);
     UserEmailVariable.value = Select.options[Select.selectedIndex].value;
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickSaveNewEmailUser(id){//Всплывающая панель. Создание Email. Кнопка сохранить
     let N = NumberOfElement(id);
@@ -1012,7 +1032,6 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     let ImgPencilInstrument = document.createElement('div');
     let DivUserEmailVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
-
     ElementKol++;
 
     //----------Создание блока в котором размещается кнопка и весь элемент------
@@ -1049,9 +1068,12 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickSaveNewTextUser(id){//Всплывающая панель.Создание текста. Кнопка сохранить
     let N = NumberOfElement(id);
@@ -1148,9 +1170,12 @@ function OnClickSaveNewTextUser(id){//Всплывающая панель.Соз
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickSaveEditTextUser(id){//Всплывающая панель. Редактирование текста. Кнопка сохранить
     TagKol = 0;
@@ -1249,16 +1274,36 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + TN);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickRemoveTextUser(id){//Панель. Пользователь. Удаление элемента текста
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserText = document.getElementById("DivUserText " + N + " " + SN  + " " + TN);
+
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//удаление связи
+        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
+        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
+        if(JumpIndicator.classList.contains('Active')){
+            JumpIndicator.classList.remove('Active')
+        }
+        ReplaceAttribute(id);
+        Panel.removeAttribute('data-connect');
+        RemoveConnect.remove();
+        Canvas.remove();
+        JumpIndicator.classList.remove('ActiveJumpIndicator');
+    }
+
     DivUserText.remove();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickSaveNewNumberUser(id){//Всплывающее окно. Создание элемента числа. Кнопка сохранить
     let N = NumberOfElement(id);
@@ -1359,9 +1404,12 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
     OnClickImgExit();
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickNextEditNumberUser(id){//Всплывающее окно. Редактирование элемента числа. Кнопка сохранить
     OnClickRemoveNumberUser(id)
@@ -1461,15 +1509,32 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + TN);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
     OnClickImgExit();   
-    
+    RefreshArrows();//Обновление стрелок
 }
 function OnClickRemoveNumberUser(id){//Панель. Удаление числового элемента
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserNumber = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN);
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//удаление связи
+        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
+        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
+        if(JumpIndicator.classList.contains('Active')){
+            JumpIndicator.classList.remove('Active')
+        }
+        ReplaceAttribute(id);
+        Panel.removeAttribute('data-connect');
+        RemoveConnect.remove();
+        Canvas.remove();
+        JumpIndicator.classList.remove('ActiveJumpIndicator');
+    }
     DivUserNumber.remove();
+    RefreshArrows();//Обновление стрелок
 }
