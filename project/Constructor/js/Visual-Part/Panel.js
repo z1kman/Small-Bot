@@ -1,19 +1,21 @@
 
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    var EditNamePanel = document.getElementById(id);
-    var NamePanel = document.getElementById("NamePanel "  + N + " " + SN);
-    var Edit = document.getElementById("Edit "  + N + " " + SN);
-    var InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
-    var TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let EditNamePanel = document.getElementById("EditNamePanel " + N + " " + SN );
+    let NamePanel = document.getElementById("NamePanel "  + N + " " + SN);
+    let Edit = document.getElementById("Edit "  + N + " " + SN);
+    let InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
+    let TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
+    let ImgPencil = document.getElementById("ImgPencil "  + N + " " + SN);
     if (!InputEdit.classList.contains('visible')){
         InputEdit.classList.add('visible');
-        TrashImg.setAttribute("style","display:none;");
-        EditNamePanel.setAttribute("style", "display: none;");
-        InputEdit.setAttribute("style", "display: block;")
-        Edit.value = NamePanel.textContent;
-        
+        TrashImg.setAttribute("hidden","hidden");
+        EditNamePanel.setAttribute("hidden","hidden");
+        InputEdit.removeAttribute("hidden");
+        NamePanel.setAttribute("hidden","hidden");
+        ImgPencil.setAttribute("hidden","hidden");
+        Edit.value = NamePanel.textContent;   
     }
     
 }
@@ -25,16 +27,19 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     let Edit = document.getElementById("Edit "  + N + " " + SN);
     let InputEdit = document.getElementById("InputEdit "  + N + " " + SN);
     let TrashImg = document.getElementById("TrashImg "  + N + " " + SN);
+    let ImgPencil = document.getElementById("ImgPencil "  + N + " " + SN);
 
     if(InputEdit.classList.contains('visible') && InputEdit.classList.contains('click') && Edit.value!=""){
         InputEdit.classList.remove('click');
         InputEdit.classList.remove('visible');
-        EditNamePanel.removeAttribute("style");
-        InputEdit.setAttribute("style", "display: none;")
+        EditNamePanel.removeAttribute("hidden");
+        ImgPencil.removeAttribute("hidden");
+        InputEdit.setAttribute("hidden", "hidden")
+        NamePanel.removeAttribute("hidden");
         click = 0;
         NamePanel.innerHTML = Edit.value; //имя панели = имя отредактированного имени
         EditNamePanel.style.width = NamePanel.width + 30; //ширина панели
-        TrashImg.removeAttribute("style");
+        TrashImg.removeAttribute("hidden");
         oldNumberOfElement = N;
     }
     else if(Edit.value == "") //если не указано никакое имя
@@ -79,7 +84,7 @@ function OnClickRemovePanel(id){//удаление панели
     let N = NumberOfElement(id);
     let ParentNewPanelBtn = document.getElementById("ParentNewPanelBtn " + N + " 0");
     let SN = SecondNumberOfElement(id);
-    let flag = false;
+    let flagB = false;
     let Panel = document.getElementById("Panel " + N + " " + SN);
     let Null = false;//Проверка на наличие бывших подключений
     let Connect = true;//наличие подключения
@@ -120,12 +125,12 @@ function OnClickRemovePanel(id){//удаление панели
     }
     for(let i = 0; i <= NumberOfPanels; i++){//поиск панелей в секции
         if(document.getElementById("Panel " + N + " " + i ) != null){
-            flag = true;
+            flagB = true;
             RefreshArrows();  
             break;
         }
     }
-    if(flag == false){//если в секции нет панелей
+    if(flagB == false){//если в секции нет панелей
         ParentNewPanelBtn.classList.remove('active');//удалить флаг
         document.getElementById("Section " + N).remove(); //удалить секцию
         RefreshArrows();  
@@ -180,7 +185,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     //----------Cоздание блока поля ввода имени панели (InputEdit)-----------
     divInputEdit.className="InputEdit";
     divInputEdit.setAttribute("id","InputEdit " + N  + " " + NumberOfPanels);
-    divInputEdit.setAttribute("style","display: none;");
+    divInputEdit.setAttribute("hidden","hidden");
     divInputEdit.setAttribute("onclick","OnClickInputEdit(id)");
     divPanel.prepend(divInputEdit);
     //----------Создание поля ввода имени панели (Edit)-----------

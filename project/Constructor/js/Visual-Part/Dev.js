@@ -1,11 +1,12 @@
 var click = 1;
 var mouse = { Xold:0, Yold:0, x:0,y:0};
-var flag = false;
+var flagA = false;
 var IdOfParentJump = "";//Родительский элемент джампера
 //---------------Тесты----------------
 //------------------------------------
 //------------------------------------
 function OnClickJumpIndicator(id){//нажатие на JumpIndicator
+    
     let JumpIndicator = document.getElementById(id);
     IdOfParentJump = id;
     if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
@@ -17,9 +18,9 @@ function OnClickJumpIndicator(id){//нажатие на JumpIndicator
             RemoveConnect.setAttribute('hidden','hidden');
             JumpIndicator.classList.remove('Active');
         }
-        flag = false;
+        flagA = false;
     }else{
-        flag = true;
+        flagA = true;
     }
 }
 function OnMouseOverDivJump(id){
@@ -44,7 +45,7 @@ function OnMouseOutDivJump(id){
 }
 
 function Jump(id){//Создание стрелок между элементом и панелями
-    if(flag == true){
+    if(flagA == true){
         let IdOfChildrenJump = "";
         let JumpContainer = document.getElementById("JumpContainer");//блок со всеми стрелками
         let Scroll = document.getElementById("Scroll");
@@ -72,7 +73,7 @@ function Jump(id){//Создание стрелок между элементо�
                        }
                 }else if(i + 1 == Panels.length){//если не найдена ни одна панель
                         click = 1;
-                        flag = false;
+                        flagA = false;
                         return 0;
                 }
             }
@@ -104,7 +105,7 @@ function Jump(id){//Создание стрелок между элементо�
             }
             else{
                 click = 1;
-                flag = false;
+                flagA = false;
                 return 0;
             }
             let ctx = canvas.getContext("2d");//линия
@@ -188,7 +189,7 @@ function Jump(id){//Создание стрелок между элементо�
                 }
             }
             click = 1;
-            flag = false;
+            flagA = false;
         }
     }
 }
