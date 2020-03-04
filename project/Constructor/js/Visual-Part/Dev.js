@@ -8,12 +8,41 @@ var IdOfParentJump = "";//Родительский элемент джампер
 function OnClickJumpIndicator(id){//нажатие на JumpIndicator
     let JumpIndicator = document.getElementById(id);
     IdOfParentJump = id;
-    if(JumpIndicator.classList.contains("ActiveJumpIndicator")){
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+        if(!JumpIndicator.classList.contains('Active')){
+            RemoveConnect.removeAttribute("hidden");
+            JumpIndicator.classList.add('Active');
+        }else{
+            RemoveConnect.setAttribute('hidden','hidden');
+            JumpIndicator.classList.remove('Active');
+        }
         flag = false;
     }else{
         flag = true;
     }
 }
+function OnMouseOverDivJump(id){
+    let JumpIndicator = document.getElementById("JumpIndicator " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+        if(!JumpIndicator.classList.contains('Active')){
+            RemoveConnect.removeAttribute("hidden");
+            JumpIndicator.classList.add('Active');
+        }
+    }
+}
+function OnMouseOutDivJump(id){
+    let JumpIndicator = document.getElementById("JumpIndicator " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+        if(JumpIndicator.classList.contains('Active')){
+            RemoveConnect.setAttribute('hidden','hidden');
+            JumpIndicator.classList.remove('Active');
+        }
+    }
+}
+
 function Jump(id){//Создание стрелок между элементом и панелями
     if(flag == true){
         let IdOfChildrenJump = "";
@@ -48,11 +77,10 @@ function Jump(id){//Создание стрелок между элементо�
             }
             let JumpIndicator = document.getElementById(IdOfParentJump);
             let Panel = document.getElementById(IdOfChildrenJump);//дочерний элемент джампера
-            JumpIndicator.classList.add("ActiveJumpIndicator");
             canvas.className = "canvas";
             canvas.setAttribute("id","Canvas " + N + " " + SN + " " + TN);
             canvas.setAttribute("data-connect",IdOfChildrenJump);
-            if(mouse.x > mouse.Xold + 48 && mouse.y > mouse.Yold){ //создание канвы и ее позиционирование
+            if(mouse.x > mouse.Xold + 60 && mouse.y > mouse.Yold){ //создание канвы и ее позиционирование
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
@@ -62,7 +90,7 @@ function Jump(id){//Создание стрелок между элементо�
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-            }else if(mouse.x > mouse.Xold + 48 && mouse.y < mouse.Yold){
+            }else if(mouse.x > mouse.Xold + 60 && mouse.y < mouse.Yold){
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
 
@@ -78,10 +106,21 @@ function Jump(id){//Создание стрелок между элементо�
                 flag = false;
                 return 0;
             }
+            let ctx = canvas.getContext("2d");//линия
+            let Input = document.createElement('input');
 
+            Input.setAttribute('type','button');
+            Input.setAttribute('value','Удалить связь');
+            Input.setAttribute('title','Удалить связь');
+            Input.setAttribute('class','RemoveConnect');
+            Input.setAttribute('id',"RemoveConnect " + N + " " + SN + " " + TN);
+            Input.setAttribute('onclick','OnClickRemoveConnect(id)');
+            Input.setAttribute('hidden','hidden');
+
+            JumpIndicator.before(Input);
+            JumpIndicator.classList.add("ActiveJumpIndicator");
             JumpContainer.append(canvas);
 
-            let ctx = canvas.getContext("2d");//линия
             ctx.strokeStyle = "rgb(143, 143, 143)";
             ctx.beginPath();
             if(mouse.x > mouse.Xold && mouse.y > mouse.Yold){//рисование самого отрезка
@@ -181,7 +220,7 @@ function RefreshArrows(){
                     Arrows[i].setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
                 
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 48 && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                     Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
                 
@@ -223,7 +262,7 @@ function RefreshArrows(){
                     ctxArrow.lineTo(0,Arrows[i].offsetHeight -20);
                     ctxArrow.lineTo(0,Arrows[i].offsetHeight);
                     ctxArrow.fill();
-                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 48 && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 20,10);
                     ctx.bezierCurveTo(0, 0, Arrows[i].offsetWidth ,Arrows[i].offsetHeight,0,Arrows[i].offsetHeight - 10)
                     //ctx.lineTo(0,canvas.offsetHeight);
@@ -253,39 +292,24 @@ function RefreshArrows(){
                 }
 
         }
-
-/*
-if(mouse.x > mouse.Xold + 48 && mouse.y > mouse.Yold){ //создание канвы и ее позиционирование
-    canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-    canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
-
-    canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
-}else if(mouse.x < mouse.Xold && mouse.y > mouse.Yold){
-    canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
-    canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
-
-    canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-}else if(mouse.x > mouse.Xold + 48 && mouse.y < mouse.Yold){
-    canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-    canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
-
-    canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
-}else if(mouse.x < mouse.Xold && mouse.y < mouse.Yold){
-    canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
-    canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
-
-    canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(Panel.offsetLeft - 20) + ";");
-}
-else{
-    click = 1;
-    flag = false;
-    return 0;
-}
-
-*/
-
-
-
-
     }
+}
+
+function OnClickRemoveConnect(id){//удаление связи
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+    let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN + " " + TN);
+    let RemoveConnect = document.getElementById(id);
+
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator'))
+    {
+        JumpIndicator.classList.remove('ActiveJumpIndicator')
+    }
+    if(JumpIndicator.classList.contains('Active')){
+        JumpIndicator.classList.remove('Active')
+    }
+    Canvas.remove();
+    RemoveConnect.remove();
 }

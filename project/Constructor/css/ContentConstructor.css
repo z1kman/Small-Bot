@@ -107,6 +107,7 @@ body{
     background-color: rgb(228, 228, 228);
     transition: 0.3s;
 }
+
 .Bot{
     border-radius: 5px;
     margin-top: 5px;
@@ -557,10 +558,13 @@ body{
     transition: 0.5s;
 }
 .DivJumpIndicator{
+    margin-top: 10px;
+    height:40px;
     display: flex;
     justify-content: flex-end;
 }
 .JumpIndicator{
+    margin-top: 5px;
     border-radius: 50%;
     border: 1px solid rgb(59, 193, 255);
     width: 20px;
@@ -607,4 +611,24 @@ body{
 }
 .canvas{
     position: absolute;
+}
+.RemoveConnect{
+    border-radius: 20px;
+    margin-bottom: 5px;
+    padding: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-right: 5px;
+    background-color:rgba(255, 255, 255, 0);
+    color: rgb(59, 193, 255);
+    border: 1px solid  rgb(59, 193, 255);
+    font-size: 18px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    outline: none;
+
+}
+.RemoveConnect:hover{
+    background-color:rgb(59, 193, 255);
+    color: white;
+    transition: 0.4s;
 }
