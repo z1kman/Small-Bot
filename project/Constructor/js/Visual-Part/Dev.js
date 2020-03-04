@@ -177,7 +177,7 @@ function Jump(id){//Создание стрелок между элементо�
                 ctxArrow.lineTo(0,20);
                 ctxArrow.fill();
             }
-
+            Panel.setAttribute('data-connect',canvas.getAttribute('id'));
             click = 1;
             flag = false;
         }
@@ -299,9 +299,13 @@ function OnClickRemoveConnect(id){//удаление связи
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
+
     let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+    let ConnectCanvasId = Canvas.getAttribute('data-connect');
     let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN + " " + TN);
     let RemoveConnect = document.getElementById(id);
+    let Panel = document.getElementById(ConnectCanvasId);
+    Panel.removeAttribute('data-connect');
 
     if(JumpIndicator.classList.contains('ActiveJumpIndicator'))
     {

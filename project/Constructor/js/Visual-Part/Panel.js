@@ -81,8 +81,19 @@ function OnClickRemovePanel(id){//удаление панели
     let ParentNewPanelBtn = document.getElementById("ParentNewPanelBtn " + N + " 0");
     let SN = SecondNumberOfElement(id);
     let flag = false;
+    let Panel = document.getElementById("Panel " + N + " " + SN)
+        
+    if(Panel.hasAttribute('data-connect') == true){//проверка на подключение к другой панели или элементу
+        alert();
+        let IdConnect = Panel.getAttribute('data-connect');
+        let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(IdConnect) + " " + SecondNumberOfElement(IdConnect) + " " + ThirdNumberOfElement(IdConnect));
+        OnClickRemoveConnect(RemoveConnect.getAttribute('id'));
+        document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
+    }else{
+        document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
+        RefreshArrows();
+    }
     formAddInstrumentBtn = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
-    document.getElementById("Panel " + N + " " + SN).parentNode.removeChild(document.getElementById("Panel " + N + " " + SN )); //удаление панели
     formAddInstrumentBtn.parentNode.removeChild(formAddInstrumentBtn);//Удаление кнопки добавления новой панели
     for(let i = 0; i <= NumberOfPanels; i++){
         if(document.getElementById("Panel " + N + " " + i ) != null){
@@ -90,7 +101,6 @@ function OnClickRemovePanel(id){//удаление панели
             break;
         }
     }
-
     if(flag == false){//если в секции нет панелей
         ParentNewPanelBtn.classList.remove('active');//удалить флаг
         document.getElementById("Section " + N).remove(); //удалить секцию
