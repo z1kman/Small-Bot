@@ -167,7 +167,7 @@ function Jump(id){//Создание стрелок между элементо�
                 ctxArrow.fill();
             }else if(mouse.x < mouse.Xold && mouse.y < mouse.Yold){
                 ctx.moveTo(canvas.offsetWidth - 60,canvas.offsetHeight);
-                ctx.bezierCurveTo(canvas.offsetWidth + 110, canvas.offsetWidth, 0 ,canvas.offsetHeight/4,5,10)
+                ctx.bezierCurveTo(canvas.offsetWidth + 110, canvas.offsetHeight, 0 ,canvas.offsetHeight/4,5,10)
                 //ctx.lineTo(0,10);
                 ctx.stroke();
 
@@ -179,6 +179,10 @@ function Jump(id){//Создание стрелок между элементо�
                 ctxArrow.lineTo(0,20);
                 ctxArrow.fill();
             }
+
+
+
+
             for(let i = 0; Connect == true; i++){//запись подключения в панель
                 if(Panel.hasAttribute("data-connect-" + i) == true)
                 {
@@ -288,7 +292,7 @@ function RefreshArrows(){
                     ctxArrow.fill();
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 60,Arrows[i].offsetHeight);
-                    ctx.bezierCurveTo(Arrows[i].offsetWidth + 110, Arrows[i].offsetWidth, 0 ,Arrows[i].offsetHeight/4,5,10)
+                    ctx.bezierCurveTo(Arrows[i].offsetWidth + 110, Arrows[i].offsetHeight, 0 ,Arrows[i].offsetHeight/4,5,10)
                     //ctx.lineTo(0,10);
                     ctx.stroke();
 
