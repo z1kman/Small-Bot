@@ -563,6 +563,10 @@ body{
     height:40px;
     display: flex;
     justify-content: flex-end;
+    z-index: 5;
+}
+.DivJumpIndicatorActive{
+    position: absolute;
 }
 .JumpIndicator{
     margin-top: 5px;
@@ -608,10 +612,15 @@ body{
 }
 .JumpContainer{
     position: absolute;
-    z-index: 1;
 }
 .canvas{
     position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+.ActiveCanvas{
+    position: relative;
+    z-index: 5;
 }
 .RemoveConnect{
     border-radius: 20px;

@@ -295,6 +295,10 @@ function OnMouseOverDivJump(id){//Панель. Мышь в области дж�
     if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
         let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
         if(!JumpIndicator.classList.contains('Active')){
+            let Canvas = document.getElementById("Canvas " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+            if(!Canvas.classList.contains('ActiveCanvas')){
+                Canvas.classList.add('ActiveCanvas');
+            }
             RemoveConnect.removeAttribute("hidden");
             JumpIndicator.classList.add('Active');
         }
@@ -305,6 +309,10 @@ function OnMouseOutDivJump(id){//Панель. Мышь вне области д
     if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
         let RemoveConnect = document.getElementById("RemoveConnect " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
         if(JumpIndicator.classList.contains('Active')){
+            let Canvas = document.getElementById("Canvas " + NumberOfElement(id) + " " + SecondNumberOfElement(id) + " " + ThirdNumberOfElement(id));
+            if(Canvas.classList.contains('ActiveCanvas')){
+                Canvas.classList.remove('ActiveCanvas');
+            }
             RemoveConnect.setAttribute('hidden','hidden');
             JumpIndicator.classList.remove('Active');
         }
