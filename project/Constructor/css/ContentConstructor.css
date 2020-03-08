@@ -607,7 +607,7 @@ body{
 }
 .JumpContainer{
     position: absolute;
-    background-color: blanchedalmond;
+    z-index: 1;
 }
 .canvas{
     position: absolute;
