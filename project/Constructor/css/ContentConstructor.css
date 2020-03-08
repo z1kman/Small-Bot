@@ -314,6 +314,7 @@ body{
     display: inline-block;
     font-family: 'Segoe UI Light', 'Times New Roman';
     font-size:18px;
+    height: 30px;
     margin-left: 5px;   
     padding: 5px;
 }

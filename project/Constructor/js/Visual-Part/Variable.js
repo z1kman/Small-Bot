@@ -4,6 +4,7 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
     let divLabelAddNewVariable = document.createElement('div');//надпись
     let divNewVariable = document.createElement('div');//блок с полем ввода имени новой переменной и надписью к ней
+    let divError = document.createElement('div');//Окно с ошибкой
     let divNewVariableValue = document.createElement('div');//блок с полем ввода значения новой  переменной и надписью к нему
     let formBtn = document.createElement('form');//форма с кнопками
 
@@ -16,7 +17,7 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     divNewVariable.className = "NewName";
     divAddNewInstrumentPanel.append(divNewVariable);
     divNewVariable.innerHTML = "<div style=\"display:inline-block\">Имя переменной:</div>" + 
-        "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
+        "<input type=\"text\" id=\"NewVariableName\" class=\"Input\" onfocus=\"OnFocusNameVariable()\" onblur=\"OnBlurNameVariable()\">";
     //----------Создание блока ввода значения новой переменной -----------
     divNewVariableValue.className = "NewVariableValue";
     divAddNewInstrumentPanel.append(divNewVariableValue);
@@ -27,48 +28,63 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     divAddNewInstrumentPanel.append(formBtn);
     formBtn.innerHTML = "<input type=\"button\" value=\"Сохранить\" class=\"AddBtn\" onclick=\"OnClickNewVariableSaveBtn(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" onclick=\"OnClickImgExit();\">";
+    //----------Создание блока с ошибкой-----------
+    divError.className="Label";
+    divError.setAttribute("id","ErrorNewVariable");
+    formBtnNewVariable.before(divError);
 
 }
 function OnClickNewVariableSaveBtn(id){ //Всплывающее окно. Кнопка сохранения
-    let StrNewVariableName = document.getElementById("NewVariableName").value;//название переменной
-    let formBtnNewVariable = document.getElementById("formBtnNewVariable");//форма с кнопками сохранения и отмены(необходимо для добавления сообщения об ошибки)
-    let error = false;//наличие ошибки 
-    if(StrNewVariableName.replace(/\s+/g, '') == ""){//если только пробелы в названии переменной
-        if(document.getElementById("ErrorNewVariable") != null){//если сообщение уже высвечивалось то удалить его
-            document.getElementById("ErrorNewVariable").remove();
+    let NewVariableName = document.getElementById("NewVariableName");
+    
+    if(!NewVariableName.classList.contains('error')){//остальная логика
+
+    }
+}
+function OnFocusNameVariable(){//Всплывающее окно. Инпут имени переменной в фокусе
+    let divError = document.getElementById("ErrorNewVariable");//блок с ошибками
+    let NewVariableName = document.getElementById("NewVariableName");
+
+    if(NewVariableName.classList.contains('error')){
+        NewVariableName.classList.remove('error');
+    }
+    divError.innerHTML = "";//очистка блока с ошибками
+}
+function OnBlurNameVariable(){//Всплывающее окно. Инпут имени переменной не в фокусе
+    let divError = document.getElementById("ErrorNewVariable");//блок с ошибками
+    let NewVariableName = document.getElementById("NewVariableName");
+    let StrNewVariableName = NewVariableName.value;
+    let Num = false;
+    let Letter= false;
+
+    if(NewVariableName.value.replace(/\s+/g, '') == ""){//если только пробелы в названии переменной
+        if(!NewVariableName.classList.contains('error')){
+            NewVariableName.classList.add('error');
         }
-        error = true;
-        let divError = document.createElement('div');//Окно с ошибкой
-        divError.className="Label";
-        divError.setAttribute("id","ErrorNewVariable");
-        formBtnNewVariable.prepend(divError);
-        divError.innerHTML="Введите название переменной";
+        divError.innerHTML="Ошибка!Введите название переменной";
         return 0;
     }
-    for(let i = 0; i < StrNewVariableName.length; i++){
-        if((StrNewVariableName[i] >= 'a' && StrNewVariableName[i] <= 'z'))
+    
+    for(let i = 0; i < StrNewVariableName.length; i++){//проверка на наличие букв и цифр
+        if((StrNewVariableName[i] >= 'a' && StrNewVariableName[i] <= 'z'))//проверка на наличие букв
         {
-            error = false;
-            continue
+            Letter = true;
+        }else if(StrNewVariableName[i] >= '0' && StrNewVariableName[i] <= '9'){//проверка на наличие цифр
+            Num = true;
         }
-        else
+        else//если какие то иные символы
         {
-            if(document.getElementById("ErrorNewVariable") != null){//если сообщение уже высвечивалось то удалить его
-                document.getElementById("ErrorNewVariable").remove();
+            divError.innerHTML="Ошибка!Имя переменной должно содержать латинские буквы или латинские буквы и цифры";
+            if(!NewVariableName.classList.contains('error')){
+                NewVariableName.classList.add('error');
             }
-            let divError = document.createElement('div');//Окно с ошибкой
-            divError.className="Label";
-            divError.setAttribute("id","ErrorNewVariable");
-            formBtnNewVariable.prepend(divError);
-            divError.innerHTML="Имя переменной должно содержать только латинские буквы";
-            error = true;
-            break
+            return 0;
         }
     }
-
-
-    if(error == false)//остальная логика по сохранению переменной
-    {
-
+    if(Letter == false && Num == true){//если имя переменной состоит только из цифр
+        divError.innerHTML="Ошибка!Имя переменной не может состоять только из чисел.Имя переменной должно содержать латинские буквы или латинские буквы и цифры ";
+        if(!NewVariableName.classList.contains('error')){
+            NewVariableName.classList.add('error');
+        }
     }
 }
