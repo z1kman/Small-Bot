@@ -36,7 +36,6 @@ function OnClickInputEdit(id){ //редактирование имени пан�
         ImgPencil.removeAttribute("hidden");
         InputEdit.setAttribute("hidden", "hidden")
         NamePanel.removeAttribute("hidden");
-        click = 0;
         NamePanel.innerHTML = Edit.value; //имя панели = имя отредактированного имени
         EditNamePanel.style.width = NamePanel.width + 30; //ширина панели
         TrashImg.removeAttribute("hidden");
@@ -44,22 +43,22 @@ function OnClickInputEdit(id){ //редактирование имени пан�
     }
     else if(Edit.value == "") //если не указано никакое имя
     {
-            ("Необходимо заполнить поле названия панели");
+           alert("Необходимо заполнить поле названия панели");
     }
     if(InputEdit.classList.contains('visible') && !InputEdit.classList.contains('click')){
         InputEdit.classList.add('click');
     }
 }
 function OnMouseOverEditPanelName(id){ //отображение иконки редактирования имени панели
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    var ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
     ImgPencil.setAttribute("style","opacity:100;");
 }
 function OnMouseOutEditPanelName(id){//скрытие иконки редактирования имени панели
-    var N = NumberOfElement(id);
-    var SN = SecondNumberOfElement(id);
-    var ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
     ImgPencil.setAttribute("style","opacity:0;");
 }
 function OnMouseOverTextBot(id){//отображение иконки редактирования на блоках действиях(показать)
