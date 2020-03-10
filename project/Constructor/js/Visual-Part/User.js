@@ -934,6 +934,7 @@ function OnClickSaveNewButtonUser(id){//Всплывающая панель.Со
     ImgPencilInstrument.innerHTML = "<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
     //----------Создание блока самой кнопки------
     DivFormUser.className = "DivFormUser";
+    DivFormUser.setAttribute("id","DivFormUser " + N + " " + SN + " " + ElementKol);
     DivUserButton.append(DivFormUser);
     DivFormUser.innerHTML = "<form class=\"FormButton\">" +
     "<input type=\"button\" name=\"button\" class=\"ButtonUser\" id=\"ButtonUser " + N + " " + SN + " " + ElementKol  + "\" value=\"" + NewButtonText + "\">" +
@@ -1063,8 +1064,9 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     //----------Создание блока с переменной------
     let Select = document.getElementById("Select");
     DivUserEmailVariable.className = "DivFormUser";
+    DivUserEmailVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + ElementKol);
     DivUserElement.append(DivUserEmailVariable);
-    DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
     DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + SN + " " + ElementKol);
@@ -1164,8 +1166,9 @@ function OnClickSaveNewTextUser(id){//Всплывающая панель.Соз
     if(RecInVariableNumber.checked){
         let Select = document.getElementById("Select");
         DivUserEmailVariable.className = "DivFormUser";
+        DivUserEmailVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + ElementKol);
         DivUserElement.append(DivUserEmailVariable);
-        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     }
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
@@ -1268,8 +1271,9 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     if(RecInVariableNumber.checked){
         let Select = document.getElementById("Select");
         DivUserEmailVariable.className = "DivFormUser";
+        DivUserEmailVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + TN);
         DivUserElement.append(DivUserEmailVariable);
-        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     }
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
@@ -1398,8 +1402,9 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
     if(RecInVariableNumber.checked){
         let Select = document.getElementById("Select");
         DivUserNumberVariable.className = "DivFormUser";
+        DivUserNumberVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + ElementKol);
         DivUserElement.append(DivUserNumberVariable);
-        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserNumberVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     }
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";
@@ -1503,8 +1508,9 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     if(RecInVariableNumber.checked){
         let Select = document.getElementById("Select");
         DivUserNumberVariable.className = "DivFormUser";
+        DivUserNumberVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + TN);
         DivUserElement.append(DivUserNumberVariable);
-        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputOther1\" id=\"UserNumberVariable " + N + " " + SN + " " + TN + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+        DivUserNumberVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserNumberVariable " + N + " " + SN + " " + TN + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     }
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";

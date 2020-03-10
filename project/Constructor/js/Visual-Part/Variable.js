@@ -1,3 +1,9 @@
+var VariableId = 3;
+//используется NumberOfElement
+//используется OnClickImgExit()
+//используется CreateWindowPanel()
+//используется DisabledNavbarBtn()
+
 function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню
@@ -5,7 +11,6 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     let divLabelAddNewVariable = document.createElement('div');//надпись
     let divNewVariable = document.createElement('div');//блок с полем ввода имени новой переменной и надписью к ней
     let divError = document.createElement('div');//Окно с ошибкой
-    let divNewVariableValue = document.createElement('div');//блок с полем ввода значения новой  переменной и надписью к нему
     let formBtn = document.createElement('form');//форма с кнопками
 
     //----------Создание надписи панели -----------
@@ -18,11 +23,6 @@ function OnClickAddNewVariable(id){//Всплывающее окно созда�
     divAddNewInstrumentPanel.append(divNewVariable);
     divNewVariable.innerHTML = "<div style=\"display:inline-block\">Имя переменной:</div>" + 
         "<input type=\"text\" id=\"NewVariableName\" class=\"Input\" onfocus=\"OnFocusNameVariable()\" onblur=\"OnBlurNameVariable()\">";
-    //----------Создание блока ввода значения новой переменной -----------
-    divNewVariableValue.className = "NewVariableValue";
-    divAddNewInstrumentPanel.append(divNewVariableValue);
-    divNewVariableValue.innerHTML = "<div style=\"display:inline-block\">Значение переменной:</div>" +
-        "<input type=\"text\" id=\"NewVariableName\" class=\"Input\">";
     //----------Создание формы с кнопками -----------
     formBtn.setAttribute("id","formBtnNewVariable")
     divAddNewInstrumentPanel.append(formBtn);
@@ -38,7 +38,28 @@ function OnClickNewVariableSaveBtn(id){ //Всплывающее окно. Кн�
     let NewVariableName = document.getElementById("NewVariableName");
     
     if(!NewVariableName.classList.contains('error')){//остальная логика
-
+        let ContainetVariablesPanel = document.getElementById("ContainetVariablesPanel");//окно переменных. список переменных
+        let NewVariableName = document.getElementById("NewVariableName");//Всплывающее окно. Ввод имени переменных
+        let VariableElement = document.createElement('div');
+        let NameVariable = document.createElement('div');
+        let BtnRemove = document.createElement('div');
+        VariableId++;
+        //---------Создания блока переменной-------
+        VariableElement.className = "VariableElement";
+        VariableElement.setAttribute("id","VariableElement " + VariableId);
+        ContainetVariablesPanel.append(VariableElement);
+        //---------Создания блока c именем переменной-------
+        NameVariable.className = "NameVariable";
+        NameVariable.setAttribute("id","NameVariable " + VariableId);
+        VariableElement.append(NameVariable);
+        NameVariable.innerHTML = NewVariableName.value;
+        //---------Создания кнопки удаления переменной-------
+        BtnRemove.className = "BtnRemove";
+        BtnRemove.setAttribute("id","BtnRemove " + VariableId);
+        BtnRemove.setAttribute("onclick","OnClickRemoveVariable(id)");
+        VariableElement.append(BtnRemove);
+        BtnRemove.innerHTML = "Удалить";
+        OnClickImgExit();
     }
 }
 function OnFocusNameVariable(){//Всплывающее окно. Инпут имени переменной в фокусе
@@ -87,4 +108,46 @@ function OnBlurNameVariable(){//Всплывающее окно. Инпут им
             NewVariableName.classList.add('error');
         }
     }
+}
+function OnClickCloseVariablePanel(){//Окно переменных. кнопка закрыть
+    let VariablesPanel = document.getElementById("VariablesPanel");
+    let NewVariableBtn = document.getElementById("NewVariableBtn");
+    VariablesPanel.setAttribute("hidden","hidden");
+    NewVariableBtn.classList.remove('Active')
+}
+function OnClickOpenPanelVariables(){//Открытие окна переменных
+    let NewVariableBtn = document.getElementById("NewVariableBtn");
+    let VariablesPanel = document.getElementById("VariablesPanel");
+    if(!NewVariableBtn.classList.contains('Active')){
+        VariablesPanel.removeAttribute("hidden");
+        NewVariableBtn.classList.add('Active')
+    }else{
+        VariablesPanel.setAttribute("hidden","hidden");
+        NewVariableBtn.classList.remove('Active')
+    }
+}
+function OnClickRemoveVariable(id){//Окно переменных. Кнопка удаления переменных. Создание всплывающего окно подтверждения
+    CreateWindowPanel();
+    DisabledNavbarBtn()
+
+    let N = NumberOfElement(id);
+    let divAddNewInstrumentPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let formBtn = document.createElement('form');//форма с кнопками
+
+    //----------Создание надписи панели -----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    divAddNewInstrumentPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="При удалении переменной произойдет ее удаление из всех связанных элементов. Вы уверены что хотите удалить переменную?";
+    divAddNewInstrumentPanel.append(formBtn);
+    //----------Создание формы для кнопок и сами кнопки-----------
+    divAddNewInstrumentPanel.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Да\" class=\"AddBtn\" id=\"RemoveVariable " + N + "\"onclick=\"OnClickAcceptRemoveVariable(id)\">" +
+    "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelRemoveVariable\" onclick=\"OnClickImgExit()\">";
+}   
+function OnClickAcceptRemoveVariable(id){
+    Variables = document.getElementsByClassName("InputVariable").length;
+    alert(Variables);
+    OnClickImgExit();
 }

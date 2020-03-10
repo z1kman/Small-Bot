@@ -21,7 +21,7 @@
             <div class="BtnDiv">
                 <div class="NewVariableBtn">
                     <form>
-                        <input type="button" value="Создать переменную" class="Btn"  id="NewVariableBtn" onclick="OnClickAddNewVariable()">
+                        <input type="button" value="Окно переменных" class="Btn"  id="NewVariableBtn" onclick="OnClickOpenPanelVariables()">
                     </form>
                 </div>
                 <div class="TestDiv">
@@ -37,6 +37,47 @@
             </div>
         </div>
 
+                <!---------------------------------->
+
+                <div class = "DivVariables">
+                    <div class = "VariablesPanel" id="VariablesPanel" hidden="hidden">
+                        <span class="TrashImg" id="CloseVariable" title="Закрыть окно переменных" onclick="OnClickCloseVariablePanel()">
+                            <img src="source/constructor/exit.png" alt="удалить" width="16px">
+                        </span>
+                        <div class="LabelBlack">
+                            Окно переменных
+                        </div>
+                        <div class="ContainetVariablesPanel" id="ContainetVariablesPanel">
+                            <div class = "VariableElement" id="VariableElement 1">
+                                <div class = "NameVariable" id="NameVariable 1">
+                                    Text
+                                </div>
+                                <div class = "BtnRemove" id="BtnRemove 1" onclick="OnClickRemoveVariable(id)">
+                                    Удалить
+                                </div>
+                            </div> 
+                            <div class = "VariableElement" id="VariableElement 2">
+                                <div class = "NameVariable" id="NameVariable 2">
+                                    Number
+                                </div>
+                                <div class = "BtnRemove" id="BtnRemove 2" onclick="OnClickRemoveVariable(id)">
+                                    Удалить
+                                </div>
+                            </div>   
+                            <div class = "VariableElement" id="VariableElement 3">
+                                <div class = "NameVariable" id="NameVariable 3">
+                                    Email
+                                </div>
+                                <div class = "BtnRemove" id="BtnRemove 3" onclick="OnClickRemoveVariable(id)">
+                                    Удалить
+                                </div>
+                            </div>   
+                        </div>
+                        <input type="button" class="BtnNewVarible" value="Создать переменную" onclick="OnClickAddNewVariable()">
+                    </div>
+                </div>
+        
+                <!---------------------------------->
             <div class="Scroll" id="Scroll">
                 <div class="JumpContainer" id="JumpContainer">
                 </div>
@@ -87,7 +128,7 @@
                                         </div>
                                     <div class="DivFormUser">
                                             <div class="LabelBlack">Запомнить в:
-                                                <input type="input" class="InputOther1" id="UserNumberVariable 1 1 1" value="Text" readonly="readonly">
+                                                <input type="input" class="InputVariable" id="UserNumberVariable 1 1 1" value="Text" readonly="readonly">
                                             </div>
                                     </div>
                                     <div class="DivJumpIndicator" id="DivJumpIndicator 1 1 1" onmouseover="OnMouseOverDivJump(id)"  onmouseout="OnMouseOutDivJump(id)">
