@@ -3,6 +3,8 @@ var VariableId = 3;
 //используется OnClickImgExit()
 //используется CreateWindowPanel()
 //используется DisabledNavbarBtn()
+//используется SecondNumberOfElement
+//используется ThirdNumberOfElement
 
 function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
@@ -77,7 +79,13 @@ function OnBlurNameVariable(){//Всплывающее окно. Инпут им
     let StrNewVariableName = NewVariableName.value;
     let Num = false;
     let Letter= false;
-
+    if(NewVariableName.value.length > 15){
+        if(!NewVariableName.classList.contains('error')){
+            NewVariableName.classList.add('error');
+        }
+        divError.innerHTML="Ошибка!Название переменной не должно превышать 15 символов";
+        return 0;  
+    }
     if(NewVariableName.value.replace(/\s+/g, '') == ""){//если только пробелы в названии переменной
         if(!NewVariableName.classList.contains('error')){
             NewVariableName.classList.add('error');
@@ -147,7 +155,21 @@ function OnClickRemoveVariable(id){//Окно переменных. Кнопка
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelRemoveVariable\" onclick=\"OnClickImgExit()\">";
 }   
 function OnClickAcceptRemoveVariable(id){
-    Variables = document.getElementsByClassName("InputVariable").length;
-    alert(Variables);
+    let NVariableId = NumberOfElement(id);
+    let Variables = document.getElementsByClassName("InputVariable");
+    let arr = [];
+    for(let i = 0; i< Variables.length; i++){//поиск связанных элементов с переменными
+        arr[i] = Variables[i];
+    }
+    NameVariable = document.getElementById("NameVariable " + NVariableId);
     OnClickImgExit();
+    for(let i = 0; i< arr.length; i++){//удаление всех связанных переменных из элементов
+        if(arr[i].value == NameVariable.innerHTML.replace(/\s/g, '')){
+            let DivFormUser = document.getElementById("DivFormUser " + NumberOfElement(arr[i].getAttribute('id')) + " " +
+                SecondNumberOfElement(arr[i].getAttribute('id')) + " " + ThirdNumberOfElement(arr[i].getAttribute('id')));//переменная на панели
+            DivFormUser.remove();
+        }
+    }
+    let VariableElement = document.getElementById("VariableElement " + NVariableId);//переменная в окне переменных
+    VariableElement.remove();
 }

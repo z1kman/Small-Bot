@@ -337,14 +337,14 @@ function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно 
 }
 function OnClickNextNewNumberUser(id){//Всплывающее окно. Действие добавление числа. Кнопка далее
     //обработка исключительных ситуаций
-    InputNumber = document.getElementById("InputNumber");//комбобокс ввод числа(возможно ввод определенного числа);
-    RangeNumber = document.getElementById("RangeNumber");//комбобокс ввод диапазона чисел
-    MaskNumber = document.getElementById("MaskNumber");//комбобокс ввод числа по маске
-    NumberCheckbox = document.getElementById("NumberCheckbox");//чекбокс ввод определенного числа
-    ErrorNewNumber = document.getElementById("ErrorNewNumber");//блок для вывода ошибок
+    let InputNumber = document.getElementById("InputNumber");//комбобокс ввод числа(возможно ввод определенного числа);
+    let RangeNumber = document.getElementById("RangeNumber");//комбобокс ввод диапазона чисел
+    let MaskNumber = document.getElementById("MaskNumber");//комбобокс ввод числа по маске
+    let NumberCheckbox = document.getElementById("NumberCheckbox");//чекбокс ввод определенного числа
+    let ErrorNewNumber = document.getElementById("ErrorNewNumber");//блок для вывода ошибок
 
-    InputNumber1 = document.getElementById("InputNumber 1");//поле ввода первого диапазона
-    InputNumber2 = document.getElementById("InputNumber 2");//поле ввода второго диапазона
+    let InputNumber1 = document.getElementById("InputNumber 1");//поле ввода первого диапазона
+    let InputNumber2 = document.getElementById("InputNumber 2");//поле ввода второго диапазона
     MaskInputNumber = document.getElementById("MaskInputNumber");//поле ввода маски
     if(InputNumber.checked == true && NumberCheckbox.checked == true &&  IndicatedNumber.value == ""){
         ErrorNewNumber.innerHTML = "Ошибка! Укажите необходимое число";
@@ -370,7 +370,7 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         let DivIndicatedVariableNumber = document.createElement('div');
         let LabelError = document.createElement('div');
         let formBtn = document.createElement('form');//форма с кнопками\
-        
+
         let AddNewPanel = document.getElementById("AddNewPanel");
         let divNewInstrumentPanel = document.getElementById("NewInstrumentPanel");        
         let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий
@@ -413,11 +413,19 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
             DivIndicatedVariableNumber.setAttribute("hidden","hidden"); 
         }
         DivRecInVariableNumber.append(DivIndicatedVariableNumber);
-        DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
-        "<select class=\"Select\" id=\"Select\">" + 
-        "<option>Number</option>" +
-        "</select>"+
-        "</label>";
+        let NameVariable = document.getElementsByClassName("NameVariable");
+        let Label = document.createElement('label');
+        let Select = document.createElement('select');
+        DivIndicatedVariableNumber.append(Label);
+        Label.innerHTML = "Выберите переменную:";
+        Select.className = "Select";
+        Select.setAttribute("id","Select");
+        Label.append(Select);
+        for(let i = 0; i<NameVariable.length; i++){
+            let Option = document.createElement('option');
+            Select.append(Option);
+            Option.innerHTML = NameVariable[i].innerHTML.replace(/\s/g, '');
+        }
         //----------------Создание подписи блока вывода ошибки---------------     
         LabelError.className = "LabelError";
         LabelError.setAttribute("id","ErrorNewNumber");
@@ -476,13 +484,22 @@ function OnClickAddEmailUser(id){//Всплывающее меню. Создан
     divLabelAddNewInstrument.innerHTML="Выберите переменную в которую необходимо записать введеный email";
     //----------Создание блока для выбора переменной-----------
     LabelBlack.className = "LabelBlack";
+    LabelBlack.setAttribute("id","LabelBlack");
     divAddNewInstrumentPanel.append(LabelBlack);
-    LabelBlack.innerHTML = "<label>Выберите переменную:" +
-        "<select class=\"Select\" id=\"Select\">" + 
-        "<option>Email</option>" +
-        "<option>Email2 </option>" +
-        "</select>" + 
-        "</label>";
+    let NameVariable = document.getElementsByClassName("NameVariable");
+    let Label = document.createElement('label');
+    let Select = document.createElement('select');
+    LabelBlack.append(Label);
+    Label.innerHTML = "Выберите переменную:";
+    Select.className = "Select";
+    Select.setAttribute("id","Select");
+    Label.append(Select);
+    for(let i = 0; i<NameVariable.length; i++){
+        let Option = document.createElement('option');
+        Select.append(Option);
+        Option.innerHTML = NameVariable[i].innerHTML.replace(/\s/g, '');
+    }
+
     //----------Создание формы для кнопок и сами кнопки-----------
     divAddNewInstrumentPanel.append(formBtn);
     if(Name == "AddEmailBtnUser"){
@@ -758,12 +775,22 @@ function OnClickNextNewTextUser(id){//Всплывающее меню. Созд�
         DivIndicatedVariableNumber.setAttribute("hidden","hidden");
     }
     DivRecInVariableNumber.append(DivIndicatedVariableNumber);
-    DivIndicatedVariableNumber.innerHTML = "<label>Выберите переменную:" +
-    "<select class=\"Select\" id=\"Select\">" + 
-    "<option>Text</option>" +
-    "<option>Text2</option>" +
-    "</select>"+
-    "</label>";
+    let NameVariable = document.getElementsByClassName("NameVariable");
+    let Label = document.createElement('label');
+    let Select = document.createElement('select');
+    DivIndicatedVariableNumber.append(Label);
+    Label.innerHTML = "Выберите переменную:";
+    Select.className = "Select";
+    Select.setAttribute("id","Select");
+    Label.append(Select);
+    for(let i = 0; i<NameVariable.length; i++){
+        let Option = document.createElement('option');
+        Select.append(Option);
+        Option.innerHTML = NameVariable[i].innerHTML.replace(/\s/g, '');
+    }
+
+
+
     //----------------Создание подписи блока вывода ошибки---------------     
     LabelError.className = "LabelError";
     LabelError.setAttribute("id","ErrorNewNumber");
@@ -1018,8 +1045,31 @@ function OnClickSaveEditEmailUser(id){//Всплывающая панель. Р�
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let Select = document.getElementById("Select");
-    let UserEmailVariable = document.getElementById("UserEmailVariable " + N + " " + SN + " " + TN);
-    UserEmailVariable.value = Select.options[Select.selectedIndex].value;
+    let SelectA = document.getElementById("Select");
+    if(SelectA.value == ''){
+        if(document.getElementById("ErrorNewNumber") != null){
+            document.getElementById("ErrorNewNumber").remove();
+        }
+        let LabelBlack = document.getElementById("LabelBlack")
+        let LabelError = document.createElement('div');
+        LabelBlack.after(LabelError);
+        LabelError.className = "LabelError";
+        LabelError.setAttribute("id","ErrorNewNumber");
+        LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+        return 0;
+    }
+    
+    if(document.getElementById("UserEmailVariable " + N + " " + SN + " " + TN) != null){
+        let UserEmailVariable = document.getElementById("UserEmailVariable " + N + " " + SN + " " + TN);
+        UserEmailVariable.value = Select.options[Select.selectedIndex].value;
+    }else{
+        let DivUserEmailVariable = document.createElement('div');
+        let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
+        DivUserEmailVariable.className = "DivFormUser";
+        DivUserEmailVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + TN);
+        DivJumpIndicator.before(DivUserEmailVariable);
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserEmailVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + SelectA.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+    }
     OnClickImgExit();
     RefreshArrows();//Обновление стрелок
 }
@@ -1033,6 +1083,22 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     let ImgPencilInstrument = document.createElement('div');
     let DivUserEmailVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
+    
+    let SelectA = document.getElementById("Select");
+    if(SelectA.value == ''){
+        if(document.getElementById("ErrorNewNumber") != null){
+            document.getElementById("ErrorNewNumber").remove();
+        }
+        let LabelBlack = document.getElementById("LabelBlack")
+        let LabelError = document.createElement('div');
+        LabelBlack.after(LabelError);
+        LabelError.className = "LabelError";
+        LabelError.setAttribute("id","ErrorNewNumber");
+        LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+        return 0;
+    }
+   
+    
     ElementKol++;
 
     //----------Создание блока в котором размещается кнопка и весь элемент------
@@ -1093,7 +1159,22 @@ function OnClickSaveNewTextUser(id){//Всплывающая панель.Соз
     let IndicatedText = document.getElementById("IndicatedText");
     let RecInVariableNumber = document.getElementById("RecInVariableNumber");
     let TagText = document.getElementById("TagText");
-
+    
+    if(RecInVariableNumber.checked){
+        let Select = document.getElementById("Select");
+        if(Select.value == ''){
+            if(document.getElementById("ErrorNewNumber") != null){
+                document.getElementById("ErrorNewNumber").remove();
+            }
+            let DivRecInVariableNumber = document.getElementById("DivRecInVariableNumber")
+            let LabelError = document.createElement('div');
+            DivRecInVariableNumber.after(LabelError);
+            LabelError.className = "LabelError";
+            LabelError.setAttribute("id","ErrorNewNumber");
+            LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+            return 0;
+        }
+    }
     ElementKol++;
 
     //----------Создание блока в котором размещается кнопка и весь элемент------
@@ -1193,7 +1274,7 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     let DivUserEmailVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
     let DivUserText = document.getElementById("DivUserText " + N + " " + SN + " " + TN);
-    DivUserText.remove();
+    
 
     let InputText = document.getElementById("InputText");
     let TextCheckbox = document.getElementById("TextCheckbox");
@@ -1201,6 +1282,23 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     let RecInVariableNumber = document.getElementById("RecInVariableNumber");
     let TagText = document.getElementById("TagText");
 
+
+    if(RecInVariableNumber.checked){
+        let SelectA = document.getElementById("Select");
+        if(SelectA.value == ''){
+            if(document.getElementById("ErrorNewNumber") != null){
+                document.getElementById("ErrorNewNumber").remove();
+            }
+            let DivRecInVariableNumber = document.getElementById("DivRecInVariableNumber")
+            let LabelError = document.createElement('div');
+            DivRecInVariableNumber.after(LabelError);
+            LabelError.className = "LabelError";
+            LabelError.setAttribute("id","ErrorNewNumber");
+            LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+            return 0;
+        }
+    }
+    DivUserText.remove();
     //----------Создание блока в котором размещается кнопка и весь элемент------
     DivUserElement.className = "DivUserElement";
     DivUserElement.setAttribute("id","DivUserText " + N + " " + SN + " " + TN);
@@ -1327,6 +1425,23 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
     let MaskNumber = document.getElementById("MaskNumber");//радио ввода числа по маске
     let RecInVariableNumber = document.getElementById("RecInVariableNumber");//чекбокс сохранения числа в переменную
 
+
+    if(RecInVariableNumber.checked){
+        let SelectA = document.getElementById("Select");
+        if(SelectA.value == ''){
+            if(document.getElementById("ErrorNewNumber") != null){
+                document.getElementById("ErrorNewNumber").remove();
+            }
+            let DivRecInVariableNumber = document.getElementById("DivRecInVariableNumber")
+            let LabelError = document.createElement('div');
+            DivRecInVariableNumber.after(LabelError);
+            LabelError.className = "LabelError";
+            LabelError.setAttribute("id","ErrorNewNumber");
+            LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+            return 0;
+        }
+    }
+
     ElementKol++;
 
     //----------Создание блока в котором размещается кнопка и весь элемент------
@@ -1417,7 +1532,7 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
     RefreshArrows();//Обновление стрелок
 }
 function OnClickNextEditNumberUser(id){//Всплывающее окно. Редактирование элемента числа. Кнопка сохранить
-    OnClickRemoveNumberUser(id)
+
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
@@ -1434,6 +1549,24 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     let RangeNumber = document.getElementById("RangeNumber");//радио ввода диапазона
     let MaskNumber = document.getElementById("MaskNumber");//радио ввода числа по маске
     let RecInVariableNumber = document.getElementById("RecInVariableNumber");//чекбокс сохранения числа в переменную
+
+    if(RecInVariableNumber.checked){
+        let SelectA = document.getElementById("Select");
+        if(SelectA.value == ''){
+            if(document.getElementById("ErrorNewNumber") != null){
+                document.getElementById("ErrorNewNumber").remove();
+            }
+            let DivRecInVariableNumber = document.getElementById("DivRecInVariableNumber")
+            let LabelError = document.createElement('div');
+            DivRecInVariableNumber.after(LabelError);
+            LabelError.className = "LabelError";
+            LabelError.setAttribute("id","ErrorNewNumber");
+            LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
+            return 0;
+        }
+    }
+    OnClickRemoveNumberUser(id);
+
 
     //----------Создание блока в котором размещается кнопка и весь элемент------
     DivUserElement.className = "DivUserElement";
