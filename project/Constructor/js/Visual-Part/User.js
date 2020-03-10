@@ -298,7 +298,7 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
      }else if(Name == "ImgPencil"){//если открыто через кнопку редактирования
         let TN = ThirdNumberOfElement(id);
         formBtn.innerHTML = "<input type=\"button\" value=\"Далее\" class=\"AddBtn\" id=\"NextEditNumberUser " + N + " " + SN + " " + TN + "\" onclick=\"OnClickNextNewNumberUser(id)\">"+ 
-        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN +  " " + TN + "\" onclick=\"CancelUser(id)\">";
+        "<input type=\"button\" value=\"Отмена\" class=\"AddBtn\" id=\"CancelUser " + N + " " + SN +  " " + TN + "\" onclick=\"OnClickImgExit()\">";
      }
 }
 function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения RadioButton

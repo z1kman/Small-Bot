@@ -3,8 +3,9 @@ var VariableId = 3;
 //используется OnClickImgExit()
 //используется CreateWindowPanel()
 //используется DisabledNavbarBtn()
-//используется SecondNumberOfElement
-//используется ThirdNumberOfElement
+//используется SecondNumberOfElement()
+//используется ThirdNumberOfElement()
+//используется RefreshArrows()
 
 function OnClickAddNewVariable(id){//Всплывающее окно создания новой переменной 
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
@@ -154,7 +155,7 @@ function OnClickRemoveVariable(id){//Окно переменных. Кнопка
     formBtn.innerHTML="<input type=\"button\" value=\"Да\" class=\"AddBtn\" id=\"RemoveVariable " + N + "\"onclick=\"OnClickAcceptRemoveVariable(id)\">" +
     "<input type=\"button\" value=\"Отменить\" class=\"AddBtn\" id=\"CancelRemoveVariable\" onclick=\"OnClickImgExit()\">";
 }   
-function OnClickAcceptRemoveVariable(id){
+function OnClickAcceptRemoveVariable(id){//Всплывающее окно. Соглашение на удаление переменной
     let NVariableId = NumberOfElement(id);
     let Variables = document.getElementsByClassName("InputVariable");
     let arr = [];
@@ -172,4 +173,5 @@ function OnClickAcceptRemoveVariable(id){
     }
     let VariableElement = document.getElementById("VariableElement " + NVariableId);//переменная в окне переменных
     VariableElement.remove();
+    RefreshArrows();
 }
