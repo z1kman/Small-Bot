@@ -3,7 +3,15 @@ var click = 1;//Стрелки. кол-во нажатий в области к�
 var mouse = { Xold:0, Yold:0, x:0,y:0};//Стрелки. для запоминания координат нажатия мыши 
 var flagA = false;//Стрелки. Для проверки режима рисования стрелок
 var IdOfParentJump = "";//Стрелки. Родительский элемент джампера
+var ParentIdNewPanel = "";//Id кнопки создания новой панели
+
 //используется переменная ElementKol из Service.js;
+//используется DisabledNavbarBtn() из Service.js
+//используется NumberOfElement(id) из Service.js;
+//используется SecondNumberOfElement(id) из Service.js;
+//используется переменная  NumberOfPanels из Service.js;
+//используется OnClickImgExit() из Service.js
+
 
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
     let N = NumberOfElement(id);
@@ -142,7 +150,28 @@ function OnClickRemovePanel(id){//удаление панели
     }
 
 }
-function OnClickNewPanelBtn(id){ //создание новой панели
+function OnClickNewPanelBtn(id){ //Всплывающее окно. выбор типа панели
+    CreateWindowPanel();
+    DisabledNavbarBtn();
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let AddNewPanel = document.getElementById("AddNewPanel");
+    let divLabelAddNewInstrument = document.createElement('div');//надпись
+    let formBtn = document.createElement('form');//форма с кнопками
+    ParentIdNewPanel = id;
+    //----------Создание надписи панели выбора действий-----------
+    divLabelAddNewInstrument.className="Label";
+    divLabelAddNewInstrument.setAttribute("id","LabelAddNewInstrument");
+    AddNewPanel.append(divLabelAddNewInstrument);
+    divLabelAddNewInstrument.innerHTML="Выберите тип создаваемой панели";
+    //----------Создание формы для кнопок и сами кнопки-----------
+    AddNewPanel.append(formBtn);
+    formBtn.innerHTML="<input type=\"button\" value=\"Панель действий\" class=\"AddBtn\" id=\"AddNewActionPanel " + N + " " + SN + "\" onclick=\"OnClickNewActionPanel(id)\"> " +
+    "<input type=\"button\" value=\"Панель условий\" class=\"AddBtn\" id=\"AddNewConditionPanel " + N + " " + SN +  "\" onclick=\"OnClickNewConditionPanel(id)\">";
+}
+
+function OnClickNewActionPanel(id){//Создание новой панели действий
+    OnClickImgExit();
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
     let ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
@@ -165,10 +194,10 @@ function OnClickNewPanelBtn(id){ //создание новой панели
    
     NumberOfPanels++;//увеличение кол-ва панелей
     ElementKol++;//увеличение кол-ва элементов(используется в панельном джампере)
-    let ParentNewPanelBtn = document.getElementById(id);
+    let ParentNewPanelBtn = document.getElementById(ParentIdNewPanel);
 
 
-    if(NameOfElement(id) == "ParentNewPanelBtn" && !ParentNewPanelBtn.classList.contains("active")){ //добавление новой секции
+    if(NameOfElement(ParentIdNewPanel) == "ParentNewPanelBtn" && !ParentNewPanelBtn.classList.contains("active")){ //добавление новой секции
         let Section = document.createElement('div');
         let formAddInstrumentBtn = document.createElement('form');
         ParentNewPanelBtn.classList.add("active");
@@ -265,6 +294,7 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
     RefreshArrows();
 }
+
 function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
@@ -387,7 +417,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
 
-                canvas.setAttribute("style","top:" + Number(Panel.offsetTop) + ";left:" + Number(Panel.offsetLeft - 20) + ";"); //---------- Panel.offsetTop + 30
+                canvas.setAttribute("style","top:" + Number(Panel.offsetTop) + ";left:" + Number(Panel.offsetLeft - 20) + ";"); 
             }
             else{
                 click = 1;
