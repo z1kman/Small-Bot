@@ -799,3 +799,15 @@ body{
     cursor: pointer;
     
 }
+.DivInputCondition{
+    margin-top:20px;
+}
+.InputCondition{
+    margin-left: 5px;
+    width: 390px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    font-size: 18px;
+    outline: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
