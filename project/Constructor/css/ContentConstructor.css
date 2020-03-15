@@ -641,7 +641,21 @@ body{
     align-content: flex-end;
 
 }
+
 .JumpIndicator:hover{
+    transition: 0.5s;
+    background-color:rgb(59, 193, 255);
+}
+.JumpIndicatorPanel{
+    margin-top: 5px;
+    border-radius: 50%;
+    border: 1px solid rgb(59, 193, 255);
+    width: 20px;
+    height: 20px;
+    margin-right: 18px;
+
+}
+.JumpIndicatorPanel:hover{
     transition: 0.5s;
     background-color:rgb(59, 193, 255);
 }
@@ -679,6 +693,7 @@ body{
     position: absolute;
     z-index: 1;
     pointer-events: none;
+
 }
 .ActiveCanvas{
     position: relative;

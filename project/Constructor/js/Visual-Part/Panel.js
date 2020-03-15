@@ -3,6 +3,7 @@ var click = 1;//Стрелки. кол-во нажатий в области к�
 var mouse = { Xold:0, Yold:0, x:0,y:0};//Стрелки. для запоминания координат нажатия мыши 
 var flagA = false;//Стрелки. Для проверки режима рисования стрелок
 var IdOfParentJump = "";//Стрелки. Родительский элемент джампера
+//используется переменная ElementKol из Service.js;
 
 function OnClickEditPanelName(id){//редактирование имени панели(скрытие имени панели, появление инпута)
     let N = NumberOfElement(id);
@@ -160,7 +161,10 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     let divLabelUser = document.createElement('div');//Создание надписи у пользователя("Действие пользователя"(Label))
     let formAddInstrumentBtnUser = document.createElement('form');//Создание формы кнопки добавления инструмента у пользователя("Добавить действие")
     let formNewPanelBtn = document.createElement('form');//Создание формы кнопки добавления новой панели(NewPanelBtn)
+    let DivJumpIndicator = document.createElement('div');//Создание формы для джампера находящегося на панели
+   
     NumberOfPanels++;//увеличение кол-ва панелей
+    ElementKol++;//увеличение кол-ва элементов(используется в панельном джампере)
     let ParentNewPanelBtn = document.getElementById(id);
 
 
@@ -247,6 +251,14 @@ function OnClickNewPanelBtn(id){ //создание новой панели
     formAddInstrumentBtnUser.setAttribute("id","formAddInstrumentBtnUser " + N + " " + NumberOfPanels);
     divUser.append(formAddInstrumentBtnUser);
     formAddInstrumentBtnUser.innerHTML="<input type=\"button\" value=\"Добавить действие\" class=\"AddInstrumentBtn\" id=\"AddInstrumentBtnUser " + N + " "  + NumberOfPanels  + " \" onclick=\"OnClickAddInstrumentBtnUser(id)\">";
+    //----------Создание формы джампера-----------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + NumberOfPanels + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
+    divPanel.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicatorPanel\" id=\"JumpIndicator " + N + " " + NumberOfPanels + " " + ElementKol + "\"" + 
+        "title = \"Создание связи в случае, если ни одно из действий пользователя не выполняется\" onclick =\"OnClickJumpIndicator(id)\"></div>";
     //----------Создание формы кнопки добавления новой панели(NewPanelBtn)----------
     formNewPanelBtn.setAttribute("id","formAddInstrumentBtn " + N + " " + NumberOfPanels);
     divPanel.after(formNewPanelBtn);
@@ -356,26 +368,26 @@ function Jump(id){//Стрелки.Создание стрелок между э
             canvas.className = "canvas";
             canvas.setAttribute("id","Canvas " + N + " " + SN + " " + TN);
             canvas.setAttribute("data-connect",IdOfChildrenJump);
-            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){ //создание канвы и ее позиционирование
+            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){ //создание канвы и ее позиционирование (4ая четверть)
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-                canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
+                canvas.setAttribute("height",Panel.offsetTop + 80 - JumpIndicator.offsetTop);
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){//3я четверть
                 canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop + 20){//2ая четверть
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-                canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
+                canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 20);
 
                 canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){//1ая четверть
                 canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
-                canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 10);
+                canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
 
-                canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(Panel.offsetLeft - 20) + ";");
+                canvas.setAttribute("style","top:" + Number(Panel.offsetTop) + ";left:" + Number(Panel.offsetLeft - 20) + ";"); //---------- Panel.offsetTop + 30
             }
             else{
                 click = 1;
@@ -427,7 +439,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.fill();
             }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
                 ctx.moveTo(canvas.offsetWidth - 20,10);
-                ctx.bezierCurveTo(0, 0, canvas.offsetWidth ,canvas.offsetHeight,0,canvas.offsetHeight - 10)
+                ctx.bezierCurveTo(0, 0, canvas.offsetWidth ,canvas.offsetHeight,0,canvas.offsetHeight - 35)
                 //ctx.lineTo(0,canvas.offsetHeight);
                 ctx.stroke();
                 
@@ -440,17 +452,17 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.lineTo(canvas.offsetWidth - 20, 20);
                 ctxArrow.fill();
             }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
-                ctx.moveTo(canvas.offsetWidth - 60,canvas.offsetHeight);
-                ctx.bezierCurveTo(canvas.offsetWidth + 110, canvas.offsetHeight, 0 ,canvas.offsetHeight/4,5,10)
+                ctx.moveTo(canvas.offsetWidth - 60,canvas.offsetHeight - 20);
+                ctx.bezierCurveTo(canvas.offsetWidth + 110, canvas.offsetHeight, 0 ,canvas.offsetHeight/4,5,20)
                 //ctx.lineTo(0,10);
                 ctx.stroke();
 
                 var ctxArrow = canvas.getContext('2d');//стрелка
                 ctxArrow.fillStyle = "rgb(143, 143, 143)";
                 ctxArrow.beginPath();
-                ctxArrow.moveTo(20,10);
-                ctxArrow.lineTo(0,0);
-                ctxArrow.lineTo(0,20);
+                ctxArrow.moveTo(20,20);
+                ctxArrow.lineTo(0,10);
+                ctxArrow.lineTo(0,30);
                 ctxArrow.fill();
             }
 
@@ -509,14 +521,15 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
                 }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-                    Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
+                    Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 20);
                 
                     Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
-                    Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop - 15);
+                    Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
+        
+                    Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop) + ";left:" + Number(Panel.offsetLeft - 20) + ";"); //---------- Panel.offsetTop + 30
 
-                    Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(Panel.offsetLeft - 20) + ";");
                 }
 
                 //Рисование стрелки
@@ -551,7 +564,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     ctxArrow.fill();
                 }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 20,10);
-                    ctx.bezierCurveTo(0, 0, Arrows[i].offsetWidth ,Arrows[i].offsetHeight,0,Arrows[i].offsetHeight - 10)
+                    ctx.bezierCurveTo(0, 0, Arrows[i].offsetWidth ,Arrows[i].offsetHeight,0,Arrows[i].offsetHeight - 35)
                     //ctx.lineTo(0,canvas.offsetHeight);
                     ctx.stroke();
                     
@@ -564,17 +577,17 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     ctxArrow.lineTo(Arrows[i].offsetWidth - 20, 20);
                     ctxArrow.fill();
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
-                    ctx.moveTo(Arrows[i].offsetWidth - 60,Arrows[i].offsetHeight);
-                    ctx.bezierCurveTo(Arrows[i].offsetWidth + 110, Arrows[i].offsetHeight, 0 ,Arrows[i].offsetHeight/4,5,10)
+                    ctx.moveTo(Arrows[i].offsetWidth - 60,Arrows[i].offsetHeight - 20);
+                    ctx.bezierCurveTo(Arrows[i].offsetWidth + 110, Arrows[i].offsetHeight, 0 ,Arrows[i].offsetHeight/4,5,20)
                     //ctx.lineTo(0,10);
                     ctx.stroke();
-
+    
                     var ctxArrow = Arrows[i].getContext('2d');//стрелка
                     ctxArrow.fillStyle = "rgb(143, 143, 143)";
                     ctxArrow.beginPath();
-                    ctxArrow.moveTo(20,10);
-                    ctxArrow.lineTo(0,0);
-                    ctxArrow.lineTo(0,20);
+                    ctxArrow.moveTo(20,20);
+                    ctxArrow.lineTo(0,10);
+                    ctxArrow.lineTo(0,30);
                     ctxArrow.fill();
                 }
 
