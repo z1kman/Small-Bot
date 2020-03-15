@@ -169,7 +169,108 @@ function OnClickNewPanelBtn(id){ //Всплывающее окно. выбор �
     formBtn.innerHTML="<input type=\"button\" value=\"Панель действий\" class=\"AddBtn\" id=\"AddNewActionPanel " + N + " " + SN + "\" onclick=\"OnClickNewActionPanel(id)\"> " +
     "<input type=\"button\" value=\"Панель условий\" class=\"AddBtn\" id=\"AddNewConditionPanel " + N + " " + SN +  "\" onclick=\"OnClickNewConditionPanel(id)\">";
 }
+function OnClickNewConditionPanel(id){//Создание новой панели условий
+    OnClickImgExit();
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let ParentFormAddNewPanel = document.getElementById("formAddInstrumentBtn " + N + " " + SN);
+    let Constructor = document.getElementById("Constructor");
+    let divPanel = document.createElement('div');//Cоздание панели (Panel)
+    let divInputEdit = document.createElement('div');//Cоздание блока поля ввода имени панели (InputEdit)
+    let inputEdit = document.createElement('input');//Создание поля ввода имени панели (Edit)
+    let divTitlePanel = document.createElement('div');//Создание блока имени панели (TitlePanel)
+    let spanNamePanel = document.createElement('span');//Создание подблока имени панели(сама надпись(NamePanel))
+    let spanImgPencil = document.createElement('span');//Создание блока изображения карандаша(редактирование имени палени(ImgPencil))
+    let spanImgTrash = document.createElement('span')//Создание блока изображения мусорки(удаление панели(TrashImg))
+    let divCondition = document.createElement('div');
+    let divLabelCondition = document.createElement('div');    
+    let formAddCondition = document.createElement('form');
+    let formNewPanelBtn = document.createElement('form');//Создание формы кнопки добавления новой панели(NewPanelBtn)
 
+    NumberOfPanels++;//увеличение кол-ва панелей
+    ElementKol++;//увеличение кол-ва элементов(используется в панельном джампере)
+    let ParentNewPanelBtn = document.getElementById(ParentIdNewPanel);
+
+
+    if(NameOfElement(ParentIdNewPanel) == "ParentNewPanelBtn" && !ParentNewPanelBtn.classList.contains("active")){ //добавление новой секции
+        let Section = document.createElement('div');
+        let formAddInstrumentBtn = document.createElement('form');
+        ParentNewPanelBtn.classList.add("active");
+
+        //----------Создание новой секции-----------
+        NumberOfSection++;//увеличение кол-ва секций
+        Section.className = "Section";
+        Section.setAttribute("id","Section " + NumberOfSection);
+        Constructor.append(Section);
+        //----------Создание новой формы с кнопкой добавления новых панелей-----------
+        formAddInstrumentBtn.setAttribute("id","formAddInstrumentBtn " + NumberOfSection + " " + "0" );
+        formAddInstrumentBtn.className = "FormAddInstrumentBtn";
+        Section.append(formAddInstrumentBtn);
+        formAddInstrumentBtn.innerHTML =  "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"ParentNewPanelBtn " + NumberOfSection + " " + "0\" onclick=\"OnClickNewPanelBtn(id)\">";
+
+    }
+
+   //----------Создание панели (Panel)-----------
+    divPanel.className="Panel";
+    divPanel.setAttribute("id","Panel " + N  + " " + NumberOfPanels)
+    ParentFormAddNewPanel.after(divPanel);
+    //----------Cоздание блока поля ввода имени панели (InputEdit)-----------
+    divInputEdit.className="InputEdit";
+    divInputEdit.setAttribute("id","InputEdit " + N  + " " + NumberOfPanels);
+    divInputEdit.setAttribute("hidden","hidden");
+    divInputEdit.setAttribute("onclick","OnClickInputEdit(id)");
+    divPanel.prepend(divInputEdit);
+    //----------Создание поля ввода имени панели (Edit)-----------
+    inputEdit.className="Edit";
+    inputEdit.setAttribute("id","Edit " + N  + " " + NumberOfPanels);
+    inputEdit.setAttribute("type","text;");
+    inputEdit.setAttribute("maxlength","28");
+    divInputEdit.prepend(inputEdit);
+    //----------Создание блока имени панели (TitlePanel)-----------
+    divTitlePanel.className="TitlePanel";
+    divTitlePanel.setAttribute("id","EditNamePanel " + N  + " " + NumberOfPanels);
+    divTitlePanel.setAttribute("onclick","OnClickEditPanelName(id)");
+    divTitlePanel.setAttribute("onmouseover","OnMouseOverEditPanelName(id)");
+    divTitlePanel.setAttribute("onmouseout","OnMouseOutEditPanelName(id)");
+    divPanel.append(divTitlePanel);
+    //----------Создание подблока имени панели(сама надпись(NamePanel))-----------
+    spanNamePanel.className="NamePanel";
+    spanNamePanel.setAttribute("id","NamePanel " + N  + " " + NumberOfPanels);
+    divTitlePanel.append(spanNamePanel);
+    spanNamePanel.innerHTML="Панель " + NumberOfPanels; 
+    //----------Создание блока изображения карандаша(редактирование имени палени(ImgPencil))-----------  
+    spanImgPencil.className = "ImgPencil";
+    spanImgPencil.setAttribute("style","opacity: 0;");
+    spanImgPencil.setAttribute("id","ImgPencil " + N  + " " + NumberOfPanels);
+    divTitlePanel.append(spanImgPencil);
+    spanImgPencil.innerHTML="<img src=\"source/constructor/pencil.png\" alt=\"Редактировать\" width=\"16px\">";
+    //----------Создание блока изображения мусорки(удаление панели(TrashImg))-----------  
+    spanImgTrash.className="TrashImg";
+    spanImgTrash.setAttribute("id","TrashImg " + N  + " " + NumberOfPanels);
+    spanImgTrash.setAttribute("title","удалить эту панель");
+    spanImgTrash.setAttribute("onclick","OnClickRemovePanel(id)");
+    divPanel.append(spanImgTrash);
+    spanImgTrash.innerHTML="<img src=\"source/constructor/trash.png\" alt=\"удалить\" width=\"16px\">"
+    //----------Создание блока условий-----------
+    divCondition.className = "Condition";
+    divCondition.setAttribute("id","Condition "+  + N  + " " + NumberOfPanels);
+    divPanel.append(divCondition);
+    //----------Создание надписи условий-----------
+    divLabelCondition.className = "Label";
+    divCondition.append(divLabelCondition);
+    divLabelCondition.innerHTML="Условие";
+    //----------Создание формы кнопки добавления условий-----------
+    formAddCondition.setAttribute("id","formAddCondition " + N + " " + NumberOfPanels);
+    divCondition.append(formAddCondition);
+    formAddCondition.innerHTML="<input type=\"button\" value=\"Добавить условие\" class=\"AddConditionBtn\" id=\"AddConditionBtn " + N + " " + NumberOfPanels  + "\" onclick=\"OnClickAddConditionBtn(id)\">";
+   
+    //----------Создание формы кнопки добавления новой панели(NewPanelBtn)----------
+    formNewPanelBtn.setAttribute("id","formAddInstrumentBtn " + N + " " + NumberOfPanels);
+    divPanel.after(formNewPanelBtn);
+    formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
+    RefreshArrows();
+  
+}
 function OnClickNewActionPanel(id){//Создание новой панели действий
     OnClickImgExit();
     let N = NumberOfElement(id);
@@ -294,7 +395,6 @@ function OnClickNewActionPanel(id){//Создание новой панели д
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
     RefreshArrows();
 }
-
 function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);

@@ -118,6 +118,12 @@ body{
     border-radius: 5px;
     border: 1px dashed rgba(1, 140, 204, 0.582);
 }
+.Condition{
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 1px dashed rgba(1, 140, 204, 0.582);
+    padding: 5px;
+}
 .FormAddInstrumentBtn{
     width:450px;
 }
@@ -153,6 +159,24 @@ body{
     outline: none;
 }
 .AddInstrumentBtn:hover{
+    color: white;
+    background-color: rgb(0, 174, 255);
+    transition: 0.3s;
+}
+.AddConditionBtn{
+    margin-left: 73px;
+    margin-top: 10px;
+    font-family: 'Candara', 'Times New Roman';
+    color: rgb(0, 142, 207);
+    border-radius: 20px;
+    width:250px;
+    height: 40px; 
+    font-size:21px;
+    background-color: rgba(0, 174, 255, 0);
+    border-style: none;
+    outline: none; 
+}
+.AddConditionBtn:hover{
     color: white;
     background-color: rgb(0, 174, 255);
     transition: 0.3s;

@@ -98,54 +98,14 @@
                             <span class="TrashImg" id="TrashImg 1 1" title="удалить эту панель" onclick="OnClickRemovePanel(id)">
                                 <img src="source/constructor/trash.png" alt="удалить" width="16px">
                             </span>
-                            <div class="Bot" id="Bot 1 1">
+                            <div class="Condition" id="Condition 1 1">
                                 <div class="Label"> 
-                                    Действие чат бота
+                                  Условия
                                 </div>
-                                <form id="formAddInstrumentBtnBot 1 1">
-                                    <input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnBot 1 1" onclick="OnClickAddInstrumentBtnBot(id)">
+                                <form id="formAddCondition 1 1">
+                                    <input type="button" value="Добавить условие" class="AddConditionBtn" id="AddConditionBtn 1 1" onclick="OnClickAddConditionBtn(id)">
                                 </form>
                             </div>
-                            <div class="User" id="User 1 1">
-                                <div class="Label">
-                                    Действие пользователя
-                                </div>
-                              <!-- 11-->
-                                <div class="DivUserElement" id="DivUserNumber 1 1 1" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)">
-                                    <div class="LabelElementUser">Ввод текста в диапазоне</div>
-                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 100;" title="удалить этот элемент" onclick="OnClickRemoveNumberUser(id)">
-                                        <img src="source/constructor/trash.png" alt="удалить" width="16px">
-                                    </span>
-                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 100;" title="Редактировать этот элемент" onclick="OnClickAddNumberUser(id)">
-                                        <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
-                                    </div>
-                                        <div class ="RangeNumberUser">
-                                            <div class="LabelBlack">Диапазон:
-                                                <label>от<input type="number" class="InputNumber" id="InputNumberUserOne 1 1 1" readonly="readonly" ></label>
-                                                <label>до<input type="number" class="InputNumber" id="InputNumberUserTwo 1 1 1" readonly="readonly"></label>
-                                            </div>
-                                        </div>
-                                    <div class="DivFormUser" id="DivFormUser 1 1 1">
-                                            <div class="LabelBlack">Запомнить в:
-                                                <input type="input" class="InputVariable" id="UserNumberVariable 1 1 1" value="Text" readonly="readonly">
-                                            </div>
-                                    </div>
-                                    <div class="DivJumpIndicator" id="DivJumpIndicator 1 1 1" onmouseover="OnMouseOverDivJump(id)"  onmouseout="OnMouseOutDivJump(id)">
-                                        <div class="JumpIndicator" id="JumpIndicator 1 1 1" onclick ="OnClickJumpIndicator(id)"></div>
-
-                                    </div>
-                                </div>
-                              <!--11-->
-                                <form id="formAddInstrumentBtnUser 1 1" >
-                                    <input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnUser 1 1" onclick="OnClickAddInstrumentBtnUser(id)">
-                                </form>
-                            </div>
-                             <!---------------------------------->
-                            <div class="DivJumpIndicator" id="DivJumpIndicator 1 1 2" onmouseover="OnMouseOverDivJump(id)"  onmouseout="OnMouseOutDivJump(id)">
-                                        <div class="JumpIndicatorPanel" id="JumpIndicator 1 1 2" title = "Создание связи в случае, если ни одно из действий пользователя не выполняется" onclick ="OnClickJumpIndicator(id)"></div>
-                             </div>
-
-                              <!---------------------------------->
                         </div>
 
                         
