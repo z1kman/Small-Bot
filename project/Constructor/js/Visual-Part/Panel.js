@@ -498,22 +498,22 @@ function Jump(id){//Стрелки.Создание стрелок между э
             canvas.className = "canvas";
             canvas.setAttribute("id","Canvas " + N + " " + SN + " " + TN);
             canvas.setAttribute("data-connect",IdOfChildrenJump);
-            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){ //создание канвы и ее позиционирование (4ая четверть)
+            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20> JumpIndicator.offsetTop){ //создание канвы и ее позиционирование (4ая четверть)
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",Panel.offsetTop + 80 - JumpIndicator.offsetTop);
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){//3я четверть
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 > JumpIndicator.offsetTop){//3я четверть
                 canvas.setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
                 canvas.setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
 
                 canvas.setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop + 20){//2ая четверть
+            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop + 20){//2ая четверть
                 canvas.setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 20);
 
                 canvas.setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){//1ая четверть
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 < JumpIndicator.offsetTop){//1ая четверть
                 canvas.setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
                 canvas.setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
 
@@ -541,7 +541,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
 
             ctx.strokeStyle = "rgb(143, 143, 143)";
             ctx.beginPath();
-            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){//рисование самого отрезка
+            if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20 > JumpIndicator.offsetTop){//рисование самого отрезка
                 ctx.moveTo(0,0);
                 ctx.bezierCurveTo(canvas.offsetWidth, 0, 0,canvas.offsetHeight,canvas.offsetWidth - 20,canvas.offsetHeight - 10)
                 //ctx.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight - 10);
@@ -554,7 +554,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight -20);
                 ctxArrow.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight);
                 ctxArrow.fill();
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 > JumpIndicator.offsetTop){
                 ctx.moveTo(canvas.offsetWidth - 30,0);
                 ctx.bezierCurveTo(canvas.offsetWidth + 110,canvas.offsetHeight, 0,0,5,canvas.offsetHeight - 10);
                 //ctx.lineTo(0,canvas.offsetHeight - 10);
@@ -567,7 +567,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.lineTo(0,canvas.offsetHeight -20);
                 ctxArrow.lineTo(0,canvas.offsetHeight);
                 ctxArrow.fill();
-            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                 ctx.moveTo(canvas.offsetWidth - 20,10);
                 ctx.bezierCurveTo(0, 0, canvas.offsetWidth ,canvas.offsetHeight,0,canvas.offsetHeight - 35)
                 //ctx.lineTo(0,canvas.offsetHeight);
@@ -581,7 +581,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.lineTo(canvas.offsetWidth - 20 , 0);
                 ctxArrow.lineTo(canvas.offsetWidth - 20, 20);
                 ctxArrow.fill();
-            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
+            }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                 ctx.moveTo(canvas.offsetWidth - 60,canvas.offsetHeight - 20);
                 ctx.bezierCurveTo(canvas.offsetWidth + 110, canvas.offsetHeight, 0 ,canvas.offsetHeight/4,5,20)
                 //ctx.lineTo(0,10);
@@ -640,21 +640,21 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                 let ctx = Arrows[i].getContext("2d");
                 ctx.clearRect(0,0,Arrows[i].offsetWidth,Arrows[i].offsetHeight);//очистка канвы
                 //редактирование канвы и ее позиционирования
-                if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){ 
+                if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20 > JumpIndicator.offsetTop){ 
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                     Arrows[i].setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
-                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 > JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
                     Arrows[i].setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
                 
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
-                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                     Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 20);
                 
                     Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
-                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
                     Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
         
@@ -666,7 +666,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
 
                 ctx.strokeStyle = "rgb(143, 143, 143)";
                 ctx.beginPath();
-                if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop > JumpIndicator.offsetTop){//рисование самого отрезка
+                if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20 > JumpIndicator.offsetTop){//рисование самого отрезка
                     ctx.moveTo(0,0);
                     ctx.bezierCurveTo(Arrows[i].offsetWidth, 0, 0,Arrows[i].offsetHeight,Arrows[i].offsetWidth - 20,Arrows[i].offsetHeight - 10)
                     //ctx.lineTo(canvas.offsetWidth - 20,canvas.offsetHeight - 10);
@@ -679,7 +679,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     ctxArrow.lineTo(Arrows[i].offsetWidth - 20,Arrows[i].offsetHeight -20);
                     ctxArrow.lineTo(Arrows[i].offsetWidth - 20,Arrows[i].offsetHeight);
                     ctxArrow.fill();
-                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop > JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20> JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 30,0);
                     ctx.bezierCurveTo(Arrows[i].offsetWidth + 110,Arrows[i].offsetHeight, 0,0,5,Arrows[i].offsetHeight - 10);
                     //ctx.lineTo(0,canvas.offsetHeight - 10);
@@ -692,7 +692,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     ctxArrow.lineTo(0,Arrows[i].offsetHeight -20);
                     ctxArrow.lineTo(0,Arrows[i].offsetHeight);
                     ctxArrow.fill();
-                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 20,10);
                     ctx.bezierCurveTo(0, 0, Arrows[i].offsetWidth ,Arrows[i].offsetHeight,0,Arrows[i].offsetHeight - 35)
                     //ctx.lineTo(0,canvas.offsetHeight);
@@ -706,7 +706,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                     ctxArrow.lineTo(Arrows[i].offsetWidth - 20 , 0);
                     ctxArrow.lineTo(Arrows[i].offsetWidth - 20, 20);
                     ctxArrow.fill();
-                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop < JumpIndicator.offsetTop){
+                }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     ctx.moveTo(Arrows[i].offsetWidth - 60,Arrows[i].offsetHeight - 20);
                     ctx.bezierCurveTo(Arrows[i].offsetWidth + 110, Arrows[i].offsetHeight, 0 ,Arrows[i].offsetHeight/4,5,20)
                     //ctx.lineTo(0,10);
