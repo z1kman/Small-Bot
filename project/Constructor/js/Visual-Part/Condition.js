@@ -4,6 +4,7 @@
 //Используется  ThirdNumberOfElement(id) из Service.js
 //Используется  CreateWindowPanel() из Service.js
 //Используется  DisabledNavbarBtn() из Service.js
+//Используется  RemoveArrowFromElement(id) из Service.js
 //Используется  переменная ElementKol из Service.js
 
 
@@ -136,22 +137,7 @@ function OnClickRemoveCondition(id){//Панель. Удаление элеме�
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivConditionElement = document.getElementById("DivConditionElement " + N + " " + SN + " " + TN);
-
-    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
-    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
-        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
-        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
-        if(JumpIndicator.classList.contains('Active')){
-            JumpIndicator.classList.remove('Active')
-        }
-        ReplaceAttribute(id);
-        Panel.removeAttribute('data-connect');
-        RemoveConnect.remove();
-        Canvas.remove();
-        JumpIndicator.classList.remove('ActiveJumpIndicator');
-    }
-
+    RemoveArrowFromElement(id);
     DivConditionElement.remove();
     RefreshArrows();//Обновление стрелок
 }

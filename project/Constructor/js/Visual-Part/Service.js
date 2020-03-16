@@ -63,3 +63,23 @@ function OnClickImgExit(){//закрытие всплывающего окна
     EnabledNavbarBtn();
     TagKol = 0;
 }
+function RemoveArrowFromElement(id){
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let TN = ThirdNumberOfElement(id);
+
+    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
+    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
+        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
+        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
+        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
+        if(JumpIndicator.classList.contains('Active')){
+            JumpIndicator.classList.remove('Active')
+        }
+        ReplaceAttribute(id);
+        Panel.removeAttribute('data-connect');
+        RemoveConnect.remove();
+        Canvas.remove();
+        JumpIndicator.classList.remove('ActiveJumpIndicator');
+    }
+}

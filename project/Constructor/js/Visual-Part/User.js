@@ -1,3 +1,13 @@
+//Используется  NameOfElement(id) из Service.js
+//Используется  NumberOfElement(id) из Service.js
+//Используется  SecondNumberOfElement(id) из Service.js
+//Используется  ThirdNumberOfElement(id) из Service.js
+//Используется  CreateWindowPanel() из Service.js
+//Используется  DisabledNavbarBtn() из Service.js
+//Используется  RemoveArrowFromElement(id) из Service.js
+//Используется  переменная ElementKol из Service.js
+//Используется  переменная TagKol из Service.js
+
 function CancelUser(id){//Всплывающее окно. Отмена создания какого либо элемента у пользователя
     
     if( NameOfElement(id) == "CancelUserNewText" || NameOfElement(id) == "CancelUserNewNumber"){
@@ -981,21 +991,9 @@ function OnClickRemoveButtonUser(id){//Панель. Удаление кнопк
     let TN = ThirdNumberOfElement(id);
     let DivUserButton = document.getElementById("DivUserButton " + N + " " + SN + " " + TN);
     let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN + " " + TN);
+    
+    RemoveArrowFromElement(id);
 
-        
-    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
-        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
-        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
-        if(JumpIndicator.classList.contains('Active')){
-            JumpIndicator.classList.remove('Active')
-        }
-        ReplaceAttribute(id);
-        Panel.removeAttribute('data-connect');
-        RemoveConnect.remove();
-        Canvas.remove();
-        JumpIndicator.classList.remove('ActiveJumpIndicator');
-    }
     DivUserButton.remove();
     RefreshArrows(); 
     
@@ -1022,20 +1020,7 @@ function OnClickRemoveEmailUser(id){//Панель. Удаление Email
     let TN = ThirdNumberOfElement(id);
     let DivUserEmail = document.getElementById("DivUserEmail " + N + " " + SN + " " + TN);
 
-    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
-    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){
-        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
-        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
-        if(JumpIndicator.classList.contains('Active')){
-            JumpIndicator.classList.remove('Active')
-        }
-        ReplaceAttribute(id);
-        Panel.removeAttribute('data-connect');
-        RemoveConnect.remove();
-        Canvas.remove();
-        JumpIndicator.classList.remove('ActiveJumpIndicator');
-    }
+    RemoveArrowFromElement(id);
 
     DivUserEmail.remove();
     RefreshArrows();//Обновление стрелок
@@ -1389,20 +1374,7 @@ function OnClickRemoveTextUser(id){//Панель. Пользователь. У�
     let TN = ThirdNumberOfElement(id);
     let DivUserText = document.getElementById("DivUserText " + N + " " + SN  + " " + TN);
 
-    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
-    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//удаление связи
-        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
-        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
-        if(JumpIndicator.classList.contains('Active')){
-            JumpIndicator.classList.remove('Active')
-        }
-        ReplaceAttribute(id);
-        Panel.removeAttribute('data-connect');
-        RemoveConnect.remove();
-        Canvas.remove();
-        JumpIndicator.classList.remove('ActiveJumpIndicator');
-    }
+    RemoveArrowFromElement(id);
 
     DivUserText.remove();
     RefreshArrows();//Обновление стрелок
@@ -1660,20 +1632,7 @@ function OnClickRemoveNumberUser(id){//Панель. Удаление число
     let SN = SecondNumberOfElement(id);
     let TN = ThirdNumberOfElement(id);
     let DivUserNumber = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN);
-    let JumpIndicator = document.getElementById("JumpIndicator " + N + " " + SN  + " " + TN); 
-    if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//удаление связи
-        let Canvas = document.getElementById("Canvas " + N + " " + SN + " " + TN);
-        let Panel = document.getElementById(Canvas.getAttribute('data-connect'));
-        let RemoveConnect = document.getElementById("RemoveConnect " + N + " " + SN + " " + TN);
-        if(JumpIndicator.classList.contains('Active')){
-            JumpIndicator.classList.remove('Active')
-        }
-        ReplaceAttribute(id);
-        Panel.removeAttribute('data-connect');
-        RemoveConnect.remove();
-        Canvas.remove();
-        JumpIndicator.classList.remove('ActiveJumpIndicator');
-    }
+    RemoveArrowFromElement(id);
     DivUserNumber.remove();
     RefreshArrows();//Обновление стрелок
 }
