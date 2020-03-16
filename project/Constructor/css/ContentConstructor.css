@@ -347,6 +347,11 @@ body{
     display: inline;
     margin-left:5px; 
 }
+.LabelElementCondition{
+    color: black;
+    display: inline;
+    margin-left:5px; 
+}
 .textareaTextBot{
     border-radius: 5px;
     width: 300px;
@@ -645,6 +650,21 @@ body{
     background-color: #F7F8FD ;
     transition: 0.5s;
 }
+.DivConditionElement{
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 350px;
+    border: 1px solid rgb(170, 228, 255);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-left:5px;
+    padding-bottom: 10px;
+}
+.DivConditionElement:hover{
+    background-color: #F7F8FD ;
+    transition: 0.5s;
+}
 .DivJumpIndicator{
     margin-top: 10px;
     height:40px;
@@ -814,4 +834,17 @@ body{
     font-size: 18px;
     outline: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.InputConditionPanel{
+    background-color: rgba(77, 77, 77, 0);
+    border-radius: 5px;
+    border: 1px solid rgb(223, 223, 223);
+    outline: none;
+    width: 300px;   
+    padding: 2px;
+    font-size: 18px;
+}
+.DivInputConditionPanel{
+    margin-top: 15px;
+    margin-left: 5px;
 }

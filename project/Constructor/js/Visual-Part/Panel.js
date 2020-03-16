@@ -395,25 +395,6 @@ function OnClickNewActionPanel(id){//Создание новой панели д
     formNewPanelBtn.innerHTML = "<input type=\"button\" value=\"Добавить панель\" class=\"NewPanelBtn\" id=\"NewPanelBtn " + N + " " + NumberOfPanels + "\" onclick=\"OnClickNewPanelBtn(id)\">";
     RefreshArrows();
 }
-function OnMouseOverUserPanel(id){ //Панель. Мышь над элементом
-    let N = NumberOfElement(id);
-    let SN = SecondNumberOfElement(id);
-    let TN = ThirdNumberOfElement(id);
-    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN );
-    TrashImg.setAttribute("style","opacity: 100;");
-    ImgPencil.setAttribute("style","opacity: 100;");
-}
-function OnMouseOutUserPanel(id){ //Панель. Мышь не над элементом
-    let N = NumberOfElement(id);
-    let SN = SecondNumberOfElement(id);
-    let TN = ThirdNumberOfElement(id);
-    let DivJumpIndicator = document.getElementById("DivJumpIndicator " + N + " " + SN + " " + TN);
-    let TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    let ImgPencil = document.getElementById("ImgPencil " + N + " " + SN + " " + TN )
-    TrashImg.setAttribute("style","opacity: 0;");
-    ImgPencil.setAttribute("style","opacity: 0;");
-}
 function OnClickJumpIndicator(id){//нажатие на JumpIndicator
     
     let JumpIndicator = document.getElementById(id);
