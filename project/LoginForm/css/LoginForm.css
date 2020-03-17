@@ -1,0 +1,73 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    font-size: larger;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+}
+.LoginForm{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
+}
+.FormAutorization{
+    background-color: white;
+    width: 400px;
+    height: 450px;
+    border-radius: 10px;
+    text-align: center;
+}
+.MainLabel{
+    margin-top: 50px;
+    font-size: 24px;
+    height: 40px;
+}
+.InputForm{
+    margin-top: 30px;
+    width: 100%;
+}
+.Input{
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    border: 1px solid rgb(235, 235, 235);
+    outline: none;
+    width: 250px;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px;
+}
+.SignInButton{
+    border-radius: 20px;
+    font-size: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border: 1px solid rgb(0, 195, 255);
+    background-color: rgba(243, 243, 243, 0);
+    color: rgb(0, 195, 255);
+    font-family: 'Candara', 'Times New Roman';
+    outline: none;
+    margin-top: 20px;
+}
+.SignInButton:hover{
+    background-color: rgb(0, 195, 255);
+    color: white;
+    transition: 0.3s;
+}
+.RegistrationBlock{
+    font-size: 15px;
+    margin-top:40px;
+}
+.Link{
+    outline: none;
+    color: rgb(0, 195, 255);
+    text-decoration: none;
+}
+.Link:hover{
+    color: rgb(0, 152, 199);
+}
+.BackToIndex{
+    font-size: 15px;
+    margin-top:20px; 
+    color: rgb(0, 87, 114);
+}
