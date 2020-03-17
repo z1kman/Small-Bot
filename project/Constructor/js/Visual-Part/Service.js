@@ -83,3 +83,4 @@ function RemoveArrowFromElement(id){
         JumpIndicator.classList.remove('ActiveJumpIndicator');
     }
 }
+
