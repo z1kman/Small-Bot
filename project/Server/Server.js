@@ -1,20 +1,32 @@
-const http = require("http");
-const fs = require("fs");
-  
-http.createServer(function(request, response){
-      
-    console.log(`Запрошенный адрес: ${request.url.substr(1)}`);//вывод адреса в консоль
-    const filePath = '../' + request.url.substr(1);//Запоминаем полный путь
-    fs.access(filePath, fs.constants.R_OK, err => {//проверка доступности для чтения (путь к файлу, опция относительно которой проверяется(в данном случае проверка прав на чтение из файла), объект ошибки)
-        // если произошла ошибка - отправляем статусный код 404
-        if(err){
-            response.statusCode = 404;
-            response.end("Resourse not found!");
-        }
-        else{
-            fs.createReadStream(filePath).pipe(response);//создание потока для чтения
-        }
-      });
-}).listen(3000, function(){
-    console.log("Server started at 3000");
+const express = require("../Expressapp/node_modules/express");
+const app = express();
+app.get("/", function(request, response){
+    let Path = __dirname.substr(0, __dirname.length - 6);
+    response.sendFile(Path + "index.html");
 });
+app.use("/", express.static("../"));
+
+app.get("/main", function(request, response){
+    let Path = __dirname.substr(0, __dirname.length - 6);
+    response.sendFile(Path + "index.html");
+});
+app.use("/main", express.static("../"));
+
+app.get("/constructor", function(request, response){
+    let Path = __dirname.substr(0, __dirname.length - 6);
+    response.sendFile(Path + "Constructor/constructor.html");
+});
+app.use("/constructor", express.static("../"));
+
+app.get("/contacts", function(request, response){
+    let Path = __dirname.substr(0, __dirname.length - 6);
+    response.sendFile(Path + "Contacts/contacts.html");
+});
+app.use("/contacts", express.static("../"));
+
+app.get("/login", function(request, response){
+    let Path = __dirname.substr(0, __dirname.length - 6);
+    response.sendFile(Path + "LoginForm/LoginForm.html");
+});
+app.use("/login", express.static("../"));
+app.listen(3000);
