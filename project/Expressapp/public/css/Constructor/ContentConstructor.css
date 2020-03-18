@@ -499,10 +499,10 @@ body{
 	position: absolute;
 	left: 0;
 	bottom: 1px;
-	background: url(../source/constructor/radio-1.png) 0 0 no-repeat;
+	background: url(../../source/constructor/radio-1.png) 0 0 no-repeat;
 }
 .FormRadio input[type=radio]:checked + label:before {
-    background: url(../source/constructor/radio-2.png) 0 0 no-repeat;
+    background: url(../../source/constructor/radio-2.png) 0 0 no-repeat;
     transition: 0.3s;
 }
 .FormRadio label:hover:before {
@@ -528,10 +528,10 @@ body{
 	position: absolute;
 	left: 0;
 	bottom: 1px;
-	background: url(../source/constructor/check-1.png) 0 0 no-repeat;
+	background: url(../../source/constructor/check-1.png) 0 0 no-repeat;
 }
 .FormCheckbox input[type=checkbox]:checked + label:before {
-    background: url(../source/constructor/check-2.png) 0 0 no-repeat;
+    background: url(../../source/constructor/check-2.png) 0 0 no-repeat;
     transition: 0.3s;
 }
 .FormCheckbox label{
