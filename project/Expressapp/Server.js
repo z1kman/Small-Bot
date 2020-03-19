@@ -18,11 +18,21 @@ app.get("/contacts", function(request, response){
 app.get("/login", function(request, response){
     response.sendFile(__dirname + "/views/LoginForm.html");
 });
-app.post(("/login"), urlencodedParser, function(request, response){
+app.post(("/login"), urlencodedParser, function(request, response){//получение ответа с данными от формы входа
     if(!request.body){
         return response.sendStatus(400);
     }
     console.log(request.body);//данные введеные на странице логина
     response.sendFile(__dirname + "/views/LoginForm.html");
+});
+app.get("/registration", function(request, response){
+    response.sendFile(__dirname + "/views/Registration.html");
+});
+app.post(("/registration"), urlencodedParser, function(request, response){//получение ответа с данными от формы входа
+    if(!request.body){
+        return response.sendStatus(400);
+    }
+    console.log(request.body);//данные введеные на странице логина
+    response.sendFile(__dirname + "/views/Registration.html");
 });
 app.listen(3000);

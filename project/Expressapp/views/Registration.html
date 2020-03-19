@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <title>Регистрация</title>
+        <meta name="viewport" content="width = device-width, initial-scale=1">
+        <script src="js/Registration/Registration.js"></script>
+        <link rel="stylesheet" href="css/Registration/Registration.css">
+    <body> 
+        <div class="RegistrationForm">
+            <div class="Form">
+                <div class = "MainLabel">
+                    Создание аккаунта
+                </div>
+                <form method="post" action="/registration">
+                    <div class="InputForm">
+                            <label>Имя отображаемое на сайте<br/><input type="text" name="NameUser" class="Input" id="NameUserInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
+                            <br />
+                            <label>Email<br/><input type="email" name="email" class="Input" id="EmailInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
+                            <br />
+                            <label>Пароль<br/><input type="password" name="password" class="Input" id="PasswordInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
+                            <br />
+                            <label>Повторите пароль<br/><input type="password" name="passwordRepeat" class="Input" id="PasswordRepeatInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
+                    </div>
+                    <div class="Error" id="Error">
+                    </div>
+                    <input type="submit" class="RegButton" id="RegButton" disabled="disabled" value="Зарегистрироваться"></label>
+                </form>
+                <br />
+                <div class="BackToIndex">
+                    <a href="/main" class="Link">Вернуться на главную</a>
+                </div>
+                <div class="BackToLogin">
+                    <a href="/login" class="Link">Вернуться на страницу входа</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
