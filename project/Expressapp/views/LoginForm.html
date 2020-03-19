@@ -10,12 +10,14 @@
                 <div class = "MainLabel">
                     Войдите в аккаунт
                 </div>
-                <div class="InputForm">
-                        <label>Email<br/><input type="email" class="Input" id="EmailInput"></label>
-                        <br />
-                        <label>Пароль<br/><input type="password" class="Input" id="PasswordInput"></label>
-                </div>
-                <input type="button" class="SignInButton" id="SignInButton" value="Войти"></label>
+                <form method="post" action="/login">
+                    <div class="InputForm">
+                            <label>Email<br/><input type="email" name="email" class="Input" id="EmailInput"></label>
+                            <br />
+                            <label>Пароль<br/><input type="password" name="password" class="Input" id="PasswordInput"></label>
+                    </div>
+                    <input type="submit" class="SignInButton" id="SignInButton" value="Войти"></label>
+                </form>
                 <br />
                 <div class="RegistrationBlock">   
                     <label>Нет аккаунта?<a href="#" class="Link"> Зарегистрироваться</a></label>
