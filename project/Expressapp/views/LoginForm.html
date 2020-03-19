@@ -3,6 +3,7 @@
         <meta charset = "utf-8">
         <title>Войти</title>
         <meta name="viewport" content="width = device-width, initial-scale=1">
+        <script src="js/LoginForm/LoginForm.js"></script>
         <link rel="stylesheet" href="css/Login/LoginForm.css">
     <body> 
         <div class="LoginForm">
@@ -12,11 +13,13 @@
                 </div>
                 <form method="post" action="/login">
                     <div class="InputForm">
-                            <label>Email<br/><input type="email" name="email" class="Input" id="EmailInput"></label>
+                            <label>Email<br/><input type="email" name="email" class="Input" id="EmailInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
                             <br />
-                            <label>Пароль<br/><input type="password" name="password" class="Input" id="PasswordInput"></label>
+                            <label>Пароль<br/><input type="password" name="password" class="Input" id="PasswordInput" onfocus="FocusInput(id)" onblur="BlurInput(id)"></label>
                     </div>
-                    <input type="submit" class="SignInButton" id="SignInButton" value="Войти"></label>
+                    <div class="Error" id="Error">
+                    </div>
+                    <input type="submit" class="SignInButton" id="SignInButton" value="Войти" disabled="disabled"></label>
                 </form>
                 <br />
                 <div class="RegistrationBlock">   

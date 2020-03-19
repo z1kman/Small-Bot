@@ -1,8 +1,11 @@
 const express = require("../Expressapp/node_modules/express");
-const app = express();
 var path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+
+const app = express();
 const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
+var db;
 
 app.use(express.static(path.join(__dirname, 'public')));//подключение css/js и source файлов
 
@@ -21,6 +24,8 @@ app.get("/login", function(request, response){
 app.post(("/login"), urlencodedParser, function(request, response){//получение ответа с данными от формы входа
     if(!request.body){
         return response.sendStatus(400);
+    }else if(request.email == "" || request.password == ""){
+        response.send();
     }
     console.log(request.body);//данные введеные на странице логина
     response.sendFile(__dirname + "/views/LoginForm.html");
@@ -35,4 +40,14 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
     console.log(request.body);//данные введеные на странице логина
     response.sendFile(__dirname + "/views/Registration.html");
 });
-app.listen(3000);
+
+MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера
+if(err){
+        return console.log(err);
+    }
+    console.log("База данных запущена");
+    db = database; 
+    app.listen(3000,function(){
+        console.log("Сервер запущен");
+    });
+})

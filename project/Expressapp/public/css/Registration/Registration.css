@@ -1,3 +1,6 @@
+form{
+    margin:0px;
+}
 body{
     padding: 0px;
     margin: 0px;
@@ -41,7 +44,7 @@ body{
     border-radius: 20px;
     font-size: 20px;
     padding-left: 25px;
-    height: 35px;
+    height: 40px;
     padding-right: 25px;
     border: 1px solid rgb(0, 195, 255);
     background-color: rgba(243, 243, 243, 0);
