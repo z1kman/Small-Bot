@@ -1,8 +1,8 @@
 
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const express = require("../Expressapp/node_modules/express");
-var path = require('path');
-var MongoClient = require('mongodb').MongoClient;
+const path = require('path');
+const MongoClient = require('mongodb').MongoClient;
 const hbs = require("hbs");
 const app = express();
 var db;
@@ -11,6 +11,7 @@ app.set("view engine", "hbs");//установление hbs в качестве
 hbs.registerPartials(__dirname + "/views/partials");//установка путей partials(ов)
 const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
 app.use(express.static(path.join(__dirname, 'public')));//подключение css/js и source файлов
+
 
 app.get("/main", function(request, response){
     response.render(__dirname + "/views/index.hbs");
@@ -33,13 +34,13 @@ app.post(("/login"), urlencodedParser, function(request, response){//получ�
             Error: "Заполните все поля"
         });
     }
-    db.collection('Users').find({"login" : request.body.email, "password" : request.body.password}).toArray(function (err,docs){
+    db.collection('Users').find({"login" : request.body.email, "password" : request.body.password}).toArray(function (err,docs){//обращение к бд и поиск записей
         if(docs.length == 0){//если нет ни одного аккаунта
-            response.render(__dirname + "/views/LoginForm.hbs",{
+            response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
                 Error: "Аккаунт не найден или не существует"
             });
         }else{//если аккаунт был найден
-            //остальная логика
+            response.render(__dirname + "/views/LoginForm.hbs");
         }
     });
 });
