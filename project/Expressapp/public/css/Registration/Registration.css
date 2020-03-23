@@ -84,4 +84,5 @@ body{
 .Error{
     color: rgb(255, 140, 140);
     height: 20px;
+    margin-top:10px;
 }

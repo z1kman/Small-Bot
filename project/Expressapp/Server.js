@@ -1,23 +1,25 @@
+
+var bodyParser = require('body-parser');
 const express = require("../Expressapp/node_modules/express");
 var path = require('path');
-var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-
+const hbs = require("hbs");
 const app = express();
-app.set("view engine", "hbs");//установление hbs в качестве движка представлений
-const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
 var db;
 
+app.set("view engine", "hbs");//установление hbs в качестве движка представлений
+hbs.registerPartials(__dirname + "/views/partials");//установка путей partials(ов)
+const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
 app.use(express.static(path.join(__dirname, 'public')));//подключение css/js и source файлов
 
 app.get("/main", function(request, response){
-    response.sendFile(__dirname + "/views/index.html");
+    response.render(__dirname + "/views/index.hbs");
 });
 app.get("/constructor", function(request, response){
     response.sendFile(__dirname + "/views/constructor.html");
 });
 app.get("/contacts", function(request, response){
-    response.sendFile(__dirname +  "/views/contacts.html");
+    response.render(__dirname +  "/views/contacts.hbs");
 });
 app.get("/login", function(request, response){
     response.render(__dirname + "/views/LoginForm.hbs");
