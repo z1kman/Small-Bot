@@ -82,7 +82,9 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
         }
     })
 });
-
+app.get("/account", function(request, response){
+    response.render(__dirname + "/views/account.hbs");
+});
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера
 if(err){
     console.log("Ошибка.База данных не запущена.");

@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <title>Личный кабинет</title>
+        <meta name="viewport" content="width = device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Account/account.css">
+        <script src="js/Account/Account.js"></script>
+    <body> 
+        <div class="NewInstrumentPanel" id="NewInstrumentPanel" style="visibility:hidden" >
+            <div class="AddNewPanel" id="AddNewPanel">
+                <div class="ImgExit" onclick="OnClickImgExit()">
+                    <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
+                </div>
+                <div class="LabelOther">
+                        Введите название проекта    
+                 </div>
+                    <form>
+                        <input type="input" class="Input">
+                        <br />
+                        <div class="Error">
+                            {{Error}}
+                        </div>
+                        <input type="submit" value="Создать" class="AddBtn">
+                    </form>
+                </div>
+            </div>
+         <div class="Navbar" id="Navbar">
+            <div class="LogoDiv">
+                <a href="/account"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
+                <a href="/account" id="LabelLogo">Small Bot</a>
+            </div>
+             <div class="BtnDiv">
+                <div class="SaveDiv">
+                    <form action="#">
+                        <input type="submit" value="Выйти" class="Btn" id="SaveBtn">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="ProjectPanel">
+
+            <div class="NewProject" onclick="AddNewProject()">
+                     Создать новый проект
+            </div>
+            <div class="ProjectList">
+                <form>  
+                    <input type="submit" class="Project" value="tewtwetwetwetewtwe">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
