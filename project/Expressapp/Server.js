@@ -11,14 +11,26 @@ app.set("view engine", "hbs");//установление hbs в качестве
 hbs.registerPartials(__dirname + "/views/partials");//установка путей partials(ов)
 const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
 app.use(express.static(path.join(__dirname, 'public')));//подключение css/js и source файлов
-
+app.use(bodyParser.json({limit: '50mb'}));//лимит на объем принимаемых данных
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));//лимит на объем принимаемых данных
 
 app.get("/main", function(request, response){
     response.render(__dirname + "/views/index.hbs");
 });
+
+
+
 app.get("/constructor", function(request, response){
-    response.sendFile(__dirname + "/views/constructor.html");
+    response.render(__dirname + "/views/constructor.hbs");
 });
+app.post("/constructor", urlencodedParser, function(request, response){
+    console.log(request.body);
+    response.render(__dirname + "/views/constructor.hbs");
+});
+
+
+
+
 app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
