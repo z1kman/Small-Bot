@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const express = require("../Expressapp/node_modules/express");
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
+const fs = require("fs");
 const hbs = require("hbs");
 const app = express();
 var db;
@@ -21,13 +22,25 @@ app.get("/main", function(request, response){
 
 
 app.get("/constructor", function(request, response){
-    response.render(__dirname + "/views/constructor.hbs");
+    //response.sendFile(__dirname + "/views/constructor.html");
+    response.sendFile(__dirname  + "/views/UsersSource/html/constructor.html");
 });
 app.post("/constructor", urlencodedParser, function(request, response){
-    console.log(request.body);
-    response.render(__dirname + "/views/constructor.hbs");
-});
+    fs.writeFile(__dirname  + "/views/UsersSource/html/constructor.html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){
+        
+        if(error) 
+        {
+            console.log("Ошибка при записи файла:" + error);
+            return;
+        }
+                   
+        console.log("Запись файла завершена. Содержимое файла:");
+        let data = fs.readFileSync(__dirname  + "/views/UsersSource/html/constructor.html",'utf-8');
+        console.log(data);
+    });
+    response.redirect('/constructor');
 
+});
 
 
 
@@ -35,7 +48,7 @@ app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
 app.get("/login", function(request, response){
-    response.render(__dirname + "/views/LoginForm.hbs");
+    response.render(__dirname + "/views/LoginForm.hbs ");
 });
 app.post(("/login"), urlencodedParser, function(request, response){//получение ответа с данными от формы входа
     if(!request.body){
