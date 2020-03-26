@@ -1,4 +1,4 @@
-var VariableId = 3;
+
 //используется NumberOfElement
 //используется OnClickImgExit()
 //используется CreateWindowPanel()

@@ -33,12 +33,18 @@ app.post("/constructor", urlencodedParser, function(request, response){
             console.log("Ошибка при записи файла:" + error);
             return;
         }
-                   
-        console.log("Запись файла завершена. Содержимое файла:");
-        let data = fs.readFileSync(__dirname  + "/views/UsersSource/html/constructor.html",'utf-8');
-        console.log(data);
     });
-    response.redirect('/constructor');
+    fs.writeFile(__dirname  + "/public/UsersSource/var.js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
+        request.body.NumberOfPanels + ";\n ElementKol =" + request.body.ElementKol + "\n NumberOfSection=" + request.body.NumberOfSection + ";", function(error){
+        
+        if(error) 
+        {
+            console.log("Ошибка при записи файла:" + error);
+            return;
+        }
+    });
+     response.redirect('/constructor');
+
 
 });
 
@@ -48,7 +54,7 @@ app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
 app.get("/login", function(request, response){
-    response.render(__dirname + "/views/LoginForm.hbs ");
+    response.render(__dirname + "/views/LoginForm.hbs");
 });
 app.post(("/login"), urlencodedParser, function(request, response){//получение ответа с данными от формы входа
     if(!request.body){

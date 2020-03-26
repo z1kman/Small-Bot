@@ -55,7 +55,7 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     let divLabelTextBot = document.createElement('div');//надпись ("Вывод текста")
     let spanTrashImg = document.createElement('span');//иконка мусорки(удаление элемента)
     let divImgPencilInstrument = document.createElement('div');//иконка карандаша(редактирование элемента)
-    let TextBotTextarea = document.createElement('textarea');//textarea для текста
+    let TextBotTextarea = document.createElement('input');//textarea для текста
     
     ElementKol++;//увеличение числа текстовых элементов
     //----------Создание div(а) внутри которого label,textarea и т.д-----------
@@ -86,8 +86,9 @@ function OnClickNewTextSaveBotBtn(id){//Всплывающее окно и па�
     //----------Создание textarea для текста  и вставка самого текста----------
     TextBotTextarea.className = "textareaTextBot";
     TextBotTextarea.setAttribute("id","textareaTextBot " + N + " " + SN + " " + ElementKol);
+    TextBotTextarea.setAttribute('readonly','readonly');
     divTextBot.append(TextBotTextarea);
-    TextBotTextarea.value = TextTextarea.value;//записать значения из окна создания элемента в сам элемент
+    TextBotTextarea.setAttribute('value',TextTextarea.value);//записать значения из окна создания элемента в сам элемент
     OnClickImgExit();//закрыть окно создания элемента
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
     RefreshArrows()//перерисовка стрелок
@@ -136,7 +137,7 @@ function OnClickEditTextSaveBotBtn(id){ //Всплывающее окно. Ре�
     var TN = ThirdNumberOfElement(id);
     var TextTextarea = document.getElementById("NewTextTextarea");//textarea в окне редактирования
     var TextBotTextarea = document.getElementById("textareaTextBot " + N + " " + SN + " " + TN);//textarea на панели у чат бота
-    TextBotTextarea.value = TextTextarea.value;
+    TextBotTextarea.setAttribute('value',TextTextarea.value);
     OnClickImgExit();
     EnabledNavbarBtn();//включение кнопок находящихся в шапке сайта
     RefreshArrows()//перерисовка стрелок

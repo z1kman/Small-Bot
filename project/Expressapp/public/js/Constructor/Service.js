@@ -1,6 +1,3 @@
-var NumberOfPanels = 1;//Кол-во панелей
-var ElementKol = 2;//кол-во элементов(для индексации - неотражает реальное кол-во элементов)
-var NumberOfSection = 1;//кол-во боковых секций
 var TagKol = 0;//кол-во тегов
 
 function NameOfElement(id){ //получение имени эллемента
@@ -17,6 +14,9 @@ function SecondNumberOfElement(id){ //получение второго номе
 }
 function ThirdNumberOfElement(id){//получение третьего номера эллемента(под элементы панели(кнопки/текст и т.д))
     return(id.split(' ')[3]);
+}
+window.onload = function() {
+    RefreshArrows();
 }
 function DisabledNavbarBtn(){//отключение кнопок находящихся в шапке сайта
     let NewVariableBtn = document.getElementById("NewVariableBtn");//кнопка добавления новой переменной(переменная необходима для блокирования доступа к кнопке)
