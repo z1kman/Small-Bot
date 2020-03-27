@@ -5,9 +5,12 @@ const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const fs = require("fs");
 const hbs = require("hbs");
+const session = require('express-session')
 const app = express();
-var db;
 
+
+var db;//Db Users
+var dbProject;
 app.set("view engine", "hbs");//установление hbs в качестве движка представлений
 hbs.registerPartials(__dirname + "/views/partials");//установка путей partials(ов)
 const urlencodedParser = bodyParser.urlencoded({extended: false});//создание парсера
@@ -44,10 +47,20 @@ app.post("/constructor", urlencodedParser, function(request, response){
         }
     });
      response.redirect('/constructor');
-
-
 });
 
+
+
+app.get("/account", function(request, response){
+    response.render(__dirname + "/views/account.hbs");
+});
+app.post("/account",urlencodedParser,function(request,response){
+    let RandName = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
+    let data = fs.readFileSync("views/constructor.html","utf-8");
+    
+    console.log(request.body.NameProject);
+    console.log(RandName);
+});
 
 
 app.get("/contacts", function(request, response){
@@ -113,9 +126,6 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
         }
     })
 });
-app.get("/account", function(request, response){
-    response.render(__dirname + "/views/account.hbs");
-});
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера
 if(err){
     console.log("Ошибка.База данных не запущена.");
@@ -123,6 +133,7 @@ if(err){
     }
     console.log("База данных запущена");
     db = database.db('Data'); 
+    dbProject = database.db('Project')
     app.listen(3000,function(){
         console.log("Сервер запущен");
     });
