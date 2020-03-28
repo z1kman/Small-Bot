@@ -102,28 +102,86 @@ body{
 .ProjectList{
     width:100%;
 }
-.Project{
-    display: inline-flex;
+.DivProject{
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
-    width: 240px;
-    height: 100px;
+    width: 220px;
+    height: 80px;
     background-color: rgb(233, 244, 255);
     padding: 10px;
     border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     margin-left: 20px;
     color: rgb(114, 114, 114);
     font-size: 20px;
     margin-top: 10px;
+    margin-right: 2px;
+    cursor: default;
+    border: none;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    outline: none;
+    overflow: hidden;
+}
+.BtnProject{ 
+    height: 100px;
+    margin-top: 10px;
+    width:70px;
+}
+.OpenProject{
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 49px;
+    background-color: rgb(233, 244, 255);
+    padding: 10px;
+    border-top-right-radius: 10px;
+    color: rgb(114, 114, 114);
+    font-size: 16px;
+    cursor: default;
+    border: none;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    outline: none;
+    margin-bottom: 2px;
+}
+.DeleteProject{
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 49px;
+    background-color: rgb(233, 244, 255);
+    padding: 10px;
+    border-bottom-right-radius: 10px;
+    color: rgb(114, 114, 114);
+    font-size: 16px;
     cursor: default;
     border: none;
     font-family: 'Segoe UI Light', 'Times New Roman';
     outline: none;
 }
-.Project:hover{
+.FormProject:hover .OpenProject{
     background-color: rgb(0, 174, 255);
     transition: 0.4s;
     color: rgb(255, 255, 255);
+}
+.FormProject:hover .OpenProject:hover{
+    background-color: rgb(46, 189, 255);
+    transition: 0.4s;
+}
+.FormProject:hover .DivProject{
+    background-color: rgb(0, 174, 255);
+    transition: 0.4s;
+    color: rgb(255, 255, 255);
+}
+.FormProject:hover .DeleteProject{
+    background-color: rgb(0, 174, 255);
+    transition: 0.4s;
+    color: rgb(255, 255, 255);
+}
+.FormProject:hover .DeleteProject:hover{
+    background-color: rgb(46, 189, 255);
+    transition: 0.4s;
 }
 .NewProject{
     display: inline-flex;
@@ -188,4 +246,9 @@ body{
     color:rgb(212, 106, 106);
     height: 25px;
     width:100%;
+}
+.FormProject{
+    display: inline-flex;
+    margin: 0px;
+    padding: 0px;
 }

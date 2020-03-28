@@ -26,6 +26,10 @@ function createToken(email){
     var token = jwt.sign({userLogin: email, rand: Rand}, secret);//генерация токена
     return token;
 }
+function createRandomId(){
+    let Rand = Math.floor(Math.random() * (9999999- 1000000) + 1000000);//генерация рандомного числа
+    return(Rand);
+}
 
 app.get("/account", function(request, response){
     if(request.cookies.valueOf == undefined)//если куков нет
@@ -40,7 +44,7 @@ app.get("/account", function(request, response){
                 console.log(err);
                 return;
             }
-            if(docs.length > 0){
+            if(docs.length > 0){//если акаунт найден
                 response.render(__dirname + "/views/account.hbs");
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
@@ -51,9 +55,38 @@ app.get("/account", function(request, response){
     }
 });
 app.post("/account",urlencodedParser,function(request,response){
-    let RandName = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
+    if(request.cookies.valueOf == undefined)//если куков нет
+    {
+        response.redirect('/login');
+    }else{
+        let Token = request.cookies['token'];//токен из куков
+        let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+        db.collection('Users').find({"login" : Login, "token" : Token }).toArray(function (err,docs){//поиск записей в бд с таким же логином и токеном
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(docs.length > 0){//если акаунт найден
+              var cursor= db.collection('Users').find({login: Login});
+              cursor.forEach(function(obj){//то что выдало
+                    console.log(obj._id);
+                })
+              //  db.collection('Projects').insertOne({"id_User": request.body.NameUser, "login" : request.body.email, "password" : request.body.password, "token": Token});//запись нового пользователя в бд
+
+
+
+
+                response.render(__dirname + "/views/account.hbs");
+            }else{//если ни один аккаунт не найден
+                response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
+                    Error: "Необходимо войти в аккаунт"
+                });
+            }
+        });
+    }
+    let RandName = Math.floor(Math.random() * (99999999999 - 10000000000) + 10000000000);
     let data = fs.readFileSync("views/constructor.html","utf-8");
-    
+
     console.log(request.body.NameProject);
     console.log(RandName);
 });
