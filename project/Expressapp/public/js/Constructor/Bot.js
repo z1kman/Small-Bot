@@ -1,3 +1,5 @@
+
+
 function OnClickAddInstrumentBtnBot(id){ //Всплывающее окно. Создание новых эллементов бота
     DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
     CreateWindowPanel()//создание основы всплывающего меню

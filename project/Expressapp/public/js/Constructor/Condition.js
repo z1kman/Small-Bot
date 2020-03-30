@@ -7,7 +7,6 @@
 //Используется  RemoveArrowFromElement(id) из Service.js
 //Используется  переменная ElementKol из Service.js
 
-
 function OnClickAddConditionBtn(id){//Создание всплывающего окна создания условий
     CreateWindowPanel();
     DisabledNavbarBtn();

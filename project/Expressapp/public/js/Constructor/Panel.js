@@ -623,7 +623,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                 //редактирование канвы и ее позиционирования
                 if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20 > JumpIndicator.offsetTop){ 
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
-                    Arrows[i].setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
+                    Arrows[i].setAttribute("height",Panel.offsetTop + 80 - JumpIndicator.offsetTop);
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 > JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));

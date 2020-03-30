@@ -45,7 +45,22 @@ app.get("/account", function(request, response){
                 return;
             }
             if(docs.length > 0){//если акаунт найден
-                response.render(__dirname + "/views/account.hbs");
+                let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+                db.collection('Users').find({login: Login},function(err,cursor){
+                    cursor.forEach(function(obj){
+                        let ProjectString = "";
+                        db.collection('Projects').find({"id_User": obj._id},function(err,projects){
+                            projects.forEach(function(objPr){//массив всех проектов пользователя
+                                ProjectString += "<form class=\"FormProject\"><div class=\"DivProject\">" + objPr.name + "</div><div class=\"BtnProject\"><input type=\"button\" class=\"OpenProject\" value=\"Открыть\" name=\""+ objPr.randName + "\" onclick=\"OpenProject(name)\">" +
+                                "<input type=\"button\" class=\"DeleteProject\" value=\"Удалить\" name=\""+ objPr.randName + "\" onclick=\"DeleteProject(name)\"></div></form>";
+                            });
+                            response.render(__dirname + "/views/account.hbs");
+                            hbs.registerHelper("Project", function(){
+                                return new hbs.SafeString(ProjectString);
+                            });
+                        });//поиск проектов пользователя
+                    });//получение id пользователя который открывает проект
+                });
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
                     Error: "Необходимо войти в аккаунт"
@@ -68,29 +83,37 @@ app.post("/account",urlencodedParser,function(request,response){
                 return;
             }
             if(docs.length > 0){//если акаунт найден
-                let objHtmlLink = "/views/UsersSource/html/" + RandName + ".html";//создание ссылки на html файл
-                let objJsLink = "UsersSource/" + RandName + ".js";//создание ссылки на js файл
-                let fileHtml = fs.readFileSync(__dirname + "/views/constructor.html", "utf8");
-                let cursor= db.collection('Users').find({login: Login});//получение id пользователя который создает новый проект
-                cursor.forEach(function(obj){
-                    db.collection('Projects').insertOne({"id_User": obj._id, "name" : request.body.NameProject, "Obj_html" : objHtmlLink, "Obj_js": objJsLink, 'randName': RandName.toString()});//запись нового проекта в бд
-                })
-                fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink + "\"></script>" + fileHtml , function(error){//создание html файла
-                    if(error) 
-                    {
-                        console.log("Ошибка при записи файла:" + error);
-                        return;
-                    }
-                });
-                fs.writeFile(__dirname  + "/public/" + objJsLink,"var VariableId= 3;\n var NumberOfPanels= 1;\n var ElementKol = 1;\n var NumberOfSection= 1;", function(error){//создание js файла
-                    if(error) 
-                    {
-                        console.log("Ошибка при записи файла:" + error);
-                        return;
-                    }
-                });
-                response.cookie('Project',RandName,{maxAge: 90000000});//устанавка куков
-                response.redirect('/constructor');
+                if(request.body.NameProject != undefined){//если пост запрос от создания нового аккаунта
+                    let objHtmlLink = "/views/UsersSource/html/" + RandName + ".html";//создание ссылки на html файл
+                    let objJsLink = "UsersSource/" + RandName + ".js";//создание ссылки на js файл
+                    let fileHtml = fs.readFileSync(__dirname + "/views/constructor.html", "utf8");
+                    let cursor= db.collection('Users').find({login: Login});//получение id пользователя который создает новый проект
+                    cursor.forEach(function(obj){
+                        db.collection('Projects').insertOne({"id_User": obj._id, "name" : request.body.NameProject, "Obj_html" : objHtmlLink, "Obj_js": objJsLink, 'randName': RandName.toString()});//запись нового проекта в бд
+                    })
+                    fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink + "\"></script>" + fileHtml , function(error){//создание html файла
+                        if(error) 
+                        {
+                            console.log("Ошибка при записи файла:" + error);
+                            return;
+                        }
+                    });
+                    fs.writeFile(__dirname  + "/public/" + objJsLink,"var VariableId= 3;\n var NumberOfPanels= 1;\n var ElementKol = 1;\n var NumberOfSection= 1;", function(error){//создание js файла
+                        if(error) 
+                        {
+                            console.log("Ошибка при записи файла:" + error);
+                            return;
+                        }
+                    });
+                    response.cookie('Project',RandName,{maxAge: 90000000});//устанавка куков
+                    response.redirect('/constructor');
+                }else if(request.body.DeleteProject != undefined)//если пост запрос от удаления проекта
+                {
+                    db.collection('Projects').deleteOne({'randName' : request.body.DeleteProject});
+                    fs.unlinkSync(__dirname + "/public/UsersSource/" + request.body.DeleteProject + ".js");
+                    fs.unlinkSync(__dirname + "/views/UsersSource/html/" + request.body.DeleteProject + ".html");
+                    response.redirect('/account');
+                }
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
                     Error: "Необходимо войти в аккаунт"
