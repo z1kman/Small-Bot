@@ -26,13 +26,13 @@ function createToken(email){
     var token = jwt.sign({userLogin: email, rand: Rand}, secret);//генерация токена
     return token;
 }
-function createRandomId(){
-    let Rand = Math.floor(Math.random() * (9999999- 1000000) + 1000000);//генерация рандомного числа
+function createRandomName(){
+    let Rand = Math.floor(Math.random() * (9999999999- 1000000000) + 1000000000);//генерация рандомного числа
     return(Rand);
 }
 
 app.get("/account", function(request, response){
-    if(request.cookies.valueOf == undefined)//если куков нет
+    if(request.cookies['token'] == undefined)//если куков нет
     {
         response.redirect('/login');
     }
@@ -55,28 +55,42 @@ app.get("/account", function(request, response){
     }
 });
 app.post("/account",urlencodedParser,function(request,response){
-    if(request.cookies.valueOf == undefined)//если куков нет
+    if(request.cookies['token'] == undefined)//если куков нет
     {
         response.redirect('/login');
     }else{
         let Token = request.cookies['token'];//токен из куков
         let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+        let RandName = createRandomName();//рандомное имя
         db.collection('Users').find({"login" : Login, "token" : Token }).toArray(function (err,docs){//поиск записей в бд с таким же логином и токеном
             if(err){
                 console.log(err);
                 return;
             }
             if(docs.length > 0){//если акаунт найден
-              var cursor= db.collection('Users').find({login: Login});
-              cursor.forEach(function(obj){//то что выдало
-                    console.log(obj._id);
+                let objHtmlLink = "/views/UsersSource/html/" + RandName + ".html";//создание ссылки на html файл
+                let objJsLink = "UsersSource/" + RandName + ".js";//создание ссылки на js файл
+                let fileHtml = fs.readFileSync(__dirname + "/views/constructor.html", "utf8");
+                let cursor= db.collection('Users').find({login: Login});//получение id пользователя который создает новый проект
+                cursor.forEach(function(obj){
+                    db.collection('Projects').insertOne({"id_User": obj._id, "name" : request.body.NameProject, "Obj_html" : objHtmlLink, "Obj_js": objJsLink, 'randName': RandName.toString()});//запись нового проекта в бд
                 })
-              //  db.collection('Projects').insertOne({"id_User": request.body.NameUser, "login" : request.body.email, "password" : request.body.password, "token": Token});//запись нового пользователя в бд
-
-
-
-
-                response.render(__dirname + "/views/account.hbs");
+                fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink + "\"></script>" + fileHtml , function(error){//создание html файла
+                    if(error) 
+                    {
+                        console.log("Ошибка при записи файла:" + error);
+                        return;
+                    }
+                });
+                fs.writeFile(__dirname  + "/public/" + objJsLink,"var VariableId= 3;\n var NumberOfPanels= 1;\n var ElementKol = 1;\n var NumberOfSection= 1;", function(error){//создание js файла
+                    if(error) 
+                    {
+                        console.log("Ошибка при записи файла:" + error);
+                        return;
+                    }
+                });
+                response.cookie('Project',RandName,{maxAge: 90000000});//устанавка куков
+                response.redirect('/constructor');
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
                     Error: "Необходимо войти в аккаунт"
@@ -84,11 +98,7 @@ app.post("/account",urlencodedParser,function(request,response){
             }
         });
     }
-    let RandName = Math.floor(Math.random() * (99999999999 - 10000000000) + 10000000000);
     let data = fs.readFileSync("views/constructor.html","utf-8");
-
-    console.log(request.body.NameProject);
-    console.log(RandName);
 });
 
 
@@ -111,7 +121,7 @@ app.post(("/login"), urlencodedParser, function(request, response){//получ�
             });
         }else{//если аккаунт был найден
             let Token = createToken(request.body.email);
-            response.cookie('token',Token,{maxAge: 3600 * 24});//устанавливаются куки
+            response.cookie('token',Token,{maxAge: 90000000});//устанавливаются куки
             db.collection('Users').updateOne({login : request.body.email}, {$set: {token : Token}});
             response.redirect("/account");
         }
@@ -149,7 +159,7 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
         }
         if(docs.length == 0){//запись в бд
             let Token = createToken(request.body.email);//генерация токена
-            response.cookie('token',Token,{maxAge: 3600 * 24});//устанавка куков
+            response.cookie('token',Token,{maxAge: 90000000});//устанавка куков
             db.collection('Users').insertOne({"name": request.body.NameUser, "login" : request.body.email, "password" : request.body.password, "token": Token});//запись нового пользователя в бд
             response.redirect('/account');//переадрессация на страницу аккаунта
         }else{//если аккаунт уже существует
@@ -165,20 +175,6 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get("/main", function(request, response){
     response.render(__dirname + "/views/index.hbs");
 });
@@ -186,28 +182,70 @@ app.get("/main", function(request, response){
 
 
 app.get("/constructor", function(request, response){
-    //response.sendFile(__dirname + "/views/constructor.html");
-    response.sendFile(__dirname  + "/views/UsersSource/html/constructor.html");
+    if(request.cookies['token'] == undefined)//если куков с токеном нет
+    {
+        response.redirect('/login');
+    }else if(request.cookies['Project'] == undefined){//если куков с проектом нет
+        response.redirect('/account');
+    }else{//если все куки присутствуют
+        let Token = request.cookies['token'];//токен из куков
+        let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+        let Project = request.cookies['Project'];// рандомное имя проекта из куков
+        db.collection('Users').find({"login" : Login, "token" : Token }).toArray(function (err,docs){//проверка на сессию аккаунта
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(docs.length > 0){//если сессия существует
+                let cursor= db.collection('Users').find({login: Login});//получение id пользователя который открывает проект
+                cursor.forEach(function(obj){
+                    db.collection('Projects').find({"id_User": obj._id, "randName": Project}).toArray(function (err,projects){//проверка прав пользователя на открытие проекта
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        if(projects.length > 0){//если права есть
+                            response.sendFile(__dirname  + "/views/UsersSource/html/" + request.cookies['Project'] + ".html");//открыть проект
+                        }else{
+                            response.redirect("/account");//перенаправить на страницу личного кабинета
+                        }
+                    });
+                })
+            }else{//если ни один аккаунт не найден
+                response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
+                    Error: "Необходимо войти в аккаунт"
+                });
+            }
+        });
+    }
 });
 app.post("/constructor", urlencodedParser, function(request, response){
-    fs.writeFile(__dirname  + "/views/UsersSource/html/constructor.html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){
-        
-        if(error) 
-        {
-            console.log("Ошибка при записи файла:" + error);
-            return;
-        }
-    });
-    fs.writeFile(__dirname  + "/public/UsersSource/var.js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
-        request.body.NumberOfPanels + ";\n ElementKol =" + request.body.ElementKol + "\n NumberOfSection=" + request.body.NumberOfSection + ";", function(error){
-        
-        if(error) 
-        {
-            console.log("Ошибка при записи файла:" + error);
-            return;
-        }
-    });
-     response.redirect('/constructor');
+    if(request.cookies['token'] == undefined)//если куков с токеном нет
+    {
+        response.redirect('/login');
+    }else if(request.cookies['Project'] == undefined){//если куков с проектом нет
+        response.redirect('/account');
+    }else{
+        let Token = request.cookies['token'];//токен из куков
+        let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+        let Project = request.cookies['Project'];// рандомное имя проекта из куков
+        fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
+            if(error) 
+            {
+                console.log("Ошибка при записи файла:" + error);
+                return;
+            }
+        });
+        fs.writeFile(__dirname  + "/public/UsersSource/" + Project + ".js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
+            request.body.NumberOfPanels + ";\n var ElementKol =" + request.body.ElementKol + "; \n var NumberOfSection=" + request.body.NumberOfSection + ";", function(error){//запись js файла
+            if(error) 
+            {
+                console.log("Ошибка при записи файла:" + error);
+                return;
+            }
+        });
+        response.redirect('/constructor');
+    }
 });
 
 
