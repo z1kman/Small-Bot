@@ -11,4 +11,5 @@ function SaveProject(){
     "<textarea name=\"Content\" value=\"" + document.head.innerHTML + "</head><body onload=\"RefreshArrows()\">" + document.body.innerHTML;
     document.body.append(form);
     form.submit();//отправка кода на сервер
+    form.innerHTML = "";
 }

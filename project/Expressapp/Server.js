@@ -276,6 +276,9 @@ app.post("/constructor", urlencodedParser, function(request, response){
 app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
+app.get("/test", function(request, response){
+    response.render(__dirname +  "/views/testing.hbs");
+});
 
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера
 if(err){
