@@ -150,8 +150,6 @@ app.post(("/login"), urlencodedParser, function(request, response){//получ�
         }
     });
 });
-
-
 app.get("/registration", function(request, response){
     response.render(__dirname + "/views/Registration.hbs");
 });
@@ -192,16 +190,9 @@ app.post(("/registration"), urlencodedParser, function(request, response){//по
         }
     })
 });
-
-
-
-
-
-
 app.get("/main", function(request, response){
     response.render(__dirname + "/views/index.hbs");
 });
-
 
 
 app.get("/constructor", function(request, response){
@@ -270,14 +261,14 @@ app.post("/constructor", urlencodedParser, function(request, response){
         response.redirect('/constructor');
     }
 });
-
-
-
 app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
 app.get("/test", function(request, response){
     response.render(__dirname +  "/views/testing.hbs");
+});
+app.post("/test",urlencodedParser,function(request,response){
+    console.log(request.body.message);//получение сообщения
 });
 
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера

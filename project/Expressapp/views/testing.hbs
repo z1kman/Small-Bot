@@ -4,6 +4,7 @@
         <title>Тестирование проекта</title>
         <meta name="viewport" content="width = device-width, initial-scale=1">
         <link rel="stylesheet" href="css/Testing/Testing.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <body> 
         <div class="Form">  
             <div class="ChatForm" id="ChatForm">
@@ -55,15 +56,15 @@
                     </div>
                 </div>
                 <div class="ButtonBlock">
-                    <input type="button" class="ButtonOnChat" value="Да">
-                    <input type="button" class="ButtonOnChat" value="Нет">
-                    <input type="button" class="ButtonOnChat" value="Возможно">
+                    <input type="button" class="ButtonOnChat" value="Да" id="Button1">
+                    <input type="button" class="ButtonOnChat" value="Нет" id="Button2">
+                    <input type="button" class="ButtonOnChat" value="Возможно" id="Button3">
                 </div>
             </div>
-            <form class="SendMessageBlock">
+            <div class="SendMessageBlock">
                 <textarea class="InputMessage" id="InputMessage"></textarea>
-                <input type="button" class="Btn" value="Отправить">
-            </form >
+                <input type="button" class="Btn" value="Отправить" id="SendMessage">
+            </div >
             <a href="/constructor">
                 <div class="EndTest">
                     Завершить тестирование
@@ -71,8 +72,22 @@
             </a>
         </div>
     </body>
-    
+
     <script type="text/javascript">
         document.getElementById("ChatForm").scrollTop = document.getElementById("ChatForm").scrollHeight;
+        $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
+            let value = document.getElementById("InputMessage").value;
+            let data = { message: value};
+            $.post('/test', data, function(res) {});
+        });
+        $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
+            let value = this.value;
+            let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
+            $.post('/test', data, function(res) {});
+        });
+        function SendBotMessage(Message) {//отправка на сервер ответа бота
+            let data = {message: "Ответ бота:\"" + Message + "\""};
+            $.post('/test', data, function(res) {});
+        }
     </script>
 </html>
