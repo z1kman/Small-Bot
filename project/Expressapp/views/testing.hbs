@@ -4,6 +4,7 @@
         <title>Тестирование проекта</title>
         <meta name="viewport" content="width = device-width, initial-scale=1">
         <link rel="stylesheet" href="css/Testing/Testing.css">
+        <script src="UsersSource/TempFile.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <body> 
         <div class="Form">  
@@ -72,22 +73,23 @@
             </a>
         </div>
     </body>
-
     <script type="text/javascript">
-        document.getElementById("ChatForm").scrollTop = document.getElementById("ChatForm").scrollHeight;
-        $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
-            let value = document.getElementById("InputMessage").value;
-            let data = { message: value};
-            $.post('/test', data, function(res) {});
-        });
-        $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
-            let value = this.value;
-            let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
-            $.post('/test', data, function(res) {});
-        });
-        function SendBotMessage(Message) {//отправка на сервер ответа бота
-            let data = {message: "Ответ бота:\"" + Message + "\""};
-            $.post('/test', data, function(res) {});
+            function LowerDown(){
+                document.getElementById("ChatForm").scrollTop = document.getElementById("ChatForm").scrollHeight;
+            }
+            $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
+                let value = document.getElementById("InputMessage").value;
+                let data = { message: value};
+                $.post('/test', data, function(res) {});
+            });
+            $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
+                let value = this.value;
+                let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
+                $.post('/test', data, function(res) {});
+            });
+            function SendBotMessage(Message) {//отправка на сервер ответа бота
+                let data = {message: "Ответ бота:\"" + Message + "\""};
+                $.post('/test', data, function(res) {});
         }
     </script>
 </html>

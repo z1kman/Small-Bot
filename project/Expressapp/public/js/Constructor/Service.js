@@ -15,6 +15,16 @@ function SecondNumberOfElement(id){ //получение второго номе
 function ThirdNumberOfElement(id){//получение третьего номера эллемента(под элементы панели(кнопки/текст и т.д))
     return(id.split(' ')[3]);
 }
+function NumberOfFunction(id){ //получение номера функции
+    return(id.split('_')[1]);
+}
+function SecondNumberOfFunction(id){ //получение второго номера функции
+    return(id.split('_')[2]);
+}
+function ThirdNumberOfFunction(id){//получение третьего номера функции
+    return(id.split('_')[3]);
+}
+
 window.onload = function() {
     RefreshArrows();
 }

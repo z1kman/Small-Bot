@@ -243,22 +243,37 @@ app.post("/constructor", urlencodedParser, function(request, response){
         let Token = request.cookies['token'];//токен из куков
         let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
         let Project = request.cookies['Project'];// рандомное имя проекта из куков
-        fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
-            if(error) 
-            {
-                console.log("Ошибка при записи файла:" + error);
-                return;
-            }
-        });
-        fs.writeFile(__dirname  + "/public/UsersSource/" + Project + ".js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
-            request.body.NumberOfPanels + ";\n var ElementKol =" + request.body.ElementKol + "; \n var NumberOfSection=" + request.body.NumberOfSection + ";", function(error){//запись js файла
-            if(error) 
-            {
-                console.log("Ошибка при записи файла:" + error);
-                return;
-            }
-        });
-        response.redirect('/constructor');
+        if(request.body.Content != undefined){//если пост запрос с кнопки сохранения проекта
+            fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
+                if(error) 
+                {
+                    console.log("Ошибка при записи файла:" + error);
+                    return;
+                }
+            });
+            fs.writeFile(__dirname  + "/public/UsersSource/" + Project + ".js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
+                request.body.NumberOfPanels + ";\n var ElementKol =" + request.body.ElementKol + "; \n var NumberOfSection=" + request.body.NumberOfSection + ";", function(error){//запись js файла
+                if(error) 
+                {
+                    console.log("Ошибка при записи файла:" + error);
+                    return;
+                }
+            });
+            response.redirect('/constructor');
+        }else if(request.body.CodeTest != undefined){//если пост запрос с нажатия кнопки тестирования проекта
+            console.log(request.body.CodeTest);
+            fs.writeFile(__dirname  + "/public/UsersSource/TempFile.js",request.body.CodeTest, function(error){//запись js файла
+                if(error) 
+                {
+                    console.log("Ошибка при записи файла:" + error);
+                    return;
+                }
+            });
+
+
+
+            response.redirect('/constructor');
+        }
     }
 });
 app.get("/contacts", function(request, response){
