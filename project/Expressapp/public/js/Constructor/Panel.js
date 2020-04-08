@@ -547,7 +547,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
                 ctxArrow.moveTo(20,canvas.offsetHeight - 10);
                 ctxArrow.lineTo(0,canvas.offsetHeight -20);
                 ctxArrow.lineTo(0,canvas.offsetHeight);
-                ctxArrow.fill();
+                ctxArrow.fill();          
             }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                 ctx.moveTo(canvas.offsetWidth - 20,10);
                 ctx.bezierCurveTo(0, 0, canvas.offsetWidth ,canvas.offsetHeight,0,canvas.offsetHeight - 35)

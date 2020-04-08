@@ -283,6 +283,7 @@ app.get("/test", function(request, response){
     response.render(__dirname +  "/views/testing.hbs");
 });
 app.post("/test",urlencodedParser,function(request,response){
+    response.sendStatus(200);
     console.log(request.body.message);//получение сообщения
 });
 

@@ -57,14 +57,14 @@
                     </div>
                 </div>
                 <div class="ButtonBlock">
-                    <input type="button" class="ButtonOnChat" value="Да" id="Button1">
-                    <input type="button" class="ButtonOnChat" value="Нет" id="Button2">
-                    <input type="button" class="ButtonOnChat" value="Возможно" id="Button3">
+                    <input type="button" class="ButtonOnChat" value="Да">
+                    <input type="button" class="ButtonOnChat" value="Нет">
+                    <input type="button" class="ButtonOnChat" value="Возможно">
                 </div>
             </div>
             <div class="SendMessageBlock">
                 <textarea class="InputMessage" id="InputMessage"></textarea>
-                <input type="button" class="Btn" value="Отправить" id="SendMessage">
+                <input type="button" class="Btn" value="Отправить" id="SendMessage"s>
             </div >
             <a href="/constructor">
                 <div class="EndTest">
@@ -87,6 +87,10 @@
                 let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
                 $.post('/test', data, function(res) {});
             });
+            function SendUserClickOnButton(Message) {
+                let data = {message: "Нажатие на кнопку с значением:\"" + Message + "\""};
+                $.post('/test', data, function(res) {});
+            }
             function SendBotMessage(Message) {//отправка на сервер ответа бота
                 let data = {message: "Ответ бота:\"" + Message + "\""};
                 $.post('/test', data, function(res) {});
