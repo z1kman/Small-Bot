@@ -607,7 +607,7 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
             (A.width + A.left) == (Panel.offsetLeft) && (A.top + A.height) == (Panel.offsetTop + 40)) 
         {
                 continue;
-        }else if(A.left ==  Number(Panel.offsetLeft - 20) && A.top == Number(JumpIndicator.offsetTop  + 10) && //в 3ей четверти
+        }else if(A.left ==  Number(Panel.offsetLeft - 20) && A.top == Number(JumpIndicator.offsetTop  + 20) && //в 3ей четверти
             (A.left + A.width - 30) == (Panel.offsetLeft + Panel.offsetWidth) && (A.top + A.height) == (Panel.offsetTop + 40)){
                 continue;
         }else if(A.left ==  Number(JumpIndicator.offsetLeft + 60) && A.top == Number(Panel.offsetTop + 30) &&  //во 2ой четверти
@@ -624,21 +624,22 @@ function RefreshArrows(){//Стрелки.Перерисовка стрелок
                 if(Panel.offsetLeft > JumpIndicator.offsetLeft  && Panel.offsetTop + 20 > JumpIndicator.offsetTop){ 
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                     Arrows[i].setAttribute("height",Panel.offsetTop + 80 - JumpIndicator.offsetTop);
+
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop  + 10) + ";left:" + Number(JumpIndicator.offsetLeft + 60 ) + ";");
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 > JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",JumpIndicator.offsetLeft - Number(Panel.offsetLeft - 110));
                     Arrows[i].setAttribute("height",Panel.offsetTop + 30 - JumpIndicator.offsetTop);
-                
+
                     Arrows[i].setAttribute("style","top:" + Number(JumpIndicator.offsetTop + 10) + ";left:" + Number(Panel.offsetLeft - 20)+ ";");
                 }else if(Panel.offsetLeft > JumpIndicator.offsetLeft + 60 && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Panel.offsetLeft - 60 - JumpIndicator.offsetLeft);
                     Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 20);
-                
+
                     Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop + 30) + ";left:" + Number(JumpIndicator.offsetLeft + 60) + ";");
                 }else if(Panel.offsetLeft < JumpIndicator.offsetLeft && Panel.offsetTop + 20 < JumpIndicator.offsetTop){
                     Arrows[i].setAttribute("width",Number(JumpIndicator.offsetLeft + 80) - Number(Panel.offsetLeft - 60));
                     Arrows[i].setAttribute("height",JumpIndicator.offsetTop - Panel.offsetTop + 30 );
-        
+  
                     Arrows[i].setAttribute("style","top:" + Number(Panel.offsetTop) + ";left:" + Number(Panel.offsetLeft - 20) + ";"); //---------- Panel.offsetTop + 30
 
                 }
