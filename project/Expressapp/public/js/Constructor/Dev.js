@@ -1,6 +1,9 @@
-
+let timerId = "";//для очищения таймера
 function SaveProject(){
     let form = document.createElement('form');
+    if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+        document.getElementById("DivErrorProject").remove();
+    }
     form.method = 'POST';
     form.action = '/constructor';
     form.setAttribute('hidden','hidden');
@@ -14,13 +17,38 @@ function SaveProject(){
     form.innerHTML = "";
 }
 function TestProject(){
-    //GenerateCode();
-
+    
+    let Code = "";
+    if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+        document.getElementById("DivErrorProject").remove();
+    }
+    clearTimeout(timerId);
+    Code = GenerateCode();
+    if(Code.split(' ')[0] == "error"){//если возникла какая то ошибка
+        Code = Code.substr((Code.split(' ')[0]).length + 1, Code.length);
+        let DivErrorProject = document.createElement('div');
+        let ErrorProject = document.createElement('div');
+        DivErrorProject.className = "DivErrorProject";
+        DivErrorProject.id = "DivErrorProject";
+        ErrorProject.className = "ErrorProject";
+        ErrorProject.innerText = Code;
+        DivErrorProject.setAttribute('title','нажмите чтобы закрыть');
+        DivErrorProject.setAttribute('onclick',"this.remove()");
+        document.body.prepend(DivErrorProject);
+        DivErrorProject.append(ErrorProject);
+        timerId = setTimeout(function(){
+            if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+                document.getElementById("DivErrorProject").remove();
+            }
+        },10000);
+        return 0;
+    }
+    SaveProject();
     let form = document.createElement('form');
     form.method = 'POST';
     form.setAttribute('hidden','hidden');
     document.body.append(form);
-    form.innerHTML = "<textarea name=\"CodeTest\">" + GenerateCode() + "</textarea>";
+    form.innerHTML = "<textarea name=\"CodeTest\">" + Code + "</textarea>";
     form.submit();//отправка кода на сервер
     form.innerHTML = "";
 
@@ -28,6 +56,7 @@ function TestProject(){
 function GenerateCode(){
     let Canvas = document.getElementsByClassName("canvas");//все стрелки на форме
     let Panels = document.getElementsByClassName("Panel");//все панели на форме
+    let Variables = document.getElementsByClassName("NameVariable");//объект со всеми переменными проекта
     let StartPanelId = "";//переменная для хранения id стартовой панели
     let ElementId = ""//переменная для хранения id элемента
     let Code = "";//переменная для сохранения сгенерированного кода
@@ -35,6 +64,7 @@ function GenerateCode(){
     let SN = 0;//для разбиения id элемента(второе число)
     let TN = 0;//для разбиения id элемента(третье число)
     let StartExist = false; //флаг для отмечания наличия созданной функции запуска чат-бота
+    let FirstUserElement = false;//переменная для отслеживания нахождения первого элемента у пользователя
 
     for(let i = 0; i < Canvas.length; i++ ){//поиск начальной панели
         N = NumberOfElement(Canvas[i].id);
@@ -49,13 +79,32 @@ function GenerateCode(){
         }    
     } 
     if(StartPanelId == ""){//если id стартовой панели не найдено тогда выдается ошибка
-        return("error");
+        return("error Ошибка! Стартовая панель не найдена.  \n\n Справка:  \n1) От стартовой панели должна отходить хотя бы одна связь." + 
+                "\n 2) К стартовой панели не могут быть присоединены другие панели");
     }
 
     //Обнуление переменных для дальнейшего использования 
     N = 0;
     SN = 0;
     TN = 0;
+
+    for(let i = 0; i < Variables.length; i++){//генерирование переменных и проверка на синтаксическую правильность
+        Code += "\n var " + Variables[i].innerHTML.replace(/\s+/g,'') + "= \"\" ;";
+        let Variable = Variables[i].innerHTML.replace(/\s+/g,'');
+        for(let e = 0; e < Variable.length; e++){
+            if((Variable[0] > 'A' && Variable[0] < 'Z') || (Variable[0] > 'a' && Variable[0] < 'z')){
+                continue;
+            }else if((e > 0) && ((Variable[0] > 'A' && Variable[0] < 'Z') || (Variable[0] > 'a' && Variable[0] < 'z') || (Variable[e] > '0' || Variable[e] < '9'))){
+                continue;
+            }else{
+                return ("error Ошибка! Переменная с именем:\"" + Variable + "\", не удовлетворяет правилам создания переменной.\n\n" +
+                        "Справка:\n 1) Переменная может начинаться только с букв латинского алфавита; \n" + 
+                        "2) Переменная может содержать только латинские буквы и арабские цифры;");
+            }
+        }
+    }
+
+
     for(let i = 0; i < Panels.length; i++){//Цикл по всем панелям
         for (let j = 0; j < Panels[i].childNodes.length; j++) {//Цикл по всем дочерним элементам панелей
             if(document.getElementById(Panels[i].childNodes[j].id).className == 'Bot'){//если обнаружен блок действий бота;
@@ -71,6 +120,7 @@ function GenerateCode(){
                             ElementId = "textareaTextBot " + N + " " + SN + " " + TN;//сохранение id элемента который содержит в себе текст бота
                             let Text = document.getElementById(ElementId).value;
                             let User = document.getElementById("User " + N + " " + SN);//блок действий пользователя на этой же панеле
+                            let Variable = "";//запоминание переменных в массив
                             if(NumberOfElement(StartPanelId) == N && SecondNumberOfElement(StartPanelId) == SN && StartExist == false ) //если это начальная панель
                             {
                                 StartExist = true;//установления флага в значение - функция старта существует
@@ -80,6 +130,14 @@ function GenerateCode(){
                             else{
                                 Code +="\nfunction Act_" + N + "_" + SN  + "_" + TN + "(){";//Создание функции с уникальным номером
                             }
+    
+                            //Поиск переменных в тексте и проверка переменных на существование
+                            Text = CheckVariable(Panels[i].id,Text,Variables);
+                            if(Text.split(' ')[0] == "error"){//если переменная не была найдена тогда вернуть ошибку
+                                return Text;
+                            }
+                            
+                            //Генерирование кода
                             Code += "\n\t let ChatForm = document.getElementById(\"ChatForm\");" +
                                         "\n\t let MessageBot = document.createElement('div');" + 
                                         "\n\t let IncomingMessage = document.createElement('div');" +
@@ -131,6 +189,7 @@ function GenerateCode(){
                             else{
                                 Code +="\nfunction Act_" + N + "_" + SN  + "_" + TN + "(){";//Создание функции с уникальным номером
                             }
+                            
                             Code += "\n\t let ChatForm = document.getElementById(\"ChatForm\");" +
                                         "\n\t let ButtonBlock = document.createElement('div');" + 
                                         "\n\t let ButtonOnChat = document.createElement('input');" + 
@@ -184,16 +243,53 @@ function GenerateCode(){
                                 }
                             }
                             Code += "\n}";//завершение функции
-
-
-
-
                         }
-                   // DivUserButton
+                        else if(Panels[i].childNodes[j].childNodes[k].className == "DivUserElement"){//если найден другой элемент(текст/число/email)
+                            ElementId = Panels[i].childNodes[j].childNodes[k].id;
+                            N = NumberOfElement(ElementId);
+                            SN = SecondNumberOfElement(ElementId);
+                            TN = ThirdNumberOfElement(ElementId);
+                            ElementId = N + " " + SN + " " + TN;
+                            if(Panels[i].childNodes[j].childNodes[k].getAttribute('elementtype') == "Text"){//если текущий элемент - текстовый ;
+                                if(document.getElementById("UserTextIdicated " + ElementId) != undefined){//если текущий элемент с указанным текстом
+                                   let Text = document.getElementById("UserTextIdicated " + ElementId);
+                                   
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
     return(Code);
+}
+
+function CheckVariable(PanelID,Text,Variables){//проверка переменной на синтаксичкскую идентичность и на наличие записанной переменной в существующих переменных
+    for(let f = 0; f < Text.length; f++){//поиск переменных в тексте
+        if(Text[f] == "$"){
+            Variable = ((Text.substr(f + 1, Text.length)).split(' ')[0]);//вырезаем имя переменной из строки
+            for(let e = 0; e < Variables.length; e++){//цикл по переменныи которые находятся в памяти (на проверку наличия переменных)
+                if(Variables[e].innerHTML.replace(/\s/g, '') == Variable){
+                    break;
+                }else if(e + 1 == Variables.length){//если не найденно ни одной переменной
+                    return ("error Ошибка! Переменная:\"" + Variable + "\", указанная на панели с именем:\"" + 
+                            document.getElementById("NamePanel " + NumberOfElement(PanelID) + " " +  SecondNumberOfElement(PanelID)).innerHTML + "\", не найдена.");
+                }
+            }
+            for(let e = 0; e < Variable.length; e++){
+                if((Variable[0] > 'A' && Variable[0] < 'Z') || (Variable[0] > 'a' && Variable[0] < 'z')){
+                    continue;
+                }else if((e > 0) && ((Variable[0] > 'A' && Variable[0] < 'Z') || (Variable[0] > 'a' && Variable[0] < 'z') || (Variable[e] > '0' || Variable[e] < '9'))){
+                    continue;
+                }else{
+                    return ("error Ошибка! Переменная с именем:\"" + Variable + "\", не удовлетворяет правилам создания переменной.\n\n" +
+                            "Справка:\n 1) Переменная может начинаться только с букв латинского алфавита; \n" + 
+                            "2) Переменная может содержать только латинские буквы и арабские цифры;");
+                }
+            }
+            Text = Text.substr(0,f) + "\" + " + Variable + " + \"" + Text.substr(f + Variable.length + 1, Text.length)//обрезка знака доллара и добавление ковычек
+        }
+    }
+    return (Text);
 }

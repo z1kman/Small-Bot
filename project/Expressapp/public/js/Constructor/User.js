@@ -64,7 +64,13 @@ function OnClickAddButtonUser(id){ //Всплывающее окно. Окно �
     //----------Создание блока с полем для ввода текста-----------
     divLabelBlack.className = "LabelBlack";
     divAddNewInstrumentPanel.append(divLabelBlack);
-    divLabelBlack.innerHTML = "<label>Текст:<input type=\"text\" id=\"NewButtonText\" class=\"InputOther1\" onfocus=\"OnFocusNewButtonText()\" onblur=\"OnBlurNewButtonText()\" style=\"margin-top:20px;\"></label>"
+    if(Name == "ImgPencil"){
+    let TN = ThirdNumberOfElement(id);
+    ButtonUser = document.getElementById("ButtonUser " + N + " " + SN + " " + TN);
+    divLabelBlack.innerHTML = "<label>Текст:<input type=\"text\" value=\"" + ButtonUser.value +"\"id=\"NewButtonText\" class=\"InputOther1\" onfocus=\"OnFocusNewButtonText()\" onblur=\"OnBlurNewButtonText()\" style=\"margin-top:20px;\"></label>"
+    }else{
+        divLabelBlack.innerHTML = "<label>Текст:<input type=\"text\" id=\"NewButtonText\" class=\"InputOther1\" onfocus=\"OnFocusNewButtonText()\" onblur=\"OnBlurNewButtonText()\" style=\"margin-top:20px;\"></label>"
+    }
     //----------Создание формы для кнопок и сами кнопки-----------
     formBtn.setAttribute("id","formNewButton");
     divAddNewInstrumentPanel.append(formBtn);
@@ -1091,6 +1097,7 @@ function OnClickSaveNewEmailUser(id){//Всплывающая панель. Со
     DivUserElement.setAttribute("id","DivUserEmail " + N + " " + SN + " " + ElementKol);
     DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
     DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    DivUserElement.setAttribute("ElementType","Email");
     formAddInstrumentBtnUser.before(DivUserElement);
     //----------Создание блока надписи названия элемента------
     LabelElementUser.className = "LabelElementUser";
@@ -1167,6 +1174,7 @@ function OnClickSaveNewTextUser(id){//Всплывающая панель.Соз
     DivUserElement.setAttribute("id","DivUserText " + N + " " + SN + " " + ElementKol);
     DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
     DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    DivUserElement.setAttribute("ElementType","Text");
     formAddInstrumentBtnUser.before(DivUserElement);
     //----------Создание блока надписи названия элемента------
     LabelElementUser.className = "LabelElementUser";
@@ -1289,6 +1297,7 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     DivUserElement.setAttribute("id","DivUserText " + N + " " + SN + " " + TN);
     DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
     DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    DivUserElement.setAttribute("ElementType","Text");
     formAddInstrumentBtnUser.before(DivUserElement);
     //----------Создание блока надписи названия элемента------
     LabelElementUser.className = "LabelElementUser";
@@ -1421,6 +1430,7 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
     DivUserElement.setAttribute("id","DivUserNumber " + N + " " + SN + " " + ElementKol);
     DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
     DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    DivUserElement.setAttribute("ElementType","Number");
     formAddInstrumentBtnUser.before(DivUserElement);
     //----------Создание блока надписи названия элемента------
     LabelElementUser.className = "LabelElementUser";
@@ -1545,6 +1555,7 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     DivUserElement.setAttribute("id","DivUserNumber " + N + " " + SN + " " + TN);
     DivUserElement.setAttribute("onmouseover","OnMouseOverUserPanel(id)");
     DivUserElement.setAttribute("onmouseout","OnMouseOutUserPanel(id)");
+    DivUserElement.setAttribute("ElementType","Number");
     formAddInstrumentBtnUser.before(DivUserElement);
     //----------Создание блока надписи названия элемента------
     LabelElementUser.className = "LabelElementUser";
