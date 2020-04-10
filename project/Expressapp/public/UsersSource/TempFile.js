@@ -17,6 +17,20 @@ function Start(){
 	 LowerDown();
 	 Act_1_2_16();
 }
+document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById('SendMessage').setAttribute('onclick','Act_1_2_7()');
+});
+ function Act_1_2_7(){
+	 let InputMessage = document.getElementById('InputMessage')
+	 if(InputMessage.value.toLowerCase() == "привет"){
+		Text = InputMessage.value;
+	 }
+}
+ function Act_1_2_8(){
+	 let InputMessage = document.getElementById('InputMessage')
+	 if(InputMessage.value.toLowerCase() == "пока"){
+	 }
+}
 function Act_1_2_16(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let ButtonBlock = document.createElement('div');

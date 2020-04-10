@@ -250,10 +250,28 @@ function GenerateCode(){
                             SN = SecondNumberOfElement(ElementId);
                             TN = ThirdNumberOfElement(ElementId);
                             ElementId = N + " " + SN + " " + TN;
-                            if(Panels[i].childNodes[j].childNodes[k].getAttribute('elementtype') == "Text"){//если текущий элемент - текстовый ;
+                            if(Panels[i].childNodes[j].childNodes[k].getAttribute('elementtype') == "Text"){//если текущий элемент - текстовый 
+                                if(FirstUserElement == false){
+                                    FirstUserElement = true;
+                                    Code += "\ndocument.addEventListener(\"DOMContentLoaded\", () => {" +
+                                            "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','Act_" + N + "_" + SN + "_" + TN + "()');\n});";     
+                                }
+                                Code += "\n function Act_" + N + "_" + SN + "_" + TN + "(){"
                                 if(document.getElementById("UserTextIdicated " + ElementId) != undefined){//если текущий элемент с указанным текстом
-                                   let Text = document.getElementById("UserTextIdicated " + ElementId);
-                                   
+                                    let Text = document.getElementById("UserTextIdicated " + ElementId).value;//Указанный текст
+                                    let Variable = "";//для запоминания имени переменной
+                                    let JumpIndicator = document.getElementById("JumpIndicator " + ElementId);
+                                    Code += "\n\t let InputMessage = document.getElementById('InputMessage')" + //Переменная отвечающая за поле ввода пользователя
+                                            "\n\t if(InputMessage.value.toLowerCase() == \"" + Text.toLowerCase() + "\"){";
+                                   if(document.getElementById("UserTextVariable " + ElementId) != undefined){//если у блока существует блок с переменной 
+                                        Variable = document.getElementById("UserTextVariable " + ElementId).value;//запомнить переменную
+                                        Code += "\n\t\t" + Variable + " = InputMessage.value;";//сохранить введеный пользователем текст в переменную
+                                   } 
+                                   Code += "\n\t }"
+                                   if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//проверка на соединение текстового элемента с другой панелью
+                                    alert(JumpIndicator.id)
+                                   }
+                                   Code += "\n}"
                                 }
                             }
                         }
