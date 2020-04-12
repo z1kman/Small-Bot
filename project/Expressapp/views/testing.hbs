@@ -9,58 +9,6 @@
     <body> 
         <div class="Form">  
             <div class="ChatForm" id="ChatForm">
-                <div class="MessageBot">
-                    <div class="IncomingMessage">
-                        Привет, я чат бот! чем могу помочь? БлаБлаБлаБлаБлаБлаБлаБл БлаБлаБла БлаБлаБла БлаБлаБла БлаБлаБла БлаБлаБла БлаБлаБла БлаБлаБла
-                    </div>
-                </div>
-
-
-                <div class="MessageUser">
-                    <div class="OutgoingMessage">
-                       Привет чат бот, у меня проблемы
-                    </div>
-                </div>
-
-                <div class="MessageBot">
-                    <div class="IncomingMessage">
-                       Какие?
-                    </div>
-                </div>
-
-                <div class="MessageUser">
-                    <div class="OutgoingMessage">
-                       Серьезные
-                    </div>
-                </div>
-
-                <div class="MessageBot">
-                    <div class="IncomingMessage">
-                       Сочувствую
-                    </div>
-                </div>
-
-                <div class="MessageBot">
-                    <div class="IncomingMessage">
-                       Я могу еще чем то помочь?
-                    </div>
-                </div>
-                <div class="MessageUser">
-                    <div class="OutgoingMessage">
-                       Да, бла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла бла
-                    </div>
-                </div>
-
-                <div class="MessageUser">
-                    <div class="OutgoingMessage">
-                      и еще, бла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла бла
-                    </div>
-                </div>
-                <div class="ButtonBlock">
-                    <input type="button" class="ButtonOnChat" value="Да">
-                    <input type="button" class="ButtonOnChat" value="Нет">
-                    <input type="button" class="ButtonOnChat" value="Возможно">
-                </div>
             </div>
             <div class="SendMessageBlock">
                 <textarea class="InputMessage" id="InputMessage"></textarea>
@@ -79,14 +27,34 @@
             }
             $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
                 let value = document.getElementById("InputMessage").value;
-                let data = { message: value};
-                $.post('/test', data, function(res) {});
+                if(value != ""){
+                    let data = { message: value};
+                    let MessageUser = document.createElement('div');
+                    let OutgoingMessage = document.createElement('div');//содержимое блока сообщения
+                    let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме
+                    let ChatForm = document.getElementById('ChatForm'); //блок с чатом
+                    MessageUser.className = 'MessageUser';
+                    OutgoingMessage.className = 'OutgoingMessage';
+                    ChatForm.append(MessageUser);
+                    MessageUser.append(OutgoingMessage);
+                    OutgoingMessage.innerHTML =  InputMessage.value ;//записать введеный пользователем текст в блок
+                    if(this.hasAttribute('onclick') != false){
+                        this.onclick(this.getAttribute('onclick'));
+                    }
+                    InputMessage.value ="";
+                    LowerDown();
+                    $.post('/test', data, function(res) {});
+                }
             });
             $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
                 let value = this.value;
                 let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
                 $.post('/test', data, function(res) {});
             });
+            function SendUserMessage(Message) {
+                let data = {message: Message}
+                $.post('/test', data, function(res) {});
+            }
             function SendUserClickOnButton(Message) {
                 let data = {message: "Нажатие на кнопку с значением:\"" + Message + "\""};
                 $.post('/test', data, function(res) {});

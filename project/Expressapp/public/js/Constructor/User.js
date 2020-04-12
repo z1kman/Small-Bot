@@ -1267,7 +1267,7 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     let DivUserEmailVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
     let DivUserText = document.getElementById("DivUserText " + N + " " + SN + " " + TN);
-    
+    let ActiveJumpIndicatorExist = false;
 
     let InputText = document.getElementById("InputText");
     let TextCheckbox = document.getElementById("TextCheckbox");
@@ -1290,6 +1290,9 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
             LabelError.innerHTML = "Ошибка! Не выбрана ни одна переменная";
             return 0;
         }
+    }
+    if(document.getElementById("JumpIndicator " + N + " " + SN + " " + TN).classList.contains('ActiveJumpIndicator')){
+        ActiveJumpIndicatorExist = true;
     }
     DivUserText.remove();
     //----------Создание блока в котором размещается кнопка и весь элемент------
@@ -1373,7 +1376,12 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
     DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
     DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    if(ActiveJumpIndicatorExist){
+        DivJumpIndicator.innerHTML = "<input type=\"button\" value=\"Удалить связь\" title=\"Удалить связь\" class=\"RemoveConnect\" id=\"RemoveConnect " + N + " " + SN + " " + TN + "\" onclick=\"OnClickRemoveConnect(id)\" hidden=\"hidden\">" +
+            "<div class=\"JumpIndicator ActiveJumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    }else{
+        DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    }
     OnClickImgExit();
     RefreshArrows();//Обновление стрелок
 }
@@ -1525,7 +1533,13 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     let ImgPencilInstrument = document.createElement('div');
     let DivUserNumberVariable = document.createElement('div');
     let DivJumpIndicator = document.createElement('div');
-    
+    let ActiveJumpIndicatorExist = false;
+    let DivUserNumber = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN);
+
+    if(document.getElementById("JumpIndicator " + N + " " + SN + " " + TN).classList.contains('ActiveJumpIndicator')){
+        ActiveJumpIndicatorExist = true;
+    }
+
     let InputNumber = document.getElementById("InputNumber");//радио ввода числа и указанного числа
     let NumberCheckbox = document.getElementById("NumberCheckbox");//чек-бокс указанного числа
     let RangeNumber = document.getElementById("RangeNumber");//радио ввода диапазона
@@ -1547,9 +1561,10 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
             return 0;
         }
     }
-    OnClickRemoveNumberUser(id);
 
+    
 
+    DivUserNumber.remove();
     //----------Создание блока в котором размещается кнопка и весь элемент------
     DivUserElement.className = "DivUserElement";
     DivUserElement.setAttribute("id","DivUserNumber " + N + " " + SN + " " + TN);
@@ -1634,7 +1649,12 @@ function OnClickNextEditNumberUser(id){//Всплывающее окно. Ред
     DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
     DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
     DivUserElement.append(DivJumpIndicator);
-    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + ElementKol + "\"></div>";
+    if(ActiveJumpIndicatorExist){
+        DivJumpIndicator.innerHTML = "<input type=\"button\" value=\"Удалить связь\" title=\"Удалить связь\" class=\"RemoveConnect\" id=\"RemoveConnect " + N + " " + SN + " " + TN +  "\" onclick=\"OnClickRemoveConnect(id)\" hidden=\"hidden\">" +
+        "<div class=\"JumpIndicator ActiveJumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    }else{
+        DivJumpIndicator.innerHTML = "<div class=\"JumpIndicator\" onclick =\"OnClickJumpIndicator(id)\" id =\"JumpIndicator " + N + " " + SN + " " + TN + "\"></div>";
+    }
     OnClickImgExit();   
     RefreshArrows();//Обновление стрелок
 }

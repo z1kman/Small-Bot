@@ -108,6 +108,7 @@ body{
     min-height: 30px;
     padding: 10px;
     border-radius: 20px;
+    word-break: break-all;
 }
 .MessageUser{
     text-align: right;
@@ -124,6 +125,7 @@ body{
     min-height: 30px;
     padding: 10px;
     border-radius: 20px;
+    word-break: break-all;
 }
 .EndTest{
     text-align: center;

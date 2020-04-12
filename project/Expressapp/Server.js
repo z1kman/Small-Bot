@@ -284,6 +284,7 @@ app.get("/test", function(request, response){
 });
 app.post("/test",urlencodedParser,function(request,response){
     console.log(request.body.message);//получение сообщения
+    response.sendStatus(200);
 });
 
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера

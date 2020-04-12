@@ -80,11 +80,11 @@ function OnBlurNameVariable(){//Всплывающее окно. Инпут им
     let StrNewVariableName = NewVariableName.value;
     let Num = false;
     let Letter= false;
-    if(NewVariableName.value.length > 15){
+    if(NewVariableName.value.length > 30){
         if(!NewVariableName.classList.contains('error')){
             NewVariableName.classList.add('error');
         }
-        divError.innerHTML="Ошибка!Название переменной не должно превышать 15 символов";
+        divError.innerHTML="Ошибка!Название переменной не должно превышать 30 символов";
         return 0;  
     }
     if(NewVariableName.value.replace(/\s+/g, '') == ""){//если только пробелы в названии переменной
@@ -96,7 +96,7 @@ function OnBlurNameVariable(){//Всплывающее окно. Инпут им
     }
     
     for(let i = 0; i < StrNewVariableName.length; i++){//проверка на наличие букв и цифр
-        if((StrNewVariableName[i] >= 'a' && StrNewVariableName[i] <= 'z'))//проверка на наличие букв
+        if(((StrNewVariableName[i] >= 'a' && StrNewVariableName[i] <= 'z') || (StrNewVariableName[i] >= 'A' && StrNewVariableName[i] <= 'Z')) && (StrNewVariableName[0] <= '0' || StrNewVariableName[0] >= '9'))//проверка на наличие букв
         {
             Letter = true;
         }else if(StrNewVariableName[i] >= '0' && StrNewVariableName[i] <= '9'){//проверка на наличие цифр
@@ -166,9 +166,31 @@ function OnClickAcceptRemoveVariable(id){//Всплывающее окно. Со
     OnClickImgExit();
     for(let i = 0; i< arr.length; i++){//удаление всех связанных переменных из элементов
         if(arr[i].value == NameVariable.innerHTML.replace(/\s/g, '')){
-            let DivFormUser = document.getElementById("DivFormUser " + NumberOfElement(arr[i].getAttribute('id')) + " " +
-                SecondNumberOfElement(arr[i].getAttribute('id')) + " " + ThirdNumberOfElement(arr[i].getAttribute('id')));//переменная на панели
-            DivFormUser.remove();
+            let N = NumberOfElement(arr[i].id);
+            let SN = SecondNumberOfElement(arr[i].id);
+            let TN = ThirdNumberOfElement(arr[i].id);
+            alert(arr[i].id);
+            let DivFormUser = document.getElementById("DivFormUser " + N + " " + SN + " " + TN);
+            DivFormUser.remove(document.getElementById("DivUserText " + N + " " + SN + " " + TN ));
+            if(document.getElementById("DivUserText " + N + " " + SN + " " + TN ) != null){
+                let DivUserText = document.getElementById("DivUserText " + N + " " + SN + " " + TN );
+                if(document.getElementById("IndicatedTextUser " + N + " " + SN + " " + TN) == null && document.getElementById("TagTextUser " + N + " " + SN + " " + TN) == null ){
+                    RemoveArrowFromElement(DivUserText.id)
+                    DivUserText.remove();
+                }
+            }else if(document.getElementById("DivUserNumber " + N + " " + SN + " " + TN ) != null){
+                let DivUserNumber = document.getElementById("DivUserNumber " + N + " " + SN + " " + TN );
+                if(document.getElementById("IndicatedNumberUser " + N + " " + SN + " " + TN) == null && document.getElementById("RangeNumberUser " + N + " " + SN + " " + TN) == null &&
+                        document.getElementById("MaskNumberUser " + N + " " + SN + " " + TN) == null ){
+                    RemoveArrowFromElement(DivUserNumber.id)
+                    DivUserNumber.remove();
+                }
+            }else if(document.getElementById("DivUserEmail " + N + " " + SN + " " + TN ) != null){
+                let DivUserEmail = document.getElementById("DivUserEmail " + N + " " + SN + " " + TN );
+                RemoveArrowFromElement(DivUserEmail.id)
+                DivUserEmail.remove();
+            
+            }
         }
     }
     let VariableElement = document.getElementById("VariableElement " + NVariableId);//переменная в окне переменных
