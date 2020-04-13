@@ -33,6 +33,7 @@
                     let OutgoingMessage = document.createElement('div');//содержимое блока сообщения
                     let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме
                     let ChatForm = document.getElementById('ChatForm'); //блок с чатом
+                    let SendMessage = document.getElementById('SendMessage');
                     MessageUser.className = 'MessageUser';
                     OutgoingMessage.className = 'OutgoingMessage';
                     ChatForm.append(MessageUser);
@@ -44,6 +45,7 @@
                     InputMessage.value ="";
                     LowerDown();
                     $.post('/test', data, function(res) {});
+                    
                 }
             });
             $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки

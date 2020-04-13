@@ -584,6 +584,7 @@ body{
     padding-right: 2px;
     font-size: 18px;
     background-color: rgb(184, 184, 184);
+    cursor: default;
 }
 .Tag:hover{
     background-color: rgb(143, 143, 143);
