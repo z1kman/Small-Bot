@@ -123,8 +123,8 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
     let DivIndicatedNumber = document.createElement('div');
     let DivRangeNumber = document.createElement('div');
     let LabelBlack1 = document.createElement('div');
-    let DivMaskNumber = document.createElement('div');
-    let LabelBlack2 = document.createElement('div');
+   // let DivMaskNumber = document.createElement('div');
+   //let LabelBlack2 = document.createElement('div');
     let LabelError = document.createElement('div');
     let formBtn = document.createElement('form');//форма с кнопками
 
@@ -143,10 +143,10 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
                     else if(DivUserNumber.childNodes[i].getAttribute('class') == "RangeNumberUser"){
                         Element = "RangeNumberUser";
                         break;
-                    }else if(DivUserNumber.childNodes[i].getAttribute('class') == "MaskNumberUser"){
+                    }/*else if(DivUserNumber.childNodes[i].getAttribute('class') == "MaskNumberUser"){
                         Element = "MaskNumberUser";
                         break;
-                    }
+                    }*/
                     else{
                         Element = "Number";
                     }
@@ -169,31 +169,32 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
             FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
             "<label for=\"InputNumber\">Ввод числа</label>" +
             "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
-            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
-            "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
-            "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>";
+            /*"<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+            "<label for=\"MaskNumber\">Ввод числа по маске</label>";*/
         }else if(Element == "RangeNumberUser"){
             FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
             "<label for=\"InputNumber\">Ввод числа</label>" +
             "<input type=\"radio\" class=\"RadioButton\" checked=\"checked\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
-            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
-            "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
-            "<label for=\"MaskNumber\">Ввод числа по маске</label>";
-        }else if(Element == "MaskNumberUser"){
+            "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" ;
+          /* "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+            "<label for=\"MaskNumber\">Ввод числа по маске</label>"; */
+        } /* else if(Element == "MaskNumberUser"){
             FormRadio.innerHTML="<input type=\"radio\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
             "<label for=\"InputNumber\">Ввод числа</label>" +
             "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
             "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
             "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" checked=\"checked\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
             "<label for=\"MaskNumber\">Ввод числа по маске</label>";
-        }
+        } */
+    
     }else{
         FormRadio.innerHTML="<input type=\"radio\" checked=\"checked\" class=\"RadioButton\" id=\"InputNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
         "<label for=\"InputNumber\">Ввод числа</label>" +
         "<input type=\"radio\" class=\"RadioButton\" id=\"RangeNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" +
-        "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>" +
-        "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
-        "<label for=\"MaskNumber\">Ввод числа по маске</label>";
+        "<label for=\"RangeNumber\">Ввод числа в диапазоне</label>";
+    /*   "<input type=\"radio\" class=\"RadioButton\" id=\"MaskNumber\" name=\"Num\" onchange=\"OnChangeCheckRadioNumber(id)\">" + 
+        "<label for=\"MaskNumber\">Ввод числа по маске</label>"; */
     }
     //----------------Создание блока в котором чекбокс и поле ввода определенного числа---------------
     DivNumber.setAttribute("id","DivNumber");
@@ -271,7 +272,8 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
         "<label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 1\" onfocus=\"OnFocusNumberError(id)\"></label>" + 
         "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumber 2\" onfocus=\"OnFocusNumberError(id)\"></label>";
     }
-     //----------------Создание блока для ввода маски---------------
+  /*
+    //----------------Создание блока для ввода маски---------------
      if(Name == "ImgPencil"){
         if(Element == "MaskNumberUser"){
         }
@@ -301,6 +303,7 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
         LabelBlack2.innerHTML = "<label>Введите маску:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumber\" onfocus=\"OnFocusNumberError(id)\"></label>" +
         "<div><input type=\"button\" class=\"helpBtn\" id=\"helpBtnMask\" value=\"справка\" onclick=\"OnClickHelpBtnMask()\"></div>";
      }
+     */
      //----------------Создание подписи блока вывода ошибки---------------     
      LabelError.className = "LabelError";
      LabelError.setAttribute("id","ErrorNewNumber");
@@ -319,27 +322,27 @@ function OnClickAddNumberUser(id){ //Всплывающее окно. Окно �
 }
 function OnChangeCheckRadioNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения RadioButton
     DivRangeNumber = document.getElementById("DivRangeNumber");
-    DivMaskNumber = document.getElementById("DivMaskNumber");
+    //DivMaskNumber = document.getElementById("DivMaskNumber");
     DivNumber = document.getElementById("DivNumber");
     ErrorNewNumber = document.getElementById("ErrorNewNumber");
     if(id === "InputNumber"){
         DivNumber.removeAttribute("hidden");
         DivRangeNumber.setAttribute("hidden","hidden");
-        DivMaskNumber.setAttribute("hidden","hidden");
+        //DivMaskNumber.setAttribute("hidden","hidden");
         ErrorNewNumber.innerHTML = "";
     }
     else if(id === "RangeNumber"){
         DivRangeNumber.removeAttribute("hidden");
-        DivMaskNumber.setAttribute("hidden","hidden");
+        //DivMaskNumber.setAttribute("hidden","hidden");
         DivNumber.setAttribute("hidden","hidden");
         ErrorNewNumber.innerHTML = "";
-    }
+    }/*
     else if(id === "MaskNumber"){
         DivMaskNumber.removeAttribute("hidden");
         DivRangeNumber.setAttribute("hidden","hidden");
         DivNumber.setAttribute("hidden","hidden");
         ErrorNewNumber.innerHTML = "";
-    }
+    }*/
 }
 function OnChangeCheckboxNumber(id){//Всплывающее окно. Окно создания ввода числа. Событие изменения CheckBox
     DivIndicatedNumber = document.getElementById("DivIndicatedNumber");

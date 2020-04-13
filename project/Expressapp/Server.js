@@ -91,7 +91,7 @@ app.post("/account",urlencodedParser,function(request,response){
                     cursor.forEach(function(obj){
                         db.collection('Projects').insertOne({"id_User": obj._id, "name" : request.body.NameProject, "Obj_html" : objHtmlLink, "Obj_js": objJsLink, 'randName': RandName.toString()});//запись нового проекта в бд
                     })
-                    fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink + "\"></script>" + fileHtml , function(error){//создание html файла
+                    fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink  + "?" + Date.now() + "\"></script>" + fileHtml , function(error){//создание html файла
                         if(error) 
                         {
                             console.log("Ошибка при записи файла:" + error);

@@ -2,54 +2,42 @@
  var Number= "" ;
  var Email= "" ;
 document.addEventListener("DOMContentLoaded", () => {
-	document.getElementById('SendMessage').setAttribute('onclick','Act_1_2_16()');
+	document.getElementById('SendMessage').setAttribute('onclick','Act_1_2_9()');
 });
-function Act_1_2_16(){
+function Act_1_2_9(){
 	 let InputMessage = document.getElementById('InputMessage');
-	 if(InputMessage.value.toLowerCase() == "1"){
-		Text = InputMessage.value;
-		 Act_2_3_15();
-		 Act_2_3_26();
+	 if(InputMessage.value >=  1 && InputMessage.value  <= 5){
+		 Act_2_3_10();
 	 }else{
-		 Act_1_2_22();
+		 Act_1_2_13();
 	 }
 }
-window.onload = function(){
-	 Start(); 
-}
-function Start(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'fwq';
-	 ButtonBlock.append(ButtonOnChat)
-	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_2_3_15();')
-	 if(ButtonOnChat.hasAttribute('onclick') != null){
-		 let AttributeContains = ButtonOnChat.getAttribute('onclick')
-		 ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById("SendMessage").setAttribute("onclick","Act_2_3_26();");');
-	 }else{
-		 ButtonOnChat.setAttribute('onclick','document.getElementById("SendMessage").setAttribute("onclick","Act_2_3_26();");'); 
-	 }
-}
-function Act_1_2_22(){
+function Act_1_2_13(){
 	 let InputMessage = document.getElementById('InputMessage');
-	 if(InputMessage.value.toLowerCase().indexOf("привет") + 1 > 0 && InputMessage.value.toLowerCase().indexOf("июль") + 1 > 0 ){
+	 if(InputMessage.value >=  6 && InputMessage.value  <= 7){
 		Text = InputMessage.value;
-		 Act_3_6_24();
+		 Act_2_4_12();
 	 }else{
-		 Act_1_2_2();
+		 Act_1_2_18();
 	 }
 }
- function Act_1_2_2(){
-	 let SendMessage = document.getElementById('SendMessage');
-	 SendMessage.setAttribute('onclick','Act_2_5_19(); SendMessage.removeAttribute("onclick");');
- }
-function Act_2_3_15(){
+function Act_1_2_18(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value == 11){
+		Text = InputMessage.value;
+	 }else{
+		 Act_1_2_25();
+	 }
+}
+function Act_1_2_25(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value != "" && !isNaN(InputMessage.value)){
+		Text = InputMessage.value;
+		 Act_4_9_24();
+	 }else{
+	 }
+}
+function Act_2_3_10(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -57,21 +45,21 @@ function Act_2_3_15(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "ваш текст " + Text + "";
-	 SendBotMessage("ваш текст " + Text + "");
+	 IncomingMessage.innerHTML = "куц";
+	 SendBotMessage("куц");
 	 LowerDown();
 	 let SendMessage = document.getElementById('SendMessage')
-	 SendMessage.setAttribute('onclick','Act_2_3_26();')
+	 SendMessage.setAttribute('onclick','Act_2_3_22();')
 }
-function Act_2_3_26(){
+function Act_2_3_22(){
 	 let InputMessage = document.getElementById('InputMessage');
-	 if(InputMessage.value.toLowerCase().indexOf("12") + 1 > 0 ){
+	 if(InputMessage.value.indexOf('@') + 1 > 0 && InputMessage.value.indexOf('.') + 1 > 0 && InputMessage.value.indexOf('@') < InputMessage.value.indexOf('.')){
 		Text = InputMessage.value;
-		 Act_2_5_19();
+		 Act_4_9_24();
 	 }else{
 	 }
 }
-function Act_2_5_19(){
+function Act_2_4_12(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -79,45 +67,11 @@ function Act_2_5_19(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "ауц";
-	 SendBotMessage("ауц");
+	 IncomingMessage.innerHTML = "екц " + Text + "";
+	 SendBotMessage("екц " + Text + "");
 	 LowerDown();
-	 Act_2_5_26();
 }
-function Act_2_5_26(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = '1';
-	 ButtonBlock.append(ButtonOnChat)
-	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_3_7_29();')
-	 Act_2_5_27();
-}
-function Act_2_5_27(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = '2';
-	 ButtonBlock.append(ButtonOnChat)
-	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_3_8_31();')
-	 if(ButtonOnChat.hasAttribute('onclick') != null){
-		 let AttributeContains = ButtonOnChat.getAttribute('onclick')
-		 ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById("SendMessage").setAttribute("onclick","Act_3_8_26();");');
-	 }else{
-		 ButtonOnChat.setAttribute('onclick','document.getElementById("SendMessage").setAttribute("onclick","Act_3_8_26();");'); 
-	 }
-}
-function Act_3_6_24(){
+function Act_2_6_21(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -125,51 +79,33 @@ function Act_3_6_24(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "Текст про июль: " + Text + "";
-	 SendBotMessage("Текст про июль: " + Text + "");
+	 IncomingMessage.innerHTML = "такой вот текст " + Text + "";
+	 SendBotMessage("такой вот текст " + Text + "");
+	 LowerDown();
+}
+function Act_3_5_19(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "число " + Text + "";
+	 SendBotMessage("число " + Text + "");
 	 LowerDown();
 	 let SendMessage = document.getElementById('SendMessage')
-	 SendMessage.setAttribute('onclick','Act_3_6_23();')
+	 SendMessage.setAttribute('onclick','Act_3_5_20();')
 }
- function Act_3_6_23(){
-	 let SendMessage = document.getElementById('SendMessage');
-	 SendMessage.setAttribute('onclick','Act_2_5_19(); SendMessage.removeAttribute("onclick");');
- }
-function Act_3_7_29(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "нажатие на кнопку 1";
-	 SendBotMessage("нажатие на кнопку 1");
-	 LowerDown();
-}
-function Act_3_8_31(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "нажатие на кнопку 2";
-	 SendBotMessage("нажатие на кнопку 2");
-	 LowerDown();
-	 let SendMessage = document.getElementById('SendMessage')
-	 SendMessage.setAttribute('onclick','Act_3_8_26();')
-}
-function Act_3_8_26(){
+function Act_3_5_20(){
 	 let InputMessage = document.getElementById('InputMessage');
 	 if(InputMessage.value != ""){
 		Text = InputMessage.value;
-		 Act_4_7_28();
+		 Act_2_6_21();
 	 }else{
 	 }
 }
-function Act_4_7_28(){
+function Act_4_9_24(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -177,8 +113,8 @@ function Act_4_7_28(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "Вот так " + Text + "";
-	 SendBotMessage("Вот так " + Text + "");
+	 IncomingMessage.innerHTML = "Ваш email " + Text + "";
+	 SendBotMessage("Ваш email " + Text + "");
 	 LowerDown();
 }
  function DeleteButton(){
