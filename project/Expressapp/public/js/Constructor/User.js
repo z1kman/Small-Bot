@@ -1371,7 +1371,7 @@ function OnClickSaveEditTextUser(id){//Всплывающая панель. Ре
         DivUserEmailVariable.className = "DivFormUser";
         DivUserEmailVariable.setAttribute("id","DivFormUser " + N + " " + SN + " " + TN);
         DivUserElement.append(DivUserEmailVariable);
-        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserTextVariable " + N + " " + SN + " " + ElementKol + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
+        DivUserEmailVariable.innerHTML = "<div class=\"LabelBlack\">Запомнить в:<input type=\"input\" class=\"InputVariable\" id=\"UserTextVariable " + N + " " + SN + " " + TN + "\" value=\"" + Select.options[Select.selectedIndex].value + "\" readonly=\"readonly\"></div>"
     }
     //----------Создание розетки(джампера)------
     DivJumpIndicator.className = "DivJumpIndicator";

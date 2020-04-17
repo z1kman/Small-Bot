@@ -1,4 +1,4 @@
-var VariableId=4;
- var NumberOfPanels=7;
- var ElementKol =24; 
- var NumberOfSection=5;
+var VariableId=5;
+ var NumberOfPanels=12;
+ var ElementKol =38; 
+ var NumberOfSection=7;

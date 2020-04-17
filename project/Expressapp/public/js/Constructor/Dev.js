@@ -232,44 +232,57 @@ function GenerateCode(){
                                 let PanelConnect = document.getElementById((document.getElementById("Canvas " + ElementId).getAttribute('data-connect')));
                                 let Bot = document.getElementById("Bot " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
                                 let User = document.getElementById("User " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
+                                let Condition = document.getElementById("Condition " +  NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
                                 let BotContainsContent = true;//флаг для проверки наличия элементов у бота
-                                for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
-                                    if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
-                                        if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
-                                            let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
-                                            //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                            Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ TextBotId +"();')";
-                                            BotContainsContent = true;
-                                            break;
-                                        }else{
-                                            BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+                                if(Bot != null && User != null){
+                                    for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+                                        if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
+                                            if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
+                                                let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
+                                                //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ TextBotId +"();')";
+                                                BotContainsContent = true;
+                                                break;
+                                            }else{
+                                                BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+                                            }
                                         }
                                     }
-                                }
 
-                                if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
-                                    for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
+                                    if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
+                                        for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
+                                            if(User.childNodes[f] != undefined){//проверка на не пустой элемент
+                                                if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
+                                                    let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                                                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                                                    Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ ButtonId +"();')";
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for(let f = 0; f < User.childNodes.length; f++){//поиск других действий пользователя в присоединеной панели
                                         if(User.childNodes[f] != undefined){//проверка на не пустой элемент
-                                            if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
-                                                let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                                            if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
+                                                let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
                                                 //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ ButtonId +"();')";
+                                                Code += "\n\t if(ButtonOnChat.hasAttribute('onclick') != null){" + //Если уже есть событие клика
+                                                        "\n\t\t let AttributeContains = ButtonOnChat.getAttribute('onclick')" + //запомнить значение события клика
+                                                        "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");\');" + //дописать новое значение
+                                                        "\n\t }else{" + //если же событие клика еще нет 
+                                                        "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");'); \n\t }"; //создание события
                                                 break;
                                             }
                                         }
                                     }
-                                }
-                                for(let f = 0; f < User.childNodes.length; f++){//поиск других действий пользователя в присоединеной панели
-                                    if(User.childNodes[f] != undefined){//проверка на не пустой элемент
-                                        if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
-                                            let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                                            //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                            Code += "\n\t if(ButtonOnChat.hasAttribute('onclick') != null){" + //Если уже есть событие клика
-                                                    "\n\t\t let AttributeContains = ButtonOnChat.getAttribute('onclick')" + //запомнить значение события клика
-                                                    "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");\');" + //дописать новое значение
-                                                    "\n\t }else{" + //если же событие клика еще нет 
-                                                    "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");'); \n\t }"; //создание события
-                                            break;
+                                }else if(Condition != null){
+                                    for(let f = 0; f < Condition.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+                                        if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
+                                            if(Condition.childNodes[f].className == "DivConditionElement"){//если обнаружено условие
+                                                let ConditionId = NumberOfElement(Condition.childNodes[f].id) + "_" + SecondNumberOfElement(Condition.childNodes[f].id) + "_" + ThirdNumberOfElement(Condition.childNodes[f].id);
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ ConditionId +"();')";
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -445,16 +458,128 @@ function GenerateCode(){
                         }
                     }
                 }
+            //-------------------------Генерация функций для условий--------------------------------------------
+            //-------------------------Генерация функций для условий--------------------------------------------
+            //-------------------------Генерация функций для условий--------------------------------------------
+            }else if(document.getElementById(Panels[i].childNodes[j].id).className == "Condition"){//если текущий элемент - блок условий
+                for(let k = 0; k < Panels[i].childNodes[j].childNodes.length; k++){//проход по всему блоку с условиями
+                    ElementId = Panels[i].childNodes[j].childNodes[k].id;//получение id текущего элемента
+                    N = NumberOfElement(ElementId);
+                    SN = SecondNumberOfElement(ElementId);
+                    TN = ThirdNumberOfElement(ElementId);
+                    ElementId = N + " " + SN + " " + TN;
+                    let CountBkt = 0;//Кол-во скобок
+                    let CountBktFig = 0;//Кол-во скобок
+                    if(document.getElementById("DivConditionElement " + ElementId) != undefined){//если текущий элемент с условием
+                        let InputConditionPanel = document.getElementById("InputConditionPanel " + ElementId);//строка с условием
+                        let Text = InputConditionPanel.value;
+                        let JumpIndicator = document.getElementById("JumpIndicator " + ElementId);//Джампер текущего элемента
+                        let NamePanel = document.getElementById("NamePanel " + N + " " + SN);//имя текущей панели(для отладки)
+                        let Condition = document.getElementById("Condition " + N + " " + SN );//панель с условиями
+                        //---генерирование имени функции
+                        if(FirstUserElement == false){//если ранее не был задействован ни один элемент действия пользователя
+                            FirstUserElement = true;
+                            //При загрузке страницы в кнопку отправки сообщения помещается текущая функция
+                            Code += "\ndocument.addEventListener(\"DOMContentLoaded\", () => {" +
+                                    "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','Act_" + N + "_" + SN + "_" + TN + "()');\n});";     
+                        }
+                        Code += "\nfunction Act_" + N + "_" + SN + "_" + TN + "(){" + //Генерирование имени функции
+                        "\n\t let InputMessage = document.getElementById('InputMessage');" + //Поле ввода сообщения на форме4
+                        "\n\t try{\n\t\t"
+                        //---проверка синтаксиса условия
+                        if(InputConditionPanel.value.indexOf("if") + 1 == 0){//проверка, существует ли слово if
+                            Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + " , отсутствует ключевое слово \"if\"." +
+                            "\n\nСправка: условия записываются следующим образом: if(\"ваше условие\");"; 
+                            return Code;
+                        }
+                        for(let f = 0; f < InputConditionPanel.value.length; f++){//проверка выражения на синтаксис
+                            if(InputConditionPanel.value[f] == "\""){//если встретилась двойная ковычка
+                                Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + " , присутствует знак:' \" '." +
+                                        "\n\nСправка: вместо двойных ковычек, при записи условий, необходимо использовать одинарные ковычки;" 
+                                return Code;
+                            }else if(InputConditionPanel.value[f] == '('){//подсчет кол-ва скобок
+                                CountBkt++;  
+                            }else if(InputConditionPanel.value[f] == ')'){//подсчет кол-ва скобок
+                                CountBkt--;
+                            }else if(InputConditionPanel.value[f] == '{'){
+                                CountBktFig++;
+                            }else if(InputConditionPanel.value[f] == '}'){
+                                CountBktFig--;
+                            }
+                            if(f + 1 >= InputConditionPanel.value.length  && (CountBkt != 0 ||  CountBktFig != 0)){
+                                if(CountBkt > 0){
+                                    Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + " , недостаточно скобок.";
+                                    return Code;
+                                }else if(CountBkt < 0){
+                                    Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + ", присутствуют лишние скобки.";
+                                    return Code;
+                                }
+                                if(CountBktFig > 0){
+                                    Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + " , недостаточно фигурных скобок.";
+                                    return Code;
+                                }else if(CountBktFig < 0){
+                                    Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + ", присутствуют лишние фигурные скобки.";
+                                    return Code;
+                                }
+                            }
+                        }
+                        if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//Если есть соединение с другой панелью
+                            for(let f = Text.length; f > 0; f-- ){//цикл по тексту условия
+                                if(Text[f] == '}'){//если найдена фигурная скобка
+                                    Text = Text.slice(0,f) + Text.slice(f+1,Text.length);//удаление последней скобки;
+                                    break
+                                }else if(Text[f] == '{'){
+                                    break;
+                                }else if(f-1 <= 0){//если ни одной фигурной скобки не обраружено
+                                    Text += "{";
+                                }
+                            }
+                            Code += "\n\t\t" + Text;
+                            Code = CreateConnect(ElementId, Code);//генерация кода для связи
+                            Code += "\n\t\t}"; 
+                        }else{
+                            Code += Text;
+                        }
+                        Code += "\n\t\t else{"
+                            for(let f = k + 1; f < Condition.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения других элементов
+                                if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
+                                    if(Condition.childNodes[f].className == "DivConditionElement"){//если найден еще элемент
+                                        let NextStepId = Condition.childNodes[f].id;//переменная для обращения к следующей функции
+                                        Code += "\n\t\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();"; 
+                                        //Вызов следующей функции которая создает кнопку(и) 
+                                        break;
+                                    }else if(f + 1 >= Condition.childNodes.length){//если текущий элемент последний
+                                        for(let e = 0; e < Panels[i].childNodes.length; e++){//запуск цикла по всем элементам текущей панели
+                                            if(Panels[i].childNodes[e].className == "DivJumpIndicator"){//поиск джампера находящегося на панеле
+                                                let JumpIndicator  = document.getElementById("JumpIndicator " + NumberOfElement(Panels[i].childNodes[e].id) + " " + 
+                                                    SecondNumberOfElement(Panels[i].childNodes[e].id) + " " + ThirdNumberOfElement(Panels[i].childNodes[e].id));
+                                                if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//если джампер активен
+                                                    let NextStepId = JumpIndicator.id;//переменная для обращения к следующей функции
+                                                    Code += "\n\t\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();";
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Code += "\n\t }\n\t}catch (e) { \n\t alert(\"Ошибка в условии:" + Text + "}\");\n\t}";
+                        Code += "\n}"//конец функции
+                    }
+                } 
             }else if(Panels[i].childNodes[j].className == "DivJumpIndicator"){
                 let JumpIndicator  = document.getElementById("JumpIndicator " + NumberOfElement(Panels[i].childNodes[j].id) + " " + 
                 SecondNumberOfElement(Panels[i].childNodes[j].id) + " " + ThirdNumberOfElement(Panels[i].childNodes[j].id));
                 if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//если джампер активен
-                    
                     ElementId = NumberOfElement(JumpIndicator.id) + " " + SecondNumberOfElement(JumpIndicator.id) + " " + ThirdNumberOfElement(JumpIndicator.id);
                     Code += "\n function Act_" + NumberOfElement(JumpIndicator.id) + "_" + SecondNumberOfElement(JumpIndicator.id) + "_" + ThirdNumberOfElement(JumpIndicator.id) + "(){"
-                    Code += "\n\t let SendMessage = document.getElementById('SendMessage');" + 
-                            "\n\t SendMessage.setAttribute('onclick',\'";
-                    Code =  CreateConnect2(ElementId, Code) + " SendMessage.removeAttribute(\"onclick\");\');";
+                    if(document.getElementById("Condition " + NumberOfElement(Panels[i].childNodes[j].id) + " " + SecondNumberOfElement(Panels[i].childNodes[j].id))){//если текущая панель с условием
+                        Code =  CreateConnect(ElementId, Code);
+                    }else{
+                        Code += "\n\t let SendMessage = document.getElementById('SendMessage');" + 
+                                "\n\t SendMessage.setAttribute('onclick',\'";
+                        Code =  CreateConnect2(ElementId, Code) + " SendMessage.removeAttribute(\"onclick\");\');";
+                    }
                     Code += "\n }"//конец функции
                 }
             }
@@ -501,33 +626,47 @@ function CreateConnect(ElementId, Code){
     let PanelConnect = document.getElementById((document.getElementById("Canvas " + ElementId).getAttribute('data-connect')));
     let Bot = document.getElementById("Bot " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
     let User = document.getElementById("User " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
+    let Condition = document.getElementById("Condition " +  NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
     let BotContainsContent = true;//флаг для проверки наличия элементов у бота
-    for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
-        if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
-            if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
-                let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
-                //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                Code += "\n\t\t Act_"+ TextBotId +"();";//вызов функции
-                BotContainsContent = true;
-                break;
-            }else{
-                BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+    if(Bot != null && User != null){//если это классическая панель действий
+        for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+            if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
+                if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
+                    let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
+                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                    Code += "\n\t\t Act_"+ TextBotId +"();";//вызов функции
+                    BotContainsContent = true;
+                    break;
+                }else{
+                    BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+                }
+            }
+        }
+
+        if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
+            for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
+                if(User.childNodes[f] != undefined){//проверка на не пустой элемент
+                    if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
+                        let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                        //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                        Code += "\n\t\t Act_"+ ButtonId +"();";//вызов функции
+                        break;
+                    }else if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
+                        let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                        //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                        Code += "\n\t\t Act_" + ID + "();"; //вызов функции
+                        break;
+                    }
+                }
             }
         }
     }
-
-    if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
-        for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
-            if(User.childNodes[f] != undefined){//проверка на не пустой элемент
-                if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
-                    let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                    Code += "\n\t\t Act_"+ ButtonId +"();";//вызов функции
-                    break;
-                }else if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
-                    let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                    Code += "\n\t\t Act_" + ID + "();"; //вызов функции
+    if(Condition != null){
+        for(let f = 0; f < Condition.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+            if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
+                if(Condition.childNodes[f].className == "DivConditionElement"){//если обнаружено условие
+                    let ConditionId = NumberOfElement(Condition.childNodes[f].id) + "_" + SecondNumberOfElement(Condition.childNodes[f].id) + "_" + ThirdNumberOfElement(Condition.childNodes[f].id);
+                    Code += "\n\t\t Act_"+ ConditionId +"();";//вызов функции
                     break;
                 }
             }
@@ -540,32 +679,46 @@ function CreateConnect2(ElementId, Code){
     let PanelConnect = document.getElementById((document.getElementById("Canvas " + ElementId).getAttribute('data-connect')));
     let Bot = document.getElementById("Bot " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
     let User = document.getElementById("User " + NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
+    let Condition = document.getElementById("Condition " +  NumberOfElement(PanelConnect.id) + " " + SecondNumberOfElement(PanelConnect.id));
     let BotContainsContent = true;//флаг для проверки наличия элементов у бота
-    for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
-        if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
-            if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
-                let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
-                //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                Code += "Act_"+ TextBotId +"();";//вызов функции
-                BotContainsContent = true;
-                break;
-            }else{
-                BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+    if(Bot != null && User != null){//если это классическая панель действий
+        for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+            if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
+                if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
+                    let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
+                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                    Code += "Act_"+ TextBotId +"();";//вызов функции
+                    BotContainsContent = true;
+                    break;
+                }else{
+                    BotContainsContent = false;//если не было найдено ни одного действия бота в присоединеной панели
+                }
+            }
+        }
+        if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
+            for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
+                if(User.childNodes[f] != undefined){//проверка на не пустой элемент
+                    if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
+                        let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                        //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                        Code += "Act_"+ ButtonId +"();";//вызов функции
+                        break;
+                    }else if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
+                        let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                        //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                        Code += "Act_" + ID + "();"; //вызов функции
+                        break;
+                    }
+                }
             }
         }
     }
-    if(BotContainsContent == false){//если не было найдено ни одного действия бота в присоединеной панели
-        for(let f = 0; f < User.childNodes.length; f++){//поиск кнопок в действиях пользователя в присоединенной панели
-            if(User.childNodes[f] != undefined){//проверка на не пустой элемент
-                if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
-                    let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                    Code += "Act_"+ ButtonId +"();";//вызов функции
-                    break;
-                }else if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
-                    let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                    Code += "Act_" + ID + "();"; //вызов функции
+    if(Condition != null){
+        for(let f = 0; f < Condition.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+            if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
+                if(Condition.childNodes[f].className == "DivConditionElement"){//если обнаружено условие
+                    let ConditionId = NumberOfElement(Condition.childNodes[f].id) + "_" + SecondNumberOfElement(Condition.childNodes[f].id) + "_" + ThirdNumberOfElement(Condition.childNodes[f].id);
+                    Code += "Act_"+ ConditionId +"();";//вызов функции
                     break;
                 }
             }

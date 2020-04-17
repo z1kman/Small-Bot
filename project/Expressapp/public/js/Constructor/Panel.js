@@ -186,6 +186,7 @@ function OnClickNewConditionPanel(id){//Создание новой панели
     let divLabelCondition = document.createElement('div');    
     let formAddCondition = document.createElement('form');
     let formNewPanelBtn = document.createElement('form');//Создание формы кнопки добавления новой панели(NewPanelBtn)
+    let DivJumpIndicator = document.createElement('div');//Создание формы для джампера находящегося на панели
 
     NumberOfPanels++;//увеличение кол-ва панелей
     ElementKol++;//увеличение кол-ва элементов(используется в панельном джампере)
@@ -263,7 +264,15 @@ function OnClickNewConditionPanel(id){//Создание новой панели
     formAddCondition.setAttribute("id","formAddCondition " + N + " " + NumberOfPanels);
     divCondition.append(formAddCondition);
     formAddCondition.innerHTML="<input type=\"button\" value=\"Добавить условие\" class=\"AddConditionBtn\" id=\"AddConditionBtn " + N + " " + NumberOfPanels  + "\" onclick=\"OnClickAddConditionBtn(id)\">";
-   
+
+    //----------Создание формы джампера-----------
+    DivJumpIndicator.className = "DivJumpIndicator";
+    DivJumpIndicator.setAttribute("id","DivJumpIndicator " + N + " " + NumberOfPanels + " " + ElementKol);
+    DivJumpIndicator.setAttribute("onmouseover","OnMouseOverDivJump(id)");
+    DivJumpIndicator.setAttribute("onmouseout","OnMouseOutDivJump(id)");
+    divPanel.append(DivJumpIndicator);
+    DivJumpIndicator.innerHTML = "<div class=\"JumpIndicatorPanel\" id=\"JumpIndicator " + N + " " + NumberOfPanels + " " + ElementKol + "\"" + 
+        "title = \"Создание связи в случае, если ни одно из действий не выполняется\" onclick =\"OnClickJumpIndicator(id)\"></div>";
     //----------Создание формы кнопки добавления новой панели(NewPanelBtn)----------
     formNewPanelBtn.setAttribute("id","formAddInstrumentBtn " + N + " " + NumberOfPanels);
     divPanel.after(formNewPanelBtn);
