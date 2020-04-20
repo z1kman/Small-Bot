@@ -158,6 +158,45 @@ body{
     border-style: none;
     outline: none;
 }
+input[type="file"] {
+    display: none;
+}
+.OpenFile{
+    border: none;
+    background-color: rgba(0, 174, 255, 0);
+    color: rgb(136, 136, 136);
+}
+.OpenFile:hover{
+    transition: 0.3s;
+    color: rgb(0, 157, 219);
+}
+.SubmitImg{
+    border: 2px solid rgb(0, 174, 255) ;
+    background-color: rgba(0, 174, 255, 0);
+    color: rgb(0, 174, 255);
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+    outline: none;
+    
+}
+.SubmitImg:hover{
+    transition: 0.3s;
+    color: white;
+    background-color: rgb(0, 174, 255);
+}
+.SubmitImg:disabled {
+    border: 2px solid rgb(184, 184, 184);
+    color: rgb(184, 184, 184);
+    background-color: rgba(0, 174, 255, 0);
+}
+.formUploadImg{
+    margin-top: 30px;
+    text-align: center;
+}
 .AddInstrumentBtn:hover{
     color: white;
     background-color: rgb(0, 174, 255);
@@ -214,6 +253,7 @@ body{
     border-radius: 5px;
     outline: none;
 }
+
 .NewInstrumentPanel{
     width:100%;
     height: 100%;
@@ -255,6 +295,10 @@ body{
     background-color: rgb(30, 184, 255); ;
     transition: 0.3s;
     color:rgb(255, 255, 255);
+}
+.AddBtn:disabled{
+    background-color: rgb(228, 228, 228); 
+    color: rgb(68, 68, 68);
 }
 
 .BtnRemove{

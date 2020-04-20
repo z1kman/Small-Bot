@@ -93,4 +93,44 @@ function RemoveArrowFromElement(id){
         JumpIndicator.classList.remove('ActiveJumpIndicator');
     }
 }
-
+function SubmImg(id){
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let filedata = document.getElementById("filedata " + N + " " + SN);
+    let SaveNewImage = document.getElementById("SaveNewImage " + N + " " + SN);
+    let LabelError = document.getElementById('LabelError');
+    let LabelImg = document.getElementById('LabelImg');
+    let SubmitImg = document.getElementById("SubmitImg " + N + " " + SN);
+    if(filedata.value == ""){
+        SaveNewImage.setAttribute('disabled','disabled');
+        LabelImg.innerHTML = ""
+        LabelError.innerHTML = "Ошибка! Необходимо выбрать файл!"
+    }else if(getCookie('FileName') == ""){
+        LabelImg.innerHTML = ""
+        LabelError.innerHTML = "Ошибка! Файл не загружен"
+    }else if(filedata.value != "" && getCookie('FileName') != ""){
+        LabelError.innerHTML = "";
+        SubmitImg.setAttribute('disabled','disabled');
+        LabelImg.innerHTML = "Файл успешно загружен!"
+        SaveNewImage.removeAttribute('disabled');
+    }
+}
+function FileOpen(id){
+    let N = NumberOfElement(id);
+    let SN = SecondNumberOfElement(id);
+    let SaveNewImage = document.getElementById("SaveNewImage " + N + " " + SN);
+    let filedata = document.getElementById("filedata " + N + " " + SN);
+    let LabelError = document.getElementById('LabelError');
+    let LabelImg = document.getElementById('LabelImg');
+    let SubmitImg = document.getElementById("SubmitImg " + N + " " + SN);
+    LabelImg.innerHTML = ""
+    LabelError.innerHTML = ""
+    SaveNewImage.setAttribute('disabled','disabled');
+    SubmitImg.removeAttribute('disabled');
+}
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }

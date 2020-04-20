@@ -14,7 +14,35 @@
             <script src="js/Constructor/Bot.js"></script>
             <script src="js/Constructor/User.js"></script>
             <script src="js/Constructor/Condition.js"></script>
-    </head><body onload="RefreshArrows()">   
+    </head><body onload="RefreshArrows()">  
+        
+        <div class="NewInstrumentPanel" id="NewInstrumentPanel">
+            <div class="AddNewPanel" id="AddNewPanel">
+                <div class="ImgExit" onclick="OnClickImgExit()">
+                    <img src="source/constructor/exit.png" title="Закрыть панель" width="16px">
+                </div>
+                <div class="Label" id="LabelAddNewInstrument">Выберите необходимое изображение</div>
+
+                <form target="myIFR" method="post" id="fore" enctype="multipart/form-data" class="formUploadImg">
+                    <label class="OpenFile"><input type="file" name="filedata"  id="filedata 1 2" class="UploadBtn" multiple accept="image/*,image/jpeg" onclick="FileOpen(id);" />
+                    Выбрать файл</label>
+                    <input type="submit" value="Загрузить" class="SubmitImg" id="SubmitImg 1 2" onclick="SubmImg(id)"/>
+                </form>
+                <iframe name="myIFR" style="display: none"></iframe>
+                <div class="Label" id="LabelImg"></div>
+                <div class="LabelError" id="LabelError">
+                </div>
+                <form id="formNewNumber">
+                    <input type="button" value="Далее" class="AddBtn" id="SaveNewImage 1 2" disabled="disabled" onclick="">
+                    <input type="button" value="Отмена" class="AddBtn" id="CancelUser 1 2" onclick="OnClickImgExit(); OnClickAddInstrumentBtnBot(id);">
+                </form>
+            </div>
+        </div>
+
+
+
+
+
         <div class="Navbar" id="Navbar">
             <div class="LogoDiv">
                 <a href="/account"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>

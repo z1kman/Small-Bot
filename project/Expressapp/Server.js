@@ -9,6 +9,8 @@ const jwt = require('jsonwebtoken')
 const app = express();
 const secret = 'z1kman';
 const cookieParser = require('cookie-parser');
+const multer  = require("multer");
+
 
 
 
@@ -19,6 +21,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});//создан
 app.use(express.static(path.join(__dirname, 'public')));//подключение css/js и source файлов
 app.use(bodyParser.json({limit: '50mb'}));//лимит на объем принимаемых данных
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));//лимит на объем принимаемых данных
+app.use(multer({dest: "public/uploads"}).single("filedata"));
 app.use(cookieParser());
 
 function createToken(email){
@@ -243,6 +246,7 @@ app.post("/constructor", urlencodedParser, function(request, response){
         let Token = request.cookies['token'];//токен из куков
         let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
         let Project = request.cookies['Project'];// рандомное имя проекта из куков
+
         if(request.body.Content != undefined){//если пост запрос с кнопки сохранения проекта
             fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
                 if(error) 
@@ -269,16 +273,18 @@ app.post("/constructor", urlencodedParser, function(request, response){
                     return;
                 }
             });
-
-
-
             response.redirect('/constructor');
+        }else if(request.file != undefined){//если пост запрос с загрузки файла изображения
+            let filedata = request.file;
+            response.cookie('FileName',filedata.filename,{maxAge: 90000000});//устанавка куков
+            response.sendStatus(200);
         }
     }
 });
 app.get("/contacts", function(request, response){
     response.render(__dirname +  "/views/contacts.hbs");
 });
+
 app.get("/test", function(request, response){
     response.render(__dirname +  "/views/testing.hbs");
 });
