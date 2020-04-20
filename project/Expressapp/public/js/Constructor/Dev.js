@@ -158,19 +158,26 @@ function GenerateCode(){
                                 Code += "\n\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();";
 
                             }else if(k + 2 ==  Panels[i].childNodes[j].childNodes.length){//если текущая итерация последнияя в цикле по элементам бота
+                                let ButtonContains = false;
                                 for(let f = 0; f < User.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения кнопок
                                     if(User.childNodes[f] != undefined){//проверка на не пустой элемент
                                         if(User.childNodes[f].className == "DivUserButton"){//если найдена кнопка
                                             let NextStepId = User.childNodes[f].id;;//переменная для обращения к следующей функции
                                             Code += "\n\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();"; 
                                             //Вызов следующей функции которая создает кнопку(и) 
+                                            ButtonContains = true;
                                             break;
-                                        }else if(User.childNodes[f].className == "DivUserElement"){//если следующий элемент - текст/число/емеил
+                                        }
+                                    }
+                                }
+                                for(let f = 0; f < User.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения других элементов
+                                    if(User.childNodes[f] != undefined){//проверка на не пустой элемент
+                                        if(User.childNodes[f].className == "DivUserElement"){//если следующий элемент - текст/число/емеил
                                             let NextStepId = User.childNodes[f].id;;//переменная для обращения к следующей функции
                                             Code += "\n\t let SendMessage = document.getElementById('SendMessage')" + 
                                                     "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();')";
                                             break; 
-                                        }else if(f + 1 >= User.childNodes.length){//если текущий элемент последний
+                                        }else if(f + 1 >= User.childNodes.length && ButtonContains == false){//если текущий элемент последний и кнопок не было
                                             for(let e = 0; e < Panels[i].childNodes.length; e++){//запуск цикла по всем элементам текущей панели
                                                 if(Panels[i].childNodes[e].className == "DivJumpIndicator"){//поиск джампера находящегося на панеле
                                                     let JumpIndicator  = document.getElementById("JumpIndicator " + NumberOfElement(Panels[i].childNodes[e].id) + " " + 
@@ -240,7 +247,7 @@ function GenerateCode(){
                                             if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
                                                 let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
                                                 //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ TextBotId +"();')";
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ TextBotId +"(); DeleteButton();')";
                                                 BotContainsContent = true;
                                                 break;
                                             }else{
@@ -255,7 +262,7 @@ function GenerateCode(){
                                                 if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
                                                     let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
                                                     //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                    Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ ButtonId +"();')";
+                                                    Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ButtonId +"(); DeleteButton();')";
                                                     break;
                                                 }
                                             }
@@ -268,9 +275,9 @@ function GenerateCode(){
                                                 //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
                                                 Code += "\n\t if(ButtonOnChat.hasAttribute('onclick') != null){" + //Если уже есть событие клика
                                                         "\n\t\t let AttributeContains = ButtonOnChat.getAttribute('onclick')" + //запомнить значение события клика
-                                                        "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");\');" + //дописать новое значение
+                                                        "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\" GenerateOutMessage(this.value); Act_" + ID + "(); DeleteButton();\");\');" + //дописать новое значение
                                                         "\n\t }else{" + //если же событие клика еще нет 
-                                                        "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"Act_" + ID + "();\");'); \n\t }"; //создание события
+                                                        "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"GenerateOutMessage(this.value); Act_" + ID + "(); DeleteButton();\");'); \n\t }"; //создание события
                                                 break;
                                             }
                                         }
@@ -280,7 +287,7 @@ function GenerateCode(){
                                         if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
                                             if(Condition.childNodes[f].className == "DivConditionElement"){//если обнаружено условие
                                                 let ConditionId = NumberOfElement(Condition.childNodes[f].id) + "_" + SecondNumberOfElement(Condition.childNodes[f].id) + "_" + ThirdNumberOfElement(Condition.childNodes[f].id);
-                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','SendUserClickOnButton(this.value);Act_"+ ConditionId +"();')";
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ConditionId +"(); DeleteButton();')";
                                                 break;
                                             }
                                         }
@@ -587,9 +594,25 @@ function GenerateCode(){
     }
     Code += "\n function DeleteButton(){" +
         "\n\t let Buttons = document.getElementsByClassName(\"ButtonOnChat\");" +
+        "\n\t let btn = new Array();" +
         "\n\t for(let i = 0; i < Buttons.length; i++){" +
-        "\n\t\t Buttons[i].remove();" +
+        "\n\t\t btn.push(Buttons[i]);" +
+        "\n\t }" +
+        "\n\t for(let i = 0; i < btn.length; i++){" +
+        "\n\t\t btn[i].remove();" +
         "\n\t}\n}";
+    Code += "\n function GenerateOutMessage(Message){" + 
+    "\n\t let MessageUser = document.createElement('div');" + 
+    "\n\t let OutgoingMessage = document.createElement('div');//содержимое блока сообщения" + 
+    "\n\t let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме" + 
+    "\n\t let ChatForm = document.getElementById('ChatForm'); //блок с чатом" +
+    "\n\t let SendMessage = document.getElementById('SendMessage');" +
+    "\n\t MessageUser.className = 'MessageUser';" +
+    "\n\t OutgoingMessage.className = 'OutgoingMessage';" +
+    "\n\t ChatForm.append(MessageUser);" + 
+    "\n\t MessageUser.append(OutgoingMessage);" +
+    "\n\t OutgoingMessage.innerHTML = Message;" + 
+    "\n\t LowerDown(); \n}";
     return(Code);
 }
 
@@ -726,3 +749,4 @@ function CreateConnect2(ElementId, Code){
     }
     return Code;
 }
+

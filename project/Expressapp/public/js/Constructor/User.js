@@ -374,10 +374,10 @@ function OnClickNextNewNumberUser(id){//Всплывающее окно. Дей�
         InputNumber1.classList.add('invalid');
         InputNumber2.classList.add('invalid');
     }
-    else if(MaskNumber.checked == true && MaskInputNumber.value == ""){
+    /*else if(MaskNumber.checked == true && MaskInputNumber.value == ""){
         ErrorNewNumber.innerHTML = "Ошибка! Задайте маску";
         MaskInputNumber.classList.add('invalid');
-    }
+    }*/
     else{
         let Name = NameOfElement(id);
         DisabledNavbarBtn();//отключение кнопок находящихся в шапке сайта
@@ -1495,7 +1495,7 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
         RangeNumberUser.append(LabelBlack);
         LabelBlack.innerHTML = "Диапазон: <label>от<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserOne " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + InputNumber1.value + "\"></label>" +
          "<label>до<input type=\"number\" class=\"InputNumber\" id=\"InputNumberUserTwo " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + InputNumber2.value + "\"></label>";
-    }else if(MaskNumber.checked){//----------Создание блока элемента ввода числа по маске------
+    }/*else if(MaskNumber.checked){//----------Создание блока элемента ввода числа по маске------
         let MaskNumberUser = document.createElement('div');
         let LabelBlack = document.createElement('div');
         let MaskInputNumber = document.getElementById("MaskInputNumber");//Поле ввода маски
@@ -1505,7 +1505,7 @@ function OnClickSaveNewNumberUser(id){//Всплывающее окно. Соз�
         LabelBlack.className = "LabelBlack";
         MaskNumberUser.append(LabelBlack);
         LabelBlack.innerHTML = "Маска:<input type=\"input\" class=\"InputOther1\" id=\"MaskInputNumberUser " + N + " " + SN + " " + ElementKol + "\" readonly=\"readonly\" value=\"" + MaskInputNumber.value + "\">";
-    }
+    }*/
     //----------Создание блока с переменной------
     if(RecInVariableNumber.checked){
         let Select = document.getElementById("Select");
