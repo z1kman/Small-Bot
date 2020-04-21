@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta charset = "utf-8"> 
+ <script src="UsersSource/3157752281.js?1587485173342"></script>
+            <title>Конструктор</title>
+            <meta name="viewport" content="width = device-width, initial-scale=1">
+            <link rel="stylesheet" href="css/Constructor/NavbarConstructor.css">
+            <link rel="stylesheet" href="css/Constructor/ContentConstructor.css">
+            <script src="js/Constructor/Dev.js"></script>
+            <script src="js/Constructor/Variable.js"></script>
+            <script src="js/Constructor/Service.js"></script>
+            <script src="js/Constructor/Panel.js"></script>
+            <script src="js/Constructor/Bot.js"></script>
+            <script src="js/Constructor/User.js"></script>
+            <script src="js/Constructor/Condition.js"></script>
+    <body>   
+        <div class="Navbar" id="Navbar">
+            <div class="LogoDiv">
+                <a href="/account"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
+                <a href="/account" id="LabelLogo">Small Bot</a>
+            </div>
+            <div class="BtnDiv">
+                <div class="NewVariableBtn">
+                    <form>
+                        <input type="button" value="Окно переменных" class="Btn"  id="NewVariableBtn" onclick="OnClickOpenPanelVariables()">
+                    </form>
+                </div>
+                <div class="TestDiv">
+                        <button value="Тестировать" class="Btn" id="TestBtn" onclick="TestProject()">Тестировать</button>
+                </div>
+                <div class="SaveDiv">
+                        <button value="Сохранить" class="Btn" id="SaveBtn" onclick="SaveProject()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+
+        <div class = "DivVariables">
+            <div class = "VariablesPanel" id="VariablesPanel" hidden="hidden">
+                <span class="TrashImg" id="CloseVariable" title="Закрыть окно переменных" onclick="OnClickCloseVariablePanel()">
+                    <img src="source/constructor/exit.png" alt="удалить" width="16px">
+                </span>
+                <div class="LabelBlack">
+                    Окно переменных
+                </div>
+                <div class="ContainetVariablesPanel" id="ContainetVariablesPanel">
+                    <div class = "VariableElement" id="VariableElement 1">
+                        <div class = "NameVariable" id="NameVariable 1">
+                            Text
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 1" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div> 
+                    <div class = "VariableElement" id="VariableElement 2">
+                        <div class = "NameVariable" id="NameVariable 2">
+                            Number
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 2" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div>   
+                    <div class = "VariableElement" id="VariableElement 3">
+                        <div class = "NameVariable" id="NameVariable 3">
+                            Email
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 3" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div>   
+                </div>
+                <input type="button" class="BtnNewVarible" value="Создать переменную" onclick="OnClickAddNewVariable()">
+            </div>
+        </div>
+        
+
+            <div class="Scroll" id="Scroll">
+                <div class="JumpContainer" id="JumpContainer">
+                </div>
+                <div class="Constructor" id="Constructor" onclick="Jump(id)">
+                    <div id="Section 1" class="Section">
+                        <form id="formAddInstrumentBtn 1 0" class="FormAddInstrumentBtn" >
+                            <input type="button" value="Добавить панель" class="NewPanelBtn" id="ParentNewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
+                        </form>
+                        <div class="Panel" id="Panel 1 1">
+                            <div class="InputEdit" id = "InputEdit 1 1" hidden="hidden" onclick="OnClickInputEdit(id)">
+                                <input type="text" class="Edit" id="Edit 1 1" maxlength="28" >
+                            </div>
+                            <div class="TitlePanel" id="EditNamePanel 1 1" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)">
+                                <span class="NamePanel" id="NamePanel 1 1">Панель 1</span>
+                                <span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1 1">
+                                    <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
+                                </span>
+                            </div>
+                            <span class="TrashImg" id="TrashImg 1 1" title="удалить эту панель" onclick="OnClickRemovePanel(id)">
+                                <img src="source/constructor/trash.png" alt="удалить" width="16px">
+                            </span>
+                            <div class="Condition" id="Condition 1 1">
+                                <div class="Label"> 
+                                  Условия
+                                </div>
+
+                                <div class="DivConditionElement" id="DivConditionElement 1 1 1" onmouseover="OnMouseOverConditionPanel(id)" onmouseout="OnMouseOutConditionPanel(id)">
+                                    <span class="TrashImg" id="TrashImg 1 1 1" style="opacity: 0;" title="удалить этот элемент" onclick="OnClickRemoveCondition(id)">
+                                        <img src="source/constructor/trash.png" alt="удалить" width="16px">
+                                    </span>
+                                    <div class="LabelElementCondition">Условие</div>
+                                    <div class="ImgPencilInstrument" id="ImgPencil 1 1 1" style="opacity: 0;" title="Редактировать этот элемент" onclick="OnClickAddConditionBtn(id)">
+                                        <img src="source/constructor/pencil.png" alt="Редактировать" width="16px">
+                                    </div>
+                                    <div class="DivInputConditionPanel" id="DivInputConditionPanel 1 1 1">
+                                        <input type="text" class="InputConditionPanel" readonly="readonly">
+                                    </div>
+                                    <div class="DivJumpIndicator" id="DivJumpIndicator 1 2 4" onmouseover="OnMouseOverDivJump(id)" onmouseout="OnMouseOutDivJump(id)">
+                                        <div class="JumpIndicator" onclick="OnClickJumpIndicator(id)" id="JumpIndicator 1 2 4">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+
+
+
+
+                                <form id="formAddCondition 1 1">
+                                    <input type="button" value="Добавить условие" class="AddConditionBtn" id="AddConditionBtn 1 1" onclick="OnClickAddConditionBtn(id)">
+                                </form>
+                            </div>
+                        </div>
+
+                        
+                        <form id="formAddInstrumentBtn 1 1" >
+                            <input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 1" onclick="OnClickNewPanelBtn(id)">
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </body>
+</html> 

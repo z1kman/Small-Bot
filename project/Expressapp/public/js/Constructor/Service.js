@@ -1,5 +1,5 @@
 var TagKol = 0;//кол-во тегов
-
+let timerId1;
 function NameOfElement(id){ //получение имени эллемента
     return(id.split(' ')[0]);
 }
@@ -64,6 +64,7 @@ function CreateWindowPanel(){ //Создание Всплывающего окн
      //----------Создание кнопки закрытия панели выбора действий-----------
      divImgExit.className="ImgExit";
      divImgExit.setAttribute("onclick","OnClickImgExit()");
+     divImgExit.setAttribute("id","ImgExit");
      divAddNewInstrumentPanel.prepend(divImgExit);
      divImgExit.innerHTML="<img src=\"source/constructor/exit.png\" title=\"Закрыть панель\" width=\"16px\">" 
 }
@@ -93,6 +94,7 @@ function RemoveArrowFromElement(id){
         JumpIndicator.classList.remove('ActiveJumpIndicator');
     }
 }
+
 function SubmImg(id){
     let N = NumberOfElement(id);
     let SN = SecondNumberOfElement(id);
@@ -100,20 +102,48 @@ function SubmImg(id){
     let SaveNewImage = document.getElementById("SaveNewImage " + N + " " + SN);
     let LabelError = document.getElementById('LabelError');
     let LabelImg = document.getElementById('LabelImg');
+    let formUploadImg = document.getElementById("formUploadImg");
     let SubmitImg = document.getElementById("SubmitImg " + N + " " + SN);
+    let ImgExit = document.getElementById("ImgExit");
+    let CancelUser  = document.getElementById("CancelUser " + N + " " + SN);
+    CancelUser.setAttribute(onclick,CancelUser.getAttribute('onclick') + ' clearTimeout(timerId1);');
+    ImgExit.setAttribute(onclick,ImgExit.getAttribute('onclick') + '; clearTimeout(timerId1);');
+
+    let i = 0;
+    clearTimeout(timerId1);
+    LabelImg.innerHTML = "";
+    LabelError.innerHTML = "";
     if(filedata.value == ""){
         SaveNewImage.setAttribute('disabled','disabled');
         LabelImg.innerHTML = ""
         LabelError.innerHTML = "Ошибка! Необходимо выбрать файл!"
-    }else if(getCookie('FileName') == ""){
-        LabelImg.innerHTML = ""
-        LabelError.innerHTML = "Ошибка! Файл не загружен"
-    }else if(filedata.value != "" && getCookie('FileName') != ""){
-        LabelError.innerHTML = "";
-        SubmitImg.setAttribute('disabled','disabled');
-        LabelImg.innerHTML = "Файл успешно загружен!"
-        SaveNewImage.removeAttribute('disabled');
+        return;
     }
+
+    deleteCookie("FileName");
+    formUploadImg.submit();
+
+     timerId1 = setTimeout(function tick() {//запуск ожидания куков
+        if(i > 3){//если лимит ожидания в две минуты превышен
+            LabelImg.innerHTML = ""
+            LabelError.innerHTML = "Ошибка! Файл не загружен. Лимит ожидания превышен";
+        }else if(getCookie('FileName') == undefined){//пока куки не найдены
+            if(i % 2 == 0){
+                LabelImg.innerHTML = "Загрузка файла."
+            }else{
+                LabelImg.innerHTML = "Загрузка файла.."
+            }
+            LabelError.innerHTML = ""
+            timerId1 = setTimeout(tick, 1000); // запуск цикла еще раз  
+            i++;
+        }else if(getCookie('FileName') != undefined && filedata.value != "" ){
+            LabelError.innerHTML = "";
+            SubmitImg.setAttribute('disabled','disabled');
+            LabelImg.innerHTML = "Файл успешно загружен!"
+            SaveNewImage.removeAttribute('disabled');
+        }
+
+    });
 }
 function FileOpen(id){
     let N = NumberOfElement(id);
@@ -127,6 +157,7 @@ function FileOpen(id){
     LabelError.innerHTML = ""
     SaveNewImage.setAttribute('disabled','disabled');
     SubmitImg.removeAttribute('disabled');
+    deleteCookie("FileName");
 }
 function getCookie(name) {
     let matches = document.cookie.match(new RegExp(
@@ -134,3 +165,7 @@ function getCookie(name) {
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
+  function deleteCookie(name) {
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+  

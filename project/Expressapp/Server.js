@@ -56,11 +56,11 @@ app.get("/account", function(request, response){
                             projects.forEach(function(objPr){//массив всех проектов пользователя
                                 ProjectString += "<form class=\"FormProject\"><div class=\"DivProject\">" + objPr.name + "</div><div class=\"BtnProject\"><input type=\"button\" class=\"OpenProject\" value=\"Открыть\" name=\""+ objPr.randName + "\" onclick=\"OpenProject(name)\">" +
                                 "<input type=\"button\" class=\"DeleteProject\" value=\"Удалить\" name=\""+ objPr.randName + "\" onclick=\"DeleteProject(name)\"></div></form>";
-                            });
-                            response.render(__dirname + "/views/account.hbs");
-                            hbs.registerHelper("Project", function(){
-                                return new hbs.SafeString(ProjectString);
-                            });
+                                },
+                                hbs.registerHelper("Project", function(){
+                                    return new hbs.SafeString(ProjectString);
+                                }),
+                                response.render(__dirname + "/views/account.hbs"));
                         });//поиск проектов пользователя
                     });//получение id пользователя который открывает проект
                 });
@@ -246,7 +246,6 @@ app.post("/constructor", urlencodedParser, function(request, response){
         let Token = request.cookies['token'];//токен из куков
         let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
         let Project = request.cookies['Project'];// рандомное имя проекта из куков
-
         if(request.body.Content != undefined){//если пост запрос с кнопки сохранения проекта
             fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
                 if(error) 

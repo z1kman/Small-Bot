@@ -181,7 +181,15 @@ input[type="file"] {
     padding-right: 10px;
     font-size: 14px;
     outline: none;
-    
+    margin-left: 5px;
+}
+.ImgContainerBot{
+    display: flex;
+    align-items: flex-start;
+}
+.OpenImg{
+    min-width: 500px;
+    max-width: 800px;
 }
 .SubmitImg:hover{
     transition: 0.3s;
@@ -382,6 +390,35 @@ input[type="file"] {
     transition: 0.5s;
 }
 .LabelTextBot{
+    margin-left:10px;
+    color: black;
+    display: inline;
+}
+.ImgBot{
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 350px;
+    border: 1px solid rgb(170, 228, 255);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px; 
+}
+.ImgBot:hover{
+    background-color: #F7F8FD ;
+    transition: 0.5s;
+}
+.ImageBot{
+    margin-left: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.LabelImg{
+    margin-left:10px;
+    color: black;
+    display: inline;
+}
+.LabelImgBot{
     margin-left:10px;
     color: black;
     display: inline;

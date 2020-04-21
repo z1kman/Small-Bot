@@ -75,24 +75,6 @@ function OnMouseOutEditPanelName(id){//скрытие иконки редакт�
     let ImgPencil= document.getElementById("ImgPencil " + N + " " + SN);
     ImgPencil.setAttribute("style","opacity:0;");
 }
-function OnMouseOverTextBot(id){//отображение иконки редактирования на блоках действиях(показать)
-    N = NumberOfElement(id);
-    SN = SecondNumberOfElement(id);
-    TN = ThirdNumberOfElement(id);
-    ImgPencilInstrument = document.getElementById("ImgPencil " + N + " " + SN + " " + TN);
-    TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    TrashImg.setAttribute("style","opacity: 100")
-    ImgPencilInstrument.setAttribute("style","opacity: 100");
-}
-function OnMouseOutTextBot(id){//отображение иконки редактирования на блоках действиях(скрыть)
-    N = NumberOfElement(id);
-    SN = SecondNumberOfElement(id);
-    TN = ThirdNumberOfElement(id);
-    ImgPencilInstrument = document.getElementById("ImgPencil " + N + " " + SN + " " + TN);
-    TrashImg = document.getElementById("TrashImg " + N + " " + SN + " " + TN);
-    TrashImg.setAttribute("style","opacity: 0")
-    ImgPencilInstrument.setAttribute("style","opacity: 0");
-}
 function OnClickRemovePanel(id){//удаление панели
     let N = NumberOfElement(id);
     let ParentNewPanelBtn = document.getElementById("ParentNewPanelBtn " + N + " 0");
