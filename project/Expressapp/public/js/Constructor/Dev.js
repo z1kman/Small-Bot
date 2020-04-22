@@ -1,23 +1,32 @@
 let timerId = "";//для очищения таймера
 function SaveProject(){
     let form = document.createElement('form');
+    let iframe = document.createElement('iframe');
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
     }
+    if(document.getElementById('myIFR')!= undefined && document.getElementById('formSub') != undefined){
+        document.getElementById('myIFR').remove();
+        document.getElementById('formSub').remove();
+    }
+    iframe.name = 'myIFR';
+    iframe.id = 'myIFR';
+    iframe.style = 'display: none';
+    form.id = "formSub"
     form.method = 'POST';
-    form.action = '/constructor';
+    form.target = "myIFR";
     form.setAttribute('hidden','hidden');
     form.innerHTML = "<input type=\"hidden\" name=\"VariableId\" value=\"" + VariableId + "\">" + 
     "<input type=\"hidden\" name=\"NumberOfPanels\" value=\"" + NumberOfPanels + "\">" + 
     "<input type=\"hidden\" name=\"ElementKol\" value=\"" + ElementKol + "\">" + 
     "<input type=\"hidden\" name=\"NumberOfSection\" value=\"" + NumberOfSection + "\">"+
     "<textarea name=\"Content\" value=\"" + document.head.innerHTML + "</head><body onload=\"RefreshArrows()\">" + document.body.innerHTML;
+    document.body.append(iframe);
     document.body.append(form);
     form.submit();//отправка кода на сервер
     form.innerHTML = "";
 }
-function TestProject(){
-    
+function TestProject(){ 
     let Code = "";
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
@@ -44,6 +53,7 @@ function TestProject(){
         return 0;
     }
     SaveProject();
+
     let form = document.createElement('form');
     form.method = 'POST';
     form.setAttribute('hidden','hidden');
@@ -65,6 +75,7 @@ function GenerateCode(){
     let TN = 0;//для разбиения id элемента(третье число)
     let StartExist = false; //флаг для отмечания наличия созданной функции запуска чат-бота
     let FirstUserElement = false;//переменная для отслеживания нахождения первого элемента у пользователя
+    let domain = "localhost:3000";//имя сайта (для отображения картинок)
 
     for(let i = 0; i < Canvas.length; i++ ){//поиск начальной панели
         N = NumberOfElement(Canvas[i].id);
@@ -115,32 +126,41 @@ function GenerateCode(){
                         //------------------------------Генерация функций для вывода сообщений бота--------------------------------------------
                         //------------------------------Генерация функций для вывода сообщений бота--------------------------------------------
 
-                        if(Panels[i].childNodes[j].childNodes[k].className == "TextBot")//если найден текстовый элемент
+                        if(Panels[i].childNodes[j].childNodes[k].className == "TextBot" || Panels[i].childNodes[j].childNodes[k].className == "ImgBot" )//если найден текстовый элемент
                         {
                             ElementId = Panels[i].childNodes[j].childNodes[k].id;//получение id элемента
                             N = NumberOfElement(ElementId);//получение первого числа id элемента
                             SN = SecondNumberOfElement(ElementId);//получение второго числа id элемента
                             TN = ThirdNumberOfElement(ElementId);//получение третьего числа id элемента
-                            ElementId = "textareaTextBot " + N + " " + SN + " " + TN;//сохранение id элемента который содержит в себе текст бота
-                            let Text = document.getElementById(ElementId).value;
+                            let Text = "";
+                            let Img;
                             let User = document.getElementById("User " + N + " " + SN);//блок действий пользователя на этой же панеле
-                            let Variable = "";//запоминание переменных в массив
-                            if(NumberOfElement(StartPanelId) == N && SecondNumberOfElement(StartPanelId) == SN && StartExist == false ) //если это начальная панель
+                            if(Panels[i].childNodes[j].childNodes[k].className == "TextBot"){//если текущий элемент - вывод текста у бота
+                                ElementId = "textareaTextBot " + N + " " + SN + " " + TN;//сохранение id элемента который содержит в себе текст бота
+                                Text = document.getElementById(ElementId).value;
+                            }else if(Panels[i].childNodes[j].childNodes[k].className == "ImgBot"){//если текущий элемент - вывод изображения у бота
+                                ElementId = "Image " + N + " " + SN + " " + TN;//сохранение id элемента который содержит в себе изображение бота
+                                Img = document.getElementById(ElementId)
+                            }
+                            if(NumberOfElement(StartPanelId) == N && SecondNumberOfElement(StartPanelId) == SN && StartExist == false ) //если текущая панель - начальная панель
                             {
                                 StartExist = true;//установления флага в значение - функция старта существует
                                 Code +="\nwindow.onload = function(){\n\t Start(); \n}" +
                                         "\nfunction Start(){"; 
                             }
-                            else{
+                            else{//если текущая панель не начальная
                                 Code +="\nfunction Act_" + N + "_" + SN  + "_" + TN + "(){";//Создание функции с уникальным номером
                             }
     
-                            //Поиск переменных в тексте и проверка переменных на существование
-                            Text = CheckVariable(Panels[i].id,Text,Variables);
-                            if(Text.split(' ')[0] == "error"){//если переменная не была найдена тогда вернуть ошибку
-                                return Text;
+                            if(Panels[i].childNodes[j].childNodes[k].className == "TextBot"){//если текущий элемент - вывод текста у бота
+                                //Поиск переменных в тексте и проверка переменных на существование
+                                Text = CheckVariable(Panels[i].id,Text,Variables);
+                                if(Text.split(' ')[0] == "error"){//если переменная не была найдена тогда вернуть ошибку
+                                    return Text;
+                                }
                             }
                             
+                            if(Panels[i].childNodes[j].childNodes[k].className == "TextBot"){//если текущий элемент - вывод текста у бота
                             //Генерирование кода
                             Code += "\n\t let ChatForm = document.getElementById(\"ChatForm\");" +
                                         "\n\t let MessageBot = document.createElement('div');" + 
@@ -151,12 +171,25 @@ function GenerateCode(){
                                         "\n\t MessageBot.append(IncomingMessage);" +
                                         "\n\t IncomingMessage.innerHTML = \"" + Text + "\";" +  
                                         "\n\t SendBotMessage(\"" + Text +"\");" +  //отправка сообщения на сервер
+                                        "\n\t LowerDown();" + //опустить скролл в самый низ(для удобства)
+                                        "\n\t DeleteButton();" ;//удалить кнопки если они есть
+                            }else if(Panels[i].childNodes[j].childNodes[k].className == "ImgBot"){//если текущий элемент - вывод изображения у бота
+                                Code += "\n\t let ChatForm = document.getElementById(\"ChatForm\");" +
+                                        "\n\t let MessageBot = document.createElement('div');" + 
+                                        "\n\t let IncomingMessage = document.createElement('div');" +
+                                        "\n\t MessageBot.className = 'MessageBot';" +
+                                        "\n\t ChatForm.append(MessageBot);" +
+                                        "\n\t IncomingMessage.className = 'IncomingMessage';" +
+                                        "\n\t MessageBot.append(IncomingMessage);" +
+                                        "\n\t IncomingMessage.innerHTML = \"<img src='" + Img.src + "' class='ImageBot' id = '" + ElementId +"' onclick = 'ClickImage(id)' width = '200px'>\"" +  
+                                        "\n\t SendBotMessage(\" Вывод изобржаения:" + Img.src + "\");" +  //отправка сообщения на сервер
+                                        "\n\t DeleteButton();" +//удалить кнопки если они есть
                                         "\n\t LowerDown();" ; //опустить скролл в самый низ(для удобства)
-                            if(Panels[i].childNodes[j].childNodes[k + 1].className == "TextBot"){//если существует еще одно действие вывода текста у бота на текущей панели
+                            }
+                            if(Panels[i].childNodes[j].childNodes[k + 1].className == "TextBot" || Panels[i].childNodes[j].childNodes[k + 1].className == "ImgBot"  ){//если существует еще одно действие вывода текста у бота или изображения на текущей панели
                                 let NextStepId = "";//переменная для обращения к следующей функции вывода сообщения(при условии что у бота есть более чем одно дейстие вывода текста)
                                 NextStepId = Panels[i].childNodes[j].childNodes[k + 1].id;
                                 Code += "\n\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();";
-
                             }else if(k + 2 ==  Panels[i].childNodes[j].childNodes.length){//если текущая итерация последнияя в цикле по элементам бота
                                 let ButtonContains = false;
                                 for(let f = 0; f < User.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения кнопок
@@ -175,7 +208,7 @@ function GenerateCode(){
                                         if(User.childNodes[f].className == "DivUserElement"){//если следующий элемент - текст/число/емеил
                                             let NextStepId = User.childNodes[f].id;;//переменная для обращения к следующей функции
                                             Code += "\n\t let SendMessage = document.getElementById('SendMessage')" + 
-                                                    "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();')";
+                                                    "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "(); InputMessage.value = \"\" ; ')";
                                             break; 
                                         }else if(f + 1 >= User.childNodes.length && ButtonContains == false){//если текущий элемент последний и кнопок не было
                                             for(let e = 0; e < Panels[i].childNodes.length; e++){//запуск цикла по всем элементам текущей панели
@@ -185,7 +218,7 @@ function GenerateCode(){
                                                     if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//если джампер активен
                                                         let NextStepId = JumpIndicator.id;//переменная для обращения к следующей функции
                                                         Code += "\n\t let SendMessage = document.getElementById('SendMessage')" + 
-                                                        "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();')"; 
+                                                        "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "(); InputMessage.value = \"\" ; ')"; 
                                                     }
                                                 }
                                             }
@@ -232,7 +265,7 @@ function GenerateCode(){
                                         "\n\t ButtonOnChat.className = 'ButtonOnChat';" +
                                         "\n\t ButtonOnChat.type = 'button';" +
                                         "\n\t ButtonOnChat.value = '"+  ButtonUser.value  + "';" +
-                                        "\n\t ButtonBlock.append(ButtonOnChat)" +
+                                        "\n\t ButtonBlock.append(ButtonOnChat);" +
                                         "\n\t LowerDown();" ; //опустить скролл в самый низ(для удобства)
                             if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//Если есть соединение с другой панелью
                                 //получение панели к которой подключена кнопка
@@ -323,7 +356,7 @@ function GenerateCode(){
                                 FirstUserElement = true;
                                  //При загрузке страницы в кнопку отправки сообщения помещается текущая функция
                                 Code += "\ndocument.addEventListener(\"DOMContentLoaded\", () => {" +
-                                        "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','Act_" + N + "_" + SN + "_" + TN + "()');\n});";     
+                                        "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','InputMessage.value = \"\"; Act_" + N + "_" + SN + "_" + TN + "() InputMessage.value = \"\" ; ');\n});";     
                             }
                             Code += "\nfunction Act_" + N + "_" + SN + "_" + TN + "(){" + //Генерирование имени функции
                                     "\n\t let InputMessage = document.getElementById('InputMessage');"//Поле ввода сообщения на форме
@@ -488,7 +521,7 @@ function GenerateCode(){
                             FirstUserElement = true;
                             //При загрузке страницы в кнопку отправки сообщения помещается текущая функция
                             Code += "\ndocument.addEventListener(\"DOMContentLoaded\", () => {" +
-                                    "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','Act_" + N + "_" + SN + "_" + TN + "()');\n});";     
+                                    "\n\tdocument.getElementById('SendMessage').setAttribute('onclick','Act_" + N + "_" + SN + "_" + TN + "() InputMessage.value = \"\" ; ');\n});";     
                         }
                         Code += "\nfunction Act_" + N + "_" + SN + "_" + TN + "(){" + //Генерирование имени функции
                         "\n\t let InputMessage = document.getElementById('InputMessage');" + //Поле ввода сообщения на форме4
@@ -547,7 +580,7 @@ function GenerateCode(){
                         }else{
                             Code += Text;
                         }
-                        Code += "\n\t\t else{"
+                        Code += "\n\t\t else{ "
                             for(let f = k + 1; f < Condition.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения других элементов
                                 if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
                                     if(Condition.childNodes[f].className == "DivConditionElement"){//если найден еще элемент
@@ -583,9 +616,10 @@ function GenerateCode(){
                     if(document.getElementById("Condition " + NumberOfElement(Panels[i].childNodes[j].id) + " " + SecondNumberOfElement(Panels[i].childNodes[j].id))){//если текущая панель с условием
                         Code =  CreateConnect(ElementId, Code);
                     }else{
-                        Code += "\n\t let SendMessage = document.getElementById('SendMessage');" + 
+                        /*Code += "\n\t let SendMessage = document.getElementById('SendMessage');" + 
                                 "\n\t SendMessage.setAttribute('onclick',\'";
-                        Code =  CreateConnect2(ElementId, Code) + " SendMessage.removeAttribute(\"onclick\");\');";
+                        Code =  CreateConnect2(ElementId, Code) + " SendMessage.removeAttribute(\"onclick\")\');";*/
+                        Code =  CreateConnect(ElementId, Code);
                     }
                     Code += "\n }"//конец функции
                 }
@@ -612,6 +646,7 @@ function GenerateCode(){
     "\n\t ChatForm.append(MessageUser);" + 
     "\n\t MessageUser.append(OutgoingMessage);" +
     "\n\t OutgoingMessage.innerHTML = Message;" + 
+    "\n\t InputMessage.value = \"\";" +
     "\n\t LowerDown(); \n}";
     return(Code);
 }
@@ -654,10 +689,10 @@ function CreateConnect(ElementId, Code){
     if(Bot != null && User != null){//если это классическая панель действий
         for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
             if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
-                if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
+                if(Bot.childNodes[f].className == "TextBot" || Bot.childNodes[f].className == "ImgBot" ){//если обнаружен текстовый или визуальный элемент
                     let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
                     //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                    Code += "\n\t\t Act_"+ TextBotId +"();";//вызов функции
+                    Code += "\n\t\t Act_"+ TextBotId +"(); " ;//удалить кнопки если они есть и вызвать функцию
                     BotContainsContent = true;
                     break;
                 }else{
@@ -707,7 +742,7 @@ function CreateConnect2(ElementId, Code){
     if(Bot != null && User != null){//если это классическая панель действий
         for(let f = 0; f < Bot.childNodes.length; f++){//поиск элементов бота у присоединеной панели
             if(Bot.childNodes[f] != undefined){//проверка на не пустой элемент
-                if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
+                if(Bot.childNodes[f].className == "TextBot" || Bot.childNodes[f].className == "ImgBot" ){//если обнаружен текстовый элемент
                     let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
                     //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
                     Code += "Act_"+ TextBotId +"();";//вызов функции

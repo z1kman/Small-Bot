@@ -1,10 +1,8 @@
-<html>
-    <head>
         <meta charset = "utf-8">
         <title>Тестирование проекта</title>
         <meta name="viewport" content="width = device-width, initial-scale=1">
         <link rel="stylesheet" href="css/Testing/Testing.css">
-        <script src="UsersSource/TempFile.js"></script>
+        <script src="js/Test/Service.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <body> 
         <div class="Form">  
@@ -39,10 +37,10 @@
                     ChatForm.append(MessageUser);
                     MessageUser.append(OutgoingMessage);
                     OutgoingMessage.innerHTML =  InputMessage.value ;//записать введеный пользователем текст в блок
-                    if(this.hasAttribute('onclick') != false){
-                        this.onclick(this.getAttribute('onclick'));
+                    if(this.hasAttribute('onclick') == false){
+                        InputMessage.value ="";
+                        //this.onclick(this.getAttribute('onclick'));
                     }
-                    InputMessage.value ="";
                     LowerDown();
                     $.post('/test', data, function(res) {});
                     

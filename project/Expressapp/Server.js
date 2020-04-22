@@ -115,6 +115,14 @@ app.post("/account",urlencodedParser,function(request,response){
                     db.collection('Projects').deleteOne({'randName' : request.body.DeleteProject});
                     fs.unlinkSync(__dirname + "/public/UsersSource/" + request.body.DeleteProject + ".js");
                     fs.unlinkSync(__dirname + "/views/UsersSource/html/" + request.body.DeleteProject + ".html");
+                    fs.access(__dirname + "/views/UsersSource/html/TempFile_" + request.body.DeleteProject + ".html", fs.F_OK, (err) => {//проверка - существуют ли временные (тестовые) файлы
+                        if (err) {
+                          return;
+                        }else{
+                            fs.unlinkSync(__dirname + "/public/UsersSource/TempFile_" + request.body.DeleteProject + ".js");
+                            fs.unlinkSync(__dirname + "/views/UsersSource/html/TempFile_" + request.body.DeleteProject + ".html");
+                        }
+                    });
                     response.redirect('/account');
                 }
             }else{//если ни один аккаунт не найден
@@ -241,11 +249,14 @@ app.post("/constructor", urlencodedParser, function(request, response){
     {
         response.redirect('/login');
     }else if(request.cookies['Project'] == undefined){//если куков с проектом нет
-        response.redirect('/account');
+        response.redirect('/login');
     }else{
         let Token = request.cookies['token'];//токен из куков
         let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
         let Project = request.cookies['Project'];// рандомное имя проекта из куков
+        let objHtmlLink = "/views/UsersSource/html/" + 'TempFile_' + Project + ".html";//создание ссылки на html файл
+        let objJsLink = "UsersSource/TempFile_" + Project + ".js";
+        let fileHtml = fs.readFileSync(__dirname + "/views/testing.hbs", "utf8");
         if(request.body.Content != undefined){//если пост запрос с кнопки сохранения проекта
             fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
                 if(error) 
@@ -262,17 +273,23 @@ app.post("/constructor", urlencodedParser, function(request, response){
                     return;
                 }
             });
-            response.redirect('/constructor');
+            response.sendStatus(200);
         }else if(request.body.CodeTest != undefined){//если пост запрос с нажатия кнопки тестирования проекта
-            console.log(request.body.CodeTest);
-            fs.writeFile(__dirname  + "/public/UsersSource/TempFile.js",request.body.CodeTest, function(error){//запись js файла
+            fs.writeFile(__dirname  + "/public/" +  objJsLink ,request.body.CodeTest, function(error){//запись js файла
                 if(error) 
                 {
                     console.log("Ошибка при записи файла:" + error);
                     return;
                 }
             });
-            response.redirect('/constructor');
+            fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<script src=\"" +  objJsLink  + "\"></script> \n" + fileHtml , function(error){//создание html файла
+                if(error) 
+                {
+                    console.log("Ошибка при записи файла:" + error);
+                    return;
+                }
+            });
+            response.redirect('/test');
         }else if(request.file != undefined){//если пост запрос с загрузки файла изображения
             let filedata = request.file;
             response.cookie('FileName',filedata.filename,{maxAge: 90000000});//устанавка куков
@@ -285,10 +302,20 @@ app.get("/contacts", function(request, response){
 });
 
 app.get("/test", function(request, response){
-    response.render(__dirname +  "/views/testing.hbs");
+    if(request.cookies['token'] == undefined)//если куков с токеном нет
+    {
+        response.redirect('/login');
+    }else if(request.cookies['Project'] == undefined){//если куков с проектом нет
+        response.redirect('/login');
+    }else{
+        let Token = request.cookies['token'];//токен из куков
+        let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+        let Project = request.cookies['Project'];// рандомное имя проекта из куков
+        let objHtmlLink = "/views/UsersSource/html/" + 'TempFile_' + Project + ".html";//создание ссылки на html файл
+        response.sendFile(__dirname + objHtmlLink);
+    }
 });
 app.post("/test",urlencodedParser,function(request,response){
-    console.log(request.body.message);//получение сообщения
     response.sendStatus(200);
 });
 

@@ -138,3 +138,19 @@ body{
 a{
     text-decoration: none;
 }
+.ImageBot{
+    border-radius: 10px;
+}
+
+.NewInstrumentPanel{
+    width:100%;
+    height: 100%;
+    background-color:rgba(202, 202, 202, 0.685);
+    display: flex;
+    position: fixed;
+    min-width: 1080px;
+    justify-content: center; 
+    align-items: center; 
+    overflow: auto;
+    z-index: 5;
+}

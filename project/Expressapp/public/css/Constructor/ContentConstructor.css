@@ -187,10 +187,6 @@ input[type="file"] {
     display: flex;
     align-items: flex-start;
 }
-.OpenImg{
-    min-width: 500px;
-    max-width: 800px;
-}
 .SubmitImg:hover{
     transition: 0.3s;
     color: white;
