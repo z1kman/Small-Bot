@@ -77,6 +77,12 @@
     height: 100%;
     padding-top: 15px;
 }
+.PublishDiv{
+    margin-left:20px;
+    float: left;
+    height: 100%;
+    padding-top: 15px;
+}
 #SaveBtn{
     background-color: rgb(0, 174, 255);
     border: 2px solid rgb(0, 174, 255);

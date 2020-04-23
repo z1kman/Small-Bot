@@ -23,7 +23,16 @@ app.use(bodyParser.json({limit: '50mb'}));//лимит на объем прин�
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));//лимит на объем принимаемых данных
 app.use(multer({dest: "public/uploads"}).single("filedata"));
 app.use(cookieParser());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
 
+    app.options('*', (req, res) => {
+        res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+        res.send();
+    });
+});
 function createToken(email){
     let Rand = Math.floor(Math.random() * (999- 100) + 100);//генерация рандомного числа
     var token = jwt.sign({userLogin: email, rand: Rand}, secret);//генерация токена
@@ -316,6 +325,7 @@ app.get("/test", function(request, response){
     }
 });
 app.post("/test",urlencodedParser,function(request,response){
+    console.log(request.body)
     response.sendStatus(200);
 });
 

@@ -1,0 +1,174 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    font-size: larger;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    background-color: rgb(243, 243, 243);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.Frame{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-right: 5%;
+    background-color: rgb(0, 183, 255);
+}
+.DivImgCloseBot{
+    float: right;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+.ImgCloseBot{
+    cursor: default;
+}
+.LabelChatBot{
+    font-family: 'Segoe UI', 'Times New Roman';
+    margin-left: 10px;
+    cursor: default;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+}
+.Form{
+    width: 480px;
+    background-color: rgb(255, 255, 255);
+}
+.ChatForm{  
+    width: 480px;
+    height: 400px;
+    overflow: auto;
+}
+.SendMessageBlock{
+    margin-top: 10px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.InputMessage{
+    width: 320px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+    outline: none;
+    border: 1px solid rgb(216, 216, 216);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    resize: none;
+}
+.Btn{
+    display: block;
+    border-radius: 15px;
+    margin-left:10px;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    border: 1px solid rgb(0, 195, 255);
+    background-color: rgba(243, 243, 243, 0);
+    color: rgb(0, 195, 255);
+    font-family: 'Candara', 'Times New Roman';
+    outline: none;
+}
+.Btn:hover{
+    background-color: rgb(0, 195, 255);
+    color: white;
+    transition: 0.3s;
+}
+.Btn:disabled{
+    border: 1px solid rgb(226, 226, 226);
+    background-color: rgba(243, 243, 243, 0);
+    color: rgb(226, 226, 226);
+}
+.ButtonBlock{
+    margin-top: 10px;
+    margin-left: 18px;
+}
+.ButtonOnChat{
+    margin-top: 10px;
+    display: block;
+    border-radius: 15px;
+    width: 400px;
+    margin-left:10px;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    border: none;
+    background-color: rgb(0, 183, 255);
+    color: white;
+    font-family: 'Candara', 'Times New Roman';
+    outline: none;
+}
+.ButtonOnChat:hover{
+    background-color: rgb(0, 166, 216);
+    color: white;
+    transition: 0.3s;
+}
+.MessageBot{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.ico{
+    display: inline-block;
+}
+.IncomingMessage{
+    display: inline-block;
+    background-color: rgb(243, 243, 243);
+    min-width: 10px;
+    max-width: 300px;
+    min-height: 30px;
+    padding: 10px;
+    border-radius: 20px;
+    word-break: break-all;
+}
+.MessageUser{
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.OutgoingMessage{
+    min-width: 10px;
+    max-width: 300px;
+    text-align: left;
+    display: inline-block;
+    background-color: rgb(0, 183, 255);
+    color: white;
+    min-height: 30px;
+    padding: 10px;
+    border-radius: 20px;
+    word-break: break-all;
+}
+.EndTest{
+    text-align: center;
+    color: rgb(0, 183, 255);
+    margin-top: 20px;
+}
+.EndTest:hover{
+    color: rgb(0, 141, 197);
+}
+a{
+    text-decoration: none;
+}
+.ImageBot{
+    border-radius: 10px;
+}
+
+.NewInstrumentPanel{
+    width:100%;
+    height: 100%;
+    background-color:rgba(202, 202, 202, 0.685);
+    display: flex;
+    position: fixed;
+    min-width: 1080px;
+    justify-content: center; 
+    align-items: center; 
+    overflow: auto;
+    z-index: 5;
+}

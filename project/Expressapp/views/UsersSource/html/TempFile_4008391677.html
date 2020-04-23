@@ -1,0 +1,70 @@
+<html>
+<head>
+<script src="UsersSource/TempFile_4008391677.js"></script> 
+        <meta charset = "utf-8">
+        <title>Тестирование проекта</title>
+        <meta name="viewport" content="width = device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Testing/Testing.css">
+        <script src="js/Test/Service.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <body> 
+        <div class="Form">  
+            <div class="ChatForm" id="ChatForm">
+            </div>
+            <div class="SendMessageBlock">
+                <textarea class="InputMessage" id="InputMessage"></textarea>
+                <input type="button" class="Btn" value="Отправить" id="SendMessage"s>
+            </div >
+            <a href="/constructor">
+                <div class="EndTest">
+                    Завершить тестирование
+                </div>
+            </a>
+        </div>
+    </body>
+    <script type="text/javascript">
+            function LowerDown(){
+                document.getElementById("ChatForm").scrollTop = document.getElementById("ChatForm").scrollHeight;
+            }
+            $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
+                let value = document.getElementById("InputMessage").value;
+                if(value != ""){
+                    let data = { message: value};
+                    let MessageUser = document.createElement('div');
+                    let OutgoingMessage = document.createElement('div');//содержимое блока сообщения
+                    let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме
+                    let ChatForm = document.getElementById('ChatForm'); //блок с чатом
+                    let SendMessage = document.getElementById('SendMessage');
+                    MessageUser.className = 'MessageUser';
+                    OutgoingMessage.className = 'OutgoingMessage';
+                    ChatForm.append(MessageUser);
+                    MessageUser.append(OutgoingMessage);
+                    OutgoingMessage.innerHTML =  InputMessage.value ;//записать введеный пользователем текст в блок
+                    if(this.hasAttribute('onclick') == false){
+                        InputMessage.value ="";
+                        //this.onclick(this.getAttribute('onclick'));
+                    }
+                    LowerDown();
+                    $.post('/test', data, function(res) {});
+                    
+                }
+            });
+            $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
+                let value = this.value;
+                let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
+                $.post('/test', data, function(res) {});
+            });
+            function SendUserMessage(Message) {
+                let data = {message: Message}
+                $.post('/test', data, function(res) {});
+            }
+            function SendUserClickOnButton(Message) {
+                let data = {message: "Нажатие на кнопку с значением:\"" + Message + "\""};
+                $.post('/test', data, function(res) {});
+            }
+            function SendBotMessage(Message) {//отправка на сервер ответа бота
+                let data = {message: "Ответ бота:\"" + Message + "\""};
+                $.post('/test', data, function(res) {});
+        }
+    </script>
+</html>
