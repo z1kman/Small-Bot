@@ -1,4 +1,39 @@
 let timerId = "";//для очищения таймера
+function PublishProject(id){
+    let Code = "";
+    if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+        document.getElementById("DivErrorProject").remove();
+    }
+    clearTimeout(timerId);
+    Code = GenerateCode(id);
+    if(Code.split(' ')[0] == "error"){//если возникла какая то ошибка
+        Code = Code.substr((Code.split(' ')[0]).length + 1, Code.length);
+        let DivErrorProject = document.createElement('div');
+        let ErrorProject = document.createElement('div');
+        DivErrorProject.className = "DivErrorProject";
+        DivErrorProject.id = "DivErrorProject";
+        ErrorProject.className = "ErrorProject";
+        ErrorProject.innerText = Code;
+        DivErrorProject.setAttribute('title','нажмите чтобы закрыть');
+        DivErrorProject.setAttribute('onclick',"this.remove()");
+        document.body.prepend(DivErrorProject);
+        DivErrorProject.append(ErrorProject);
+        timerId = setTimeout(function(){
+            if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+                document.getElementById("DivErrorProject").remove();
+            }
+        },10000);
+        return 0;
+    }
+    SaveProject();
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.setAttribute('hidden','hidden');
+    document.body.append(form);
+    form.innerHTML = "<textarea name=\"Code\">" + Code + "</textarea>";
+    form.submit();//отправка кода на сервер
+    form.innerHTML = "";
+}
 function SaveProject(){
     let form = document.createElement('form');
     let iframe = document.createElement('iframe');
@@ -26,13 +61,13 @@ function SaveProject(){
     form.submit();//отправка кода на сервер
     form.innerHTML = "";
 }
-function TestProject(){ 
+function TestProject(id){ 
     let Code = "";
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
     }
     clearTimeout(timerId);
-    Code = GenerateCode();
+    Code = GenerateCode(id);
     if(Code.split(' ')[0] == "error"){//если возникла какая то ошибка
         Code = Code.substr((Code.split(' ')[0]).length + 1, Code.length);
         let DivErrorProject = document.createElement('div');
@@ -53,7 +88,6 @@ function TestProject(){
         return 0;
     }
     SaveProject();
-
     let form = document.createElement('form');
     form.method = 'POST';
     form.setAttribute('hidden','hidden');
@@ -63,7 +97,7 @@ function TestProject(){
     form.innerHTML = "";
 
 }
-function GenerateCode(){
+function GenerateCode(ButtonName){
     let Canvas = document.getElementsByClassName("canvas");//все стрелки на форме
     let Panels = document.getElementsByClassName("Panel");//все панели на форме
     let Variables = document.getElementsByClassName("NameVariable");//объект со всеми переменными проекта
@@ -75,7 +109,7 @@ function GenerateCode(){
     let TN = 0;//для разбиения id элемента(третье число)
     let StartExist = false; //флаг для отмечания наличия созданной функции запуска чат-бота
     let FirstUserElement = false;//переменная для отслеживания нахождения первого элемента у пользователя
-    let domain = "localhost:3000";//имя сайта (для отображения картинок)
+    let domain = "http://localhost:3000/publish";//имя сайта (для отображения картинок)
 
     for(let i = 0; i < Canvas.length; i++ ){//поиск начальной панели
         N = NumberOfElement(Canvas[i].id);
@@ -626,6 +660,7 @@ function GenerateCode(){
             }
         }
     }
+    //код для удаления кнопок после нажатия
     Code += "\n function DeleteButton(){" +
         "\n\t let Buttons = document.getElementsByClassName(\"ButtonOnChat\");" +
         "\n\t let btn = new Array();" +
@@ -635,19 +670,109 @@ function GenerateCode(){
         "\n\t for(let i = 0; i < btn.length; i++){" +
         "\n\t\t btn[i].remove();" +
         "\n\t}\n}";
+    //код для генерации исходящих сообщений
     Code += "\n function GenerateOutMessage(Message){" + 
-    "\n\t let MessageUser = document.createElement('div');" + 
-    "\n\t let OutgoingMessage = document.createElement('div');//содержимое блока сообщения" + 
-    "\n\t let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме" + 
-    "\n\t let ChatForm = document.getElementById('ChatForm'); //блок с чатом" +
-    "\n\t let SendMessage = document.getElementById('SendMessage');" +
-    "\n\t MessageUser.className = 'MessageUser';" +
-    "\n\t OutgoingMessage.className = 'OutgoingMessage';" +
-    "\n\t ChatForm.append(MessageUser);" + 
-    "\n\t MessageUser.append(OutgoingMessage);" +
-    "\n\t OutgoingMessage.innerHTML = Message;" + 
-    "\n\t InputMessage.value = \"\";" +
-    "\n\t LowerDown(); \n}";
+        "\n\t let MessageUser = document.createElement('div');" + 
+        "\n\t let OutgoingMessage = document.createElement('div');//содержимое блока сообщения" + 
+        "\n\t let InputMessage = document.getElementById('InputMessage');//Поле ввода сообщения на форме" + 
+        "\n\t let ChatForm = document.getElementById('ChatForm'); //блок с чатом" +
+        "\n\t let SendMessage = document.getElementById('SendMessage');" +
+        "\n\t MessageUser.className = 'MessageUser';" +
+        "\n\t OutgoingMessage.className = 'OutgoingMessage';" +
+        "\n\t ChatForm.append(MessageUser);" + 
+        "\n\t MessageUser.append(OutgoingMessage);" +
+        "\n\t OutgoingMessage.innerHTML = Message;" + 
+        "\n\t InputMessage.value = \"\";" +
+        "\n\t LowerDown(); \n}";
+    //код для загрузки сообщений на сервер
+    if(ButtonName == "PublishBtn"){ //если запуск генерации кода прозошел по нажатию на кнопку "опубликовать"
+        Code += "\n async function  SendMessageOnServer(Message,Source){//отправка сообщений на сервер" +
+            "\n\t let url = \'"+ domain + "\';" +
+            "\n\t let ProjectName = document.getElementById('FrameChatBot').getAttribute('ProjectName');" +
+            "\n\t let err = document.getElementById('LabelErrorChatBot');" +
+            "\n\t let mess = {" + 
+            "\n\t   message : Message," + 
+            "\n\t   source : Source," + 
+            "\n\t   project : ProjectName" +
+            "\n\t }; " + 
+            "\n\t if(!err.hasAttribute('hidden')){" + 
+            "\n\t   err.setAttribute('hidden','hidden');" + 
+            "\n\t   err.innerHTML = \"\";" + 
+            "\n\t }; " + 
+            "\n\t let response = await fetch(url, { " + 
+            "\n\t   method: 'POST'," + 
+            "\n\t   headers: {" + 
+            "\n\t       'Content-Type': 'application/json;charset=utf-8'" + 
+            "\n\t    }," + 
+            "\n\t    body: JSON.stringify(mess) " + 
+            "\n\t }); " + 
+
+            "\n\t if (response.ok) { // если HTTP-статус в диапазоне 200-299 " + 
+            "\n\t   } else {" + 
+            "\n\t   if(err.hasAttribute('hidden')){" + 
+            "\n\t       err.removeAttribute('hidden');" + 
+            "\n\t    }" + 
+            "\n\t    err.innerHTML = \"Ошибка! сообщение не отправлена на сервер\";" + 
+            "\n\t }; " + 
+            "\n}";
+    //код для открытия чата
+    }
+    Code += "\n function OpenChatBot(){" +
+            "\n\t let FormChatBot = document.getElementById('FormChatBot');" + 
+            "\n\t let DivImgCloseBot = document.getElementById('DivImgCloseBot');" + 
+            "\n\t if(FormChatBot.hasAttribute('hidden')){" + 
+            "\n\t       FormChatBot.removeAttribute('hidden');" + 
+            "\n\t       DivImgCloseBot.removeAttribute('hidden')" + 
+            "\n\t }" + 
+            "\n}";
+    //код для закрытия чата
+    Code += "\n function CloseChatBot(){" + 
+      "\n\t let FormChatBot = document.getElementById('FormChatBot');" + 
+      "\n\t let DivImgCloseBot = document.getElementById('DivImgCloseBot');" +
+      "\n\t FormChatBot.setAttribute('hidden','hidden');" + 
+      "\n\t DivImgCloseBot.setAttribute('hidden','hidden');" +
+       "\n}";
+    //код для открытия и закрытия изображения
+    Code += "\n function ClickImage(id){//увеличение изображения " +
+    "\n\t let body = document.body " +
+    "\n\t let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран " +
+    "\n\t let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий " +
+    "\n\t let Cwidth = document.documentElement.clientWidth; " +
+    "\n\t let Cheight = document.documentElement.clientHeight; " +
+    "\n\t let img = document.getElementById(id); " +
+    "\n\t  let ImgOpen = document.createElement('img'); " +
+    "\n\t  //----------Создание фиксированной панели----------- " +
+    "\n\t divNewInstrumentPanel.className=\"NewInstrumentPanel\"; " +
+    "\n\t divNewInstrumentPanel.setAttribute(\"id\",\"NewInstrumentPanel\"); " +
+    "\n\t body.prepend(divNewInstrumentPanel); " +
+    "\n\t ImgOpen.src = img.src; " +
+    "\n\t ImgOpen.className = \"OpenImg\"; " +
+    "\n\t ImgOpen.id = img.id; " +
+    "\n\t ImgOpen.setAttribute('onclick','OnClickImgExit()'); " +
+    "\n\t if(img.naturalWidth > img.naturalHeight){ " +
+    "\n\t  if(img.naturalWidth > Cwidth - 400){ " +
+        "\n\t\t ImgOpen.width = img.naturalWidth/2;  " +
+    "\n\t}else{ " + 
+        "\n\t\t ImgOpen.width = img.naturalWidth; " +
+    "\n\t } " +
+    "\n\t }else if(img.naturalWidth <= img.naturalHeight){ " +
+        "\n\t\t if(img.naturalHeight > Cheight - 400){ " +
+            "\n\t\t\tImgOpen.height = img.naturalHeight/2;  " +
+        "\n\t\t }else{ " +
+            "\n\t\t\t ImgOpen.height = img.naturalHeight;  " +
+            "\n\t\t} " +
+    "\n\t} " +
+    "\n\t divNewInstrumentPanel.append(ImgOpen); " +
+    "\n} " +
+    "\n function OnClickImgExit(){//закрытие всплывающего окна  " +
+        "\n\t let NewInstrumentPanel = document.getElementById(\"NewInstrumentPanel\"); " +
+        "\n\t NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel); " +
+    "\n} ";
+    //код для прокрутки чата в самый низ
+    Code += "\n function LowerDown(){" + 
+      "\n\t document.getElementById('ChatForm').scrollTop = document.getElementById('ChatForm').scrollHeight;" + 
+      "\n}";
+    
     return(Code);
 }
 

@@ -8,12 +8,12 @@
         <script src="Script.js"> </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <body> 
-        <div class="Frame" ProjectName="4008391677">
-            <div class="DivImgCloseBot" ><img src="close.png" width="24px" class="ImgCloseBot"></div>
+        <div class="Frame" ProjectName="4008391677" onclick="OpenChatBot()">
+            <div class="DivImgCloseBot" ><img src="close.png" width="24px" class="ImgCloseBot" onclick="CloseChatBot()"></div>
             <div class="LabelChatBot">
                 Чат
                </div> 
-            <div class="Form">  
+            <div class="Form" id="FormChatBot">  
                 <div class="ChatForm" id="ChatForm">
                 </div>
                 <div class="SendMessageBlock">
@@ -24,9 +24,6 @@
             </div>
         </div>
         <script type="text/javascript">
-            function LowerDown(){
-                document.getElementById("ChatForm").scrollTop = document.getElementById("ChatForm").scrollHeight;
-            }
             $('#SendMessage').click(function() {//отправка на сервер введеного текста пользователяч
                 let value = document.getElementById("InputMessage").value;
                 if(value != ""){

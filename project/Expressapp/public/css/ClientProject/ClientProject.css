@@ -1,40 +1,48 @@
-body{
-    padding: 0px;
-    margin: 0px;
-    font-size: larger;
-    font-family: 'Segoe UI Light', 'Times New Roman';
-    background-color: rgb(243, 243, 243);
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
+
 .Frame{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    margin-right: 5%;
     background-color: rgb(0, 183, 255);
+    position: absolute;
+    right: 5%;
+    z-index: 9999;
+    width: 480px;
+    bottom: 0px;
+    font-family: 'Segoe UI Light', 'Times New Roman';
 }
 .DivImgCloseBot{
     float: right;
+    margin-top: 20px;
     margin-right: 20px;
-    margin-top: 25px;
 }
 .ImgCloseBot{
     cursor: default;
+}
+.LabelError{
+    text-align: center;
+    background-color: rgba(206, 0, 0, 0.664);
+    color: white;
+    margin-top: 10px;
 }
 .LabelChatBot{
     font-family: 'Segoe UI', 'Times New Roman';
     margin-left: 10px;
     cursor: default;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    display: flex;
     font-size: 26px;
+    justify-content: center;
+    align-items: center;
     color: rgb(255, 255, 255);
+    height: 100%;
 }
 .Form{
     width: 480px;
     background-color: rgb(255, 255, 255);
+}
+.HeaderChatBot{
+    height: 60px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 .ChatForm{  
     width: 480px;
@@ -170,5 +178,5 @@ a{
     justify-content: center; 
     align-items: center; 
     overflow: auto;
-    z-index: 5;
+    z-index: 99999;
 }

@@ -12,13 +12,13 @@ function Start(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "fwq";
-	 SendBotMessage("fwq");
+	 IncomingMessage.innerHTML = "приветы";
+	 SendBotMessage("приветы");
 	 LowerDown();
 	 DeleteButton();
-	 Act_1_2_5();
+	 Act_1_2_4();
 }
-function Act_1_2_5(){
+function Act_1_2_4(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -26,58 +26,41 @@ function Act_1_2_5(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "<img src='http://localhost:3000/uploads/567fde06dfc57c6e7a89147d19f435b1' class='ImageBot' id = 'Image 1 2 5' onclick = 'ClickImage(id)' width = '200px'>"
-	 SendBotMessage(" Вывод изобржаения:http://localhost:3000/uploads/567fde06dfc57c6e7a89147d19f435b1");
+	 IncomingMessage.innerHTML = "<img src='http://localhost:3000/uploads/9bc2c4b9335a1bb94e16cd75f604bd24' class='ImageBot' id = 'Image 1 2 4' onclick = 'ClickImage(id)' width = '200px'>"
+	 SendBotMessage(" Вывод изобржаения:http://localhost:3000/uploads/9bc2c4b9335a1bb94e16cd75f604bd24");
 	 DeleteButton();
 	 LowerDown();
 	 let SendMessage = document.getElementById('SendMessage')
-	 SendMessage.setAttribute('onclick','Act_1_2_2(); InputMessage.value = "" ; ')
+	 SendMessage.setAttribute('onclick','Act_1_2_5(); InputMessage.value = "" ; ')
+}
+document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById('SendMessage').setAttribute('onclick','InputMessage.value = ""; Act_1_2_5() InputMessage.value = "" ; ');
+});
+function Act_1_2_5(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value.toLowerCase() == "1"){
+		 Act_2_3_7(); 
+	 }else{
+		 Act_1_2_2();
+	 }
 }
  function Act_1_2_2(){
-		 Act_2_3_6(); 
+		 Act_2_4_9(); 
  }
-function Act_2_3_6(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "fqw";
-	 SendBotMessage("fqw");
-	 LowerDown();
-	 DeleteButton();
-	 Act_2_3_7();
-}
 function Act_2_3_7(){
 	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'fqw';
-	 ButtonBlock.append(ButtonOnChat);
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "<img src='http://localhost:3000/uploads/3763b5983a961eb851eeb62850c17c75' class='ImageBot' id = 'Image 2 3 7' onclick = 'ClickImage(id)' width = '200px'>"
+	 SendBotMessage(" Вывод изобржаения:http://localhost:3000/uploads/3763b5983a961eb851eeb62850c17c75");
+	 DeleteButton();
 	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_3_4_10(); DeleteButton();')
-	 Act_2_3_8();
 }
-function Act_2_3_8(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'fwqf';
-	 ButtonBlock.append(ButtonOnChat);
-	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_3_5_12(); DeleteButton();')
-}
-function Act_3_4_10(){
+function Act_2_4_9(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -85,23 +68,10 @@ function Act_3_4_10(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "gegew";
-	 SendBotMessage("gegew");
-	 LowerDown();
+	 IncomingMessage.innerHTML = "<img src='http://localhost:3000/uploads/b5f9a569fb0b7eb2dceb21df780b79fc' class='ImageBot' id = 'Image 2 4 9' onclick = 'ClickImage(id)' width = '200px'>"
+	 SendBotMessage(" Вывод изобржаения:http://localhost:3000/uploads/b5f9a569fb0b7eb2dceb21df780b79fc");
 	 DeleteButton();
-}
-function Act_3_5_12(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "rwqrwq";
-	 SendBotMessage("rwqrwq");
 	 LowerDown();
-	 DeleteButton();
 }
  function DeleteButton(){
 	 let Buttons = document.getElementsByClassName("ButtonOnChat");
@@ -169,6 +139,41 @@ function Act_3_5_12(){
 	 FormChatBot.setAttribute('hidden','hidden');
 	 DivImgCloseBot.setAttribute('hidden','hidden');
 }
+ function ClickImage(id){//увеличение изображения 
+	 let body = document.body 
+	 let divNewInstrumentPanel = document.createElement('div');//фиксированная панель во весь экран 
+	 let divAddNewInstrumentPanel = document.createElement('div');//панель по середине фиксированной панели с кнопками выбора действий 
+	 let Cwidth = document.documentElement.clientWidth; 
+	 let Cheight = document.documentElement.clientHeight; 
+	 let img = document.getElementById(id); 
+	  let ImgOpen = document.createElement('img'); 
+	  //----------Создание фиксированной панели----------- 
+	 divNewInstrumentPanel.className="NewInstrumentPanel"; 
+	 divNewInstrumentPanel.setAttribute("id","NewInstrumentPanel"); 
+	 body.prepend(divNewInstrumentPanel); 
+	 ImgOpen.src = img.src; 
+	 ImgOpen.className = "OpenImg"; 
+	 ImgOpen.id = img.id; 
+	 ImgOpen.setAttribute('onclick','OnClickImgExit()'); 
+	 if(img.naturalWidth > img.naturalHeight){ 
+	  if(img.naturalWidth > Cwidth - 400){ 
+		 ImgOpen.width = img.naturalWidth/2;  
+	}else{ 
+		 ImgOpen.width = img.naturalWidth; 
+	 } 
+	 }else if(img.naturalWidth <= img.naturalHeight){ 
+		 if(img.naturalHeight > Cheight - 400){ 
+			ImgOpen.height = img.naturalHeight/2;  
+		 }else{ 
+			 ImgOpen.height = img.naturalHeight;  
+		} 
+	} 
+	 divNewInstrumentPanel.append(ImgOpen); 
+} 
+ function OnClickImgExit(){//закрытие всплывающего окна  
+	 let NewInstrumentPanel = document.getElementById("NewInstrumentPanel"); 
+	 NewInstrumentPanel.parentNode.removeChild(NewInstrumentPanel); 
+} 
  function LowerDown(){
 	 document.getElementById('ChatForm').scrollTop = document.getElementById('ChatForm').scrollHeight;
 }

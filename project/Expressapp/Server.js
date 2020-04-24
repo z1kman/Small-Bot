@@ -299,6 +299,15 @@ app.post("/constructor", urlencodedParser, function(request, response){
                 }
             });
             response.redirect('/test');
+        }else if(request.body.Code != undefined){//если пост запрос с нажатия кнопки публикации проекта
+            fs.writeFile(__dirname  + "/public/" +  objJsLink ,request.body.Code, function(error){//запись js файла
+                if(error) 
+                {
+                    console.log("Ошибка при записи файла:" + error);
+                    return;
+                }
+            });
+            response.redirect('/publish');
         }else if(request.file != undefined){//если пост запрос с загрузки файла изображения
             let filedata = request.file;
             response.cookie('FileName',filedata.filename,{maxAge: 90000000});//устанавка куков
@@ -324,11 +333,21 @@ app.get("/test", function(request, response){
         response.sendFile(__dirname + objHtmlLink);
     }
 });
-app.post("/test",urlencodedParser,function(request,response){
+app.get("/publish", function(request, response){
+    if(request.cookies['token'] == undefined)//если куков с токеном нет
+    {
+        response.redirect('/login');
+    }else if(request.cookies['Project'] == undefined){//если куков с проектом нет
+        response.redirect('/login');
+    }else{
+         response.sendFile(__dirname +  "/views/publish.html");
+    }
+});
+app.post("/publish",urlencodedParser,function(request,response){   
     console.log(request.body)
     response.sendStatus(200);
 });
-
+app.post("")
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера
 if(err){
     console.log("Ошибка.База данных не запущена.");

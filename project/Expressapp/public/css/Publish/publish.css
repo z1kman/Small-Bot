@@ -1,0 +1,89 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(226, 226, 226);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI Light', 'Times New Roman';
+}
+.PublishForm{
+    background-color: white;
+    width: 40%;
+    border-radius: 20px;
+    padding: 20px;
+}
+.FormSrcCss{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.FormSrcJs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.FormHtml{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.FormJs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+}
+label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 22px;
+}
+.MainLabel{
+    font-size: 26px;
+    text-align: center;
+}
+input{
+    width: 80%;
+    outline: none;
+    font-size: 1em;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 13px;
+    border: 1px solid rgb(226, 226, 226);
+    color: rgb(180, 180, 180);
+
+}
+code{
+    width: 80%;
+    outline: none;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 13px;
+    border: 1px solid rgb(226, 226, 226);
+    resize: none;
+    height: 200px;
+    overflow: auto;
+    color: rgb(180, 180, 180);
+}
+.LinkToConstructor{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+a{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(0, 144, 201);
+}
+a:hover{
+    color: rgb(19, 181, 245);
+    transition: 0.3s;
+}

@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <title>Публикация проекта</title>
+        <meta name="viewport" content="width = device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Publish/publish.css">
+        <script src="js/Publish/publish.js"></script>
+    <body> 
+        <div class="PublishForm">
+            <label class="MainLabel">Поместите данный код внутрь тега "head" вашего сайта</label>
+            <label>CSS файл:</label>
+            <div class="FormSrcCss">
+                <input type='text' readonly='readonly' id="InputSrcCss" value="">
+            </div>
+            <label>JavaScript файлы:</label>
+            <div class="FormSrcJs">
+                <input type='text' readonly='readonly' id="InputSrcJs" value="">
+            </div>
+            <div class="FormSrcJs">
+                <input type='text' readonly='readonly' id="InputSrcJsAjax" value="<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>">
+            </div>
+            <label class="MainLabel">Поместите данный код внутрь тега "body" вашего сайта</label>
+            <label>HTML/JavaScript код:</label>
+            <div class="FormHtml">
+                <code id='HtmlCode'>
+                    <script>document.getElementById('HtmlCode').innerText = "<div class=\"Frame\" ProjectName=\"" + get_cookie('Project') + "\" id=\"FrameChatBot\">"</script>
+                    <pre>       &lt;div class="DivImgCloseBot" id="DivImgCloseBot" &gt; </pre>
+                    <script>document.getElementById('HtmlCode').innerText +="\n<img src=\"" + Domain + "source/projectClient/close.png\" width=\"24px\" class=\"ImgCloseBot\" onclick=\"CloseChatBot()\">"</script>   
+                    <pre>       &lt;/div &gt; </pre>
+                    <pre>       &lt;div class="HeaderChatBot" onclick="OpenChatBot()" &gt; </pre>
+                    <pre>           &lt;div class="LabelChatBot" &gt; Чат </pre>
+                    <pre>           &lt;/div &gt;  </pre>
+                    <pre>       &lt;/div &gt; </pre>
+                    <pre>       &lt;div class="Form" id="FormChatBot" &gt; </pre>
+                    <pre>           &lt;div class="ChatForm" id="ChatForm" &gt; </pre>
+                    <pre>           &lt;/div &gt; </pre>
+                    <pre>           &lt;div class="LabelError" id="LabelErrorChatBot" hidden="hidden" &gt; </pre>
+                    <pre>           &lt;/div &gt; </pre>
+                    <pre>           &lt;div class="SendMessageBlock" &gt; </pre>
+                    <pre>               &lt;textarea class="InputMessage" id="InputMessage" &gt;  &lt;/textarea &gt; </pre>
+                    <pre>               &lt;input type="button" class="Btn" value="Отправить" id="SendMessage" &gt; </pre>
+                    <pre>           &lt;/div &gt; </pre>
+                    <pre>           &lt;br /&gt; </pre>
+                    <pre>       &lt;/div &gt; </pre>
+                    <pre>&lt;/div &gt; </pre>
+
+                    &lt;script type="text/javascript"&gt;
+                    <pre>        $('#SendMessage').click(function() { </pre>
+                    <pre>            let value = document.getElementById("InputMessage").value;</pre>
+                    <pre>            if(value != ""){</pre>
+                    <pre>                let data = { message: value};</pre>
+                    <pre>                let MessageUser = document.createElement('div');</pre>
+                    <pre>                let OutgoingMessage = document.createElement('div');</pre>
+                    <pre>               let InputMessage = document.getElementById('InputMessage');</pre>
+                    <pre>                let ChatForm = document.getElementById('ChatForm');</pre>
+                    <pre>                let SendMessage = document.getElementById('SendMessage');</pre>
+                    <pre>                MessageUser.className = 'MessageUser';</pre>
+                    <pre>                OutgoingMessage.className = 'OutgoingMessage';</pre>
+                    <pre>                ChatForm.append(MessageUser);</pre>
+                    <pre>                MessageUser.append(OutgoingMessage);</pre>
+                    <pre>                SendMessageOnServer(InputMessage.value,"User");</pre>
+                    <pre>                OutgoingMessage.innerHTML =  InputMessage.value ;</pre>
+                    <pre>                if(this.hasAttribute('onclick') == false){</pre>
+                    <pre>                    InputMessage.value ="";</pre>
+                    <pre>                }</pre>
+                    <pre>                LowerDown();    </pre>
+                    <pre>            }</pre>
+                    <pre>        });</pre>
+                    <pre>         function SendUserMessage(Message) {</pre>
+                    <pre>            let data = {message: Message}</pre>
+                    <pre>        }</pre>
+                    <pre>        function SendUserClickOnButton(Message) {</pre>
+                    <pre>            SendMessageOnServer(Message,"Btn");</pre>
+                    <pre>        }</pre>
+                    <pre>        function SendBotMessage(Message) {</pre>
+                    <pre>            SendMessageOnServer(Message,"Bot");</pre>
+                    <pre>    }</pre>
+                    &lt;/script&gt;
+                </code>
+            </div>
+            <div class="LinkToConstructor">
+                <a href = "/constructor">Вернуться на страницу конструктора</a>
+            </div>
+        </div>
+    </body>
+</html>

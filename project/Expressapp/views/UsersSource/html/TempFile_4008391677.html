@@ -45,26 +45,20 @@
                         //this.onclick(this.getAttribute('onclick'));
                     }
                     LowerDown();
-                    $.post('/test', data, function(res) {});
-                    
                 }
             });
             $('.ButtonOnChat').click(function() {//отправка на сервер значение нажатой пользователем кнопки
                 let value = this.value;
                 let data = { message: "Нажатие на кнопку с значением:\"" + value + "\""};
-                $.post('/test', data, function(res) {});
             });
             function SendUserMessage(Message) {
                 let data = {message: Message}
-                $.post('/test', data, function(res) {});
             }
             function SendUserClickOnButton(Message) {
                 let data = {message: "Нажатие на кнопку с значением:\"" + Message + "\""};
-                $.post('/test', data, function(res) {});
             }
             function SendBotMessage(Message) {//отправка на сервер ответа бота
                 let data = {message: "Ответ бота:\"" + Message + "\""};
-                $.post('/test', data, function(res) {});
         }
     </script>
 </html>
