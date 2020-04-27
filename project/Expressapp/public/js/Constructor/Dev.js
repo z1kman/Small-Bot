@@ -160,7 +160,7 @@ function GenerateCode(ButtonName){
                         //------------------------------Генерация функций для вывода сообщений бота--------------------------------------------
                         //------------------------------Генерация функций для вывода сообщений бота--------------------------------------------
 
-                        if(Panels[i].childNodes[j].childNodes[k].className == "TextBot" || Panels[i].childNodes[j].childNodes[k].className == "ImgBot" )//если найден текстовый элемент
+                        if(Panels[i].childNodes[j].childNodes[k].className == "TextBot" || Panels[i].childNodes[j].childNodes[k].className == "ImgBot" )//если найден текстовый элемент или изображение
                         {
                             ElementId = Panels[i].childNodes[j].childNodes[k].id;//получение id элемента
                             N = NumberOfElement(ElementId);//получение первого числа id элемента
@@ -192,6 +192,7 @@ function GenerateCode(ButtonName){
                                 if(Text.split(' ')[0] == "error"){//если переменная не была найдена тогда вернуть ошибку
                                     return Text;
                                 }
+                                Text = CheckLink(Text); //проверка на ссылки
                             }
                             
                             if(Panels[i].childNodes[j].childNodes[k].className == "TextBot"){//если текущий элемент - вывод текста у бота
@@ -246,13 +247,12 @@ function GenerateCode(ButtonName){
                                             break; 
                                         }else if(f + 1 >= User.childNodes.length && ButtonContains == false){//если текущий элемент последний и кнопок не было
                                             for(let e = 0; e < Panels[i].childNodes.length; e++){//запуск цикла по всем элементам текущей панели
-                                                if(Panels[i].childNodes[e].className == "DivJumpIndicator"){//поиск джампера находящегося на панеле
+                                                if(Panels[i].childNodes[e].className == "DivJumpIndicator"){//поиск джампера находящегося на панели
                                                     let JumpIndicator  = document.getElementById("JumpIndicator " + NumberOfElement(Panels[i].childNodes[e].id) + " " + 
                                                         SecondNumberOfElement(Panels[i].childNodes[e].id) + " " + ThirdNumberOfElement(Panels[i].childNodes[e].id));
                                                     if(JumpIndicator.classList.contains('ActiveJumpIndicator')){//если джампер активен
                                                         let NextStepId = JumpIndicator.id;//переменная для обращения к следующей функции
-                                                        Code += "\n\t let SendMessage = document.getElementById('SendMessage')" + 
-                                                        "\n\t SendMessage.setAttribute('onclick','Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "(); InputMessage.value = \"\" ; ')"; 
+                                                        Code += "\n\tInputMessage.value = \"\" ; \n\t Act_" + NumberOfElement(NextStepId) + "_" + SecondNumberOfElement(NextStepId) + "_" + ThirdNumberOfElement(NextStepId) + "();"; 
                                                     }
                                                 }
                                             }
@@ -314,7 +314,7 @@ function GenerateCode(ButtonName){
                                             if(Bot.childNodes[f].className == "TextBot"){//если обнаружен текстовый элемент
                                                 let TextBotId = NumberOfElement(Bot.childNodes[f].id) + "_" + SecondNumberOfElement(Bot.childNodes[f].id) + "_" + ThirdNumberOfElement(Bot.childNodes[f].id);
                                                 //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ TextBotId +"(); DeleteButton();')";
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ TextBotId +"();')";
                                                 BotContainsContent = true;
                                                 break;
                                             }else{
@@ -329,32 +329,32 @@ function GenerateCode(ButtonName){
                                                 if(User.childNodes[f].className == "DivUserButton"){//если обнаружена кнопка
                                                     let ButtonId = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
                                                     //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                    Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ButtonId +"(); DeleteButton();')";
+                                                    Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ButtonId +"();')";
+                                                    break;
+                                                }
+                                            }
+                                            }
+                                        for(let f = 0; f < User.childNodes.length; f++){//поиск других действий пользователя в присоединеной панели
+                                            if(User.childNodes[f] != undefined){//проверка на не пустой элемент
+                                                if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
+                                                    let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
+                                                    //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
+                                                    Code += "\n\t if(ButtonOnChat.hasAttribute('onclick') != null){" + //Если уже есть событие клика
+                                                            "\n\t\t let AttributeContains = ButtonOnChat.getAttribute('onclick')" + //запомнить значение события клика
+                                                            "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\" GenerateOutMessage(this.value); Act_" + ID + "();\");\');" + //дописать новое значение
+                                                            "\n\t }else{" + //если же событие клика еще нет 
+                                                            "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"GenerateOutMessage(this.value); Act_" + ID + "(); \");'); \n\t }"; //создание события
                                                     break;
                                                 }
                                             }
                                         }
                                     }
-                                    for(let f = 0; f < User.childNodes.length; f++){//поиск других действий пользователя в присоединеной панели
-                                        if(User.childNodes[f] != undefined){//проверка на не пустой элемент
-                                            if(User.childNodes[f].className == "DivUserElement"){//если обнаружен какой либо элемент действия пользователя
-                                                let ID = NumberOfElement(User.childNodes[f].id) + "_" + SecondNumberOfElement(User.childNodes[f].id) + "_" + ThirdNumberOfElement(User.childNodes[f].id);
-                                                //запись в код вызов функции. при нажатии по кнопке вызовется действие бота
-                                                Code += "\n\t if(ButtonOnChat.hasAttribute('onclick') != null){" + //Если уже есть событие клика
-                                                        "\n\t\t let AttributeContains = ButtonOnChat.getAttribute('onclick')" + //запомнить значение события клика
-                                                        "\n\t\t ButtonOnChat.setAttribute('onclick', AttributeContains + 'document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\" GenerateOutMessage(this.value); Act_" + ID + "(); DeleteButton();\");\');" + //дописать новое значение
-                                                        "\n\t }else{" + //если же событие клика еще нет 
-                                                        "\n\t\t ButtonOnChat.setAttribute('onclick','document.getElementById(\"SendMessage\").setAttribute(\"onclick\",\"GenerateOutMessage(this.value); Act_" + ID + "(); DeleteButton();\");'); \n\t }"; //создание события
-                                                break;
-                                            }
-                                        }
-                                    }
                                 }else if(Condition != null){
-                                    for(let f = 0; f < Condition.childNodes.length; f++){//поиск элементов бота у присоединеной панели
+                                    for(let f = 0; f < Condition.childNodes.length; f++){//поиск элементов условий у присоединеной панели
                                         if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
                                             if(Condition.childNodes[f].className == "DivConditionElement"){//если обнаружено условие
                                                 let ConditionId = NumberOfElement(Condition.childNodes[f].id) + "_" + SecondNumberOfElement(Condition.childNodes[f].id) + "_" + ThirdNumberOfElement(Condition.childNodes[f].id);
-                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ConditionId +"(); DeleteButton();')";
+                                                Code += "\n\t ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_"+ ConditionId +"();')";
                                                 break;
                                             }
                                         }
@@ -662,7 +662,7 @@ function GenerateCode(ButtonName){
     }
     //код для удаления кнопок после нажатия
     Code += "\n function DeleteButton(){" +
-        "\n\t let Buttons = document.getElementsByClassName(\"ButtonOnChat\");" +
+        "\n\t let Buttons = document.getElementsByClassName(\"ButtonBlock\");" +
         "\n\t let btn = new Array();" +
         "\n\t for(let i = 0; i < Buttons.length; i++){" +
         "\n\t\t btn.push(Buttons[i]);" +
@@ -804,6 +804,28 @@ function CheckVariable(PanelID,Text,Variables){//проверка перемен
     }
     return (Text);
 }
+
+function CheckLink(Text){//проверка текста на наличие ссылок
+    let index = -1;//индекс начала ссылки
+    let link = "";//сама ссылка
+    if(Text.indexOf('https') >= 0)
+    {
+        index = Text.indexOf('https');
+    }
+    else if(Text.indexOf('http') >= 0)
+    {
+        index = Text.indexOf('http');
+    }else if(Text.indexOf('www') >= 0)
+    {
+        index = Text.indexOf('www');
+    }
+    if(index >= 0){
+        Text.substr(index, Text.length).indexOf(" ") >= 0 ? link = Text.substr(index,Text.substr(index, Text.length).indexOf(" ")) : link = Text.substr(index,Text.length); //получение ссылки из текста(вырезание)
+        Text = Text.substr(0,index) + "<a href=\'" + link +"\' target='_blank'>" + link + "</a>";
+    }
+    return (Text);
+}
+
 function CreateConnect(ElementId, Code){
     //получение панели к которой подключена кнопка
     let PanelConnect = document.getElementById((document.getElementById("Canvas " + ElementId).getAttribute('data-connect')));

@@ -32,21 +32,23 @@ function DisabledNavbarBtn(){//отключение кнопок находящ�
     let NewVariableBtn = document.getElementById("NewVariableBtn");//кнопка добавления новой переменной(переменная необходима для блокирования доступа к кнопке)
     let TestBtn = document.getElementById("TestBtn");//кнопка тестирования(переменная необходима для блокирования доступа к кнопке)
     let SaveBtn = document.getElementById("SaveBtn");//кнопка сохранения(переменная необходима для блокирования доступа к кнопке)
-
+    let PublishBtn = document.getElementById("PublishBtn");//кнопка публицкации(переменная необходима для блокирования доступа к кнопке)
     //----------Отключение кнопок в Navbar-----------
     NewVariableBtn.setAttribute("disabled","disabled");
     TestBtn.setAttribute("disabled","disabled");
     SaveBtn.setAttribute("disabled","disabled");
+    PublishBtn.setAttribute("disabled","disabled");
 }
 function EnabledNavbarBtn(){//включение кнопок находящихся в шапке сайта
     let NewVariableBtn = document.getElementById("NewVariableBtn");//кнопка добавления новой переменной(переменная необходима для блокирования доступа к кнопке)
     let TestBtn = document.getElementById("TestBtn");//кнопка тестирования(переменная необходима для блокирования доступа к кнопке)
     let SaveBtn = document.getElementById("SaveBtn");//кнопка сохранения(переменная необходима для блокирования доступа к кнопке)
-
+    let PublishBtn = document.getElementById("PublishBtn");//кнопка публицкации(переменная необходима для блокирования доступа к кнопке)
     //----------Включение кнопок в Navbar-----------
     NewVariableBtn.removeAttribute("disabled");
     TestBtn.removeAttribute("disabled");
     SaveBtn.removeAttribute("disabled");
+    PublishBtn.removeAttribute("disabled");
 }
 function CreateWindowPanel(){ //Создание Всплывающего окна(основа)
     let body = document.body

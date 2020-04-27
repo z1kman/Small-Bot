@@ -3,61 +3,62 @@
         <meta charset = "utf-8">
         <title>Проект для тестирования</title>
         <link rel="stylesheet" href="http://localhost:3000/css/ClientProject/ClientProject.css">
-        <script src="http://localhost:3000/UsersSource/TempFile_3752898897.js"></script>
+        <script src="http://localhost:3000/UsersSource/TempFile_5134749302.js"></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <meta name="viewport" content="width = device-width, initial-scale=1">
     <body> 
-        <div class="Frame" ProjectName="3752898897" id="FrameChatBot">
-            <div class="DivImgCloseBot" id="DivImgCloseBot" >
-            <img src="http://localhost:3000/source/projectClient/close.png" width="24px" class="ImgCloseBot" onclick="CloseChatBot()">
-                   </div > 
-                   <div class="HeaderChatBot" onclick="OpenChatBot()" > 
-                       <div class="LabelChatBot" > Чат 
-                       </div >  
-                   </div > 
-                   <div class="Form" id="FormChatBot" > 
-                       <div class="ChatForm" id="ChatForm" > 
-                       </div > 
-                       <div class="LabelError" id="LabelErrorChatBot" hidden="hidden" > 
-                       </div > 
-                       <div class="SendMessageBlock" > 
-                           <textarea class="InputMessage" id="InputMessage" >  </textarea > 
-                           <input type="button" class="Btn" value="Отправить" id="SendMessage" > 
-                       </div > 
-                       <br /> 
-                   </div > 
-            </div > 
-            <script type="text/javascript">
-                    $('#SendMessage').click(function() { 
-                        let value = document.getElementById("InputMessage").value;
-                        if(value != ""){
-                            let data = { message: value};
-                            let MessageUser = document.createElement('div');
-                            let OutgoingMessage = document.createElement('div');
-                           let InputMessage = document.getElementById('InputMessage');
-                            let ChatForm = document.getElementById('ChatForm');
-                            let SendMessage = document.getElementById('SendMessage');
-                            MessageUser.className = 'MessageUser';
-                            OutgoingMessage.className = 'OutgoingMessage';
-                            ChatForm.append(MessageUser);
-                            MessageUser.append(OutgoingMessage);
-                            SendMessageOnServer(InputMessage.value,"User");
-                            OutgoingMessage.innerHTML =  InputMessage.value ;
-                            if(this.hasAttribute('onclick') == false){
-                                InputMessage.value ="";
-                            }
-                            LowerDown();    
-                        }
-                    });
-                     function SendUserMessage(Message) {
-                        let data = {message: Message}
-                    }
-                    function SendUserClickOnButton(Message) {
-                        SendMessageOnServer(Message,"Btn");
-                    }
-                    function SendBotMessage(Message) {
-                        SendMessageOnServer(Message,"Bot");
+        <div class="Frame" ProjectName="5134749302" id="FrameChatBot">
+<div class="DivImgCloseBot" id="DivImgCloseBot" >
+<img src="http://localhost:3000/source/projectClient/close.png" width="24px" class="ImgCloseBot" onclick="CloseChatBot()">
+       </div > 
+       <div class="HeaderChatBot" onclick="OpenChatBot()" > 
+           <div class="LabelChatBot" > Чат 
+           </div >  
+       </div > 
+       <div class="Form" id="FormChatBot" > 
+           <div class="ChatForm" id="ChatForm" > 
+           </div > 
+           <div class="LabelError" id="LabelErrorChatBot" hidden="hidden" > 
+           </div > 
+           <div class="SendMessageBlock" > 
+               <textarea class="InputMessage" id="InputMessage" >  </textarea > 
+               <input type="button" class="Btn" value="Отправить" id="SendMessage" > 
+           </div > 
+           <br /> 
+       </div > 
+</div > 
+<script type="text/javascript">
+        $('#SendMessage').click(function() { 
+            let value = document.getElementById("InputMessage").value;
+            if(value != ""){
+                let data = { message: value};
+                let MessageUser = document.createElement('div');
+                let OutgoingMessage = document.createElement('div');
+               let InputMessage = document.getElementById('InputMessage');
+                let ChatForm = document.getElementById('ChatForm');
+                let SendMessage = document.getElementById('SendMessage');
+                MessageUser.className = 'MessageUser';
+                OutgoingMessage.className = 'OutgoingMessage';
+                ChatForm.append(MessageUser);
+                MessageUser.append(OutgoingMessage);
+                SendMessageOnServer(InputMessage.value,"User");
+                OutgoingMessage.innerHTML =  InputMessage.value ;
+                if(this.hasAttribute('onclick') == false){
+                    InputMessage.value ="";
                 }
-            </script>
+                LowerDown();    
+            }
+        });
+         function SendUserMessage(Message) {
+            let data = {message: Message}
+        }
+        function SendUserClickOnButton(Message) {
+            SendMessageOnServer(Message,"Btn");
+        }
+        function SendBotMessage(Message) {
+            SendMessageOnServer(Message,"Bot");
+    }
+</script>
+
     </body>
 </html>

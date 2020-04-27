@@ -450,6 +450,7 @@ function Jump(id){//Стрелки.Создание стрелок между э
             let canvas = document.createElement('canvas');
             mouse.x = event.pageX  + Scroll.scrollLeft; 
             mouse.y = event.pageY  - 70 + Scroll.scrollTop;//70 - высота навбара
+
             for(let i = 0; i < Panels.length;i++){//поиск панелей с такими же координатами что и были заданы
                 if((Panels[i].offsetLeft <= mouse.x && (Panels[i].offsetLeft + Panels[i].offsetWidth >= mouse.x)) && 
                    (Panels[i].offsetTop <= mouse.y && (Panels[i].offsetTop + Panels[i].offsetHeight >= mouse.y))){

@@ -6,7 +6,7 @@
     position: absolute;
     right: 5%;
     z-index: 9999;
-    width: 480px;
+    width: 420px;
     bottom: 0px;
     font-family: 'Segoe UI Light', 'Times New Roman';
 }
@@ -36,7 +36,7 @@
     height: 100%;
 }
 .Form{
-    width: 480px;
+    width: 420px;
     background-color: rgb(255, 255, 255);
 }
 .HeaderChatBot{
@@ -45,7 +45,7 @@
     border-top-right-radius: 20px;
 }
 .ChatForm{  
-    width: 480px;
+    width: 420px;
     height: 400px;
     overflow: auto;
 }
@@ -57,7 +57,7 @@
     align-items: center;
 }
 .InputMessage{
-    width: 320px;
+    width: 280px;
     height: 40px;
     border-radius: 10px;
     font-size: 18px;
@@ -96,17 +96,15 @@
 }
 .ButtonBlock{
     margin-top: 10px;
-    margin-left: 18px;
+    display: flex;
+    justify-content: center;
 }
 .ButtonOnChat{
     margin-top: 10px;
     display: block;
     border-radius: 15px;
     width: 400px;
-    margin-left:10px;
     font-size: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
     height: 40px;
     border: none;
     background-color: rgb(0, 183, 255);
@@ -163,6 +161,10 @@
 }
 a{
     text-decoration: none;
+    color: rgb(0, 183, 255);
+}
+a:hover{
+    color: rgb(0, 141, 197);
 }
 .ImageBot{
     border-radius: 10px;
