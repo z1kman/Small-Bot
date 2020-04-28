@@ -821,7 +821,7 @@ function CheckLink(Text){//проверка текста на наличие с�
     }
     if(index >= 0){
         Text.substr(index, Text.length).indexOf(" ") >= 0 ? link = Text.substr(index,Text.substr(index, Text.length).indexOf(" ")) : link = Text.substr(index,Text.length); //получение ссылки из текста(вырезание)
-        Text = Text.substr(0,index) + "<a href=\'" + link +"\' target='_blank'>" + link + "</a>";
+        Text = Text.substr(0,index) + "<a href=\'" + link +"\' target='_blank'>" + link + "</a>" + Text.substr(index + link.length, Text.length) ;
     }
     return (Text);
 }

@@ -68,8 +68,7 @@ app.get("/account", function(request, response){
                                 },
                                 hbs.registerHelper("Project", function(){
                                     return new hbs.SafeString(ProjectString);
-                                }),
-                                response.render(__dirname + "/views/account.hbs"));
+                                }, response.render(__dirname + "/views/account.hbs") ));
                         });//поиск проектов пользователя
                     });//получение id пользователя который открывает проект
                 });
@@ -346,6 +345,9 @@ app.get("/publish", function(request, response){
 app.post("/publish",urlencodedParser,function(request,response){   
     console.log(request.body)
     response.sendStatus(200);
+});
+app.get("/control", function(request, response){
+    response.render(__dirname +  "/views/control.hbs");
 });
 app.post("")
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера

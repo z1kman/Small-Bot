@@ -124,8 +124,22 @@ function Act_3_6_14(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "Для того, чтобы перейти на страницу досуга нажмите на эту ссылку:<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a>";
-	 SendBotMessage("Для того, чтобы перейти на страницу досуга нажмите на эту ссылку:<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a>");
+	 IncomingMessage.innerHTML = "Для того, чтобы перейти на страницу досуга нажмите на эту ссылку:<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a>  ewqewrwqrqwwq";
+	 SendBotMessage("Для того, чтобы перейти на страницу досуга нажмите на эту ссылку:<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a>  ewqewrwqrqwwq");
+	 LowerDown();
+	 DeleteButton();
+	 Act_3_6_27();
+}
+function Act_3_6_27(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a> gerer";
+	 SendBotMessage("<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a> gerer");
 	 LowerDown();
 	 DeleteButton();
 	InputMessage.value = "" ; 
@@ -234,34 +248,6 @@ function Act_6_11_26(){
 	 OutgoingMessage.innerHTML = Message;
 	 InputMessage.value = "";
 	 LowerDown(); 
-}
- async function  SendMessageOnServer(Message,Source){//отправка сообщений на сервер
-	 let url = 'http://localhost:3000/publish';
-	 let ProjectName = document.getElementById('FrameChatBot').getAttribute('ProjectName');
-	 let err = document.getElementById('LabelErrorChatBot');
-	 let mess = {
-	   message : Message,
-	   source : Source,
-	   project : ProjectName
-	 }; 
-	 if(!err.hasAttribute('hidden')){
-	   err.setAttribute('hidden','hidden');
-	   err.innerHTML = "";
-	 }; 
-	 let response = await fetch(url, { 
-	   method: 'POST',
-	   headers: {
-	       'Content-Type': 'application/json;charset=utf-8'
-	    },
-	    body: JSON.stringify(mess) 
-	 }); 
-	 if (response.ok) { // если HTTP-статус в диапазоне 200-299 
-	   } else {
-	   if(err.hasAttribute('hidden')){
-	       err.removeAttribute('hidden');
-	    }
-	    err.innerHTML = "Ошибка! сообщение не отправлена на сервер";
-	 }; 
 }
  function OpenChatBot(){
 	 let FormChatBot = document.getElementById('FormChatBot');
