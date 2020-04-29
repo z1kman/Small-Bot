@@ -342,9 +342,36 @@ app.get("/publish", function(request, response){
          response.sendFile(__dirname +  "/views/publish.html");
     }
 });
+
 app.post("/publish",urlencodedParser,function(request,response){   
-    console.log(request.body)
-    response.sendStatus(200);
+    if(request.body.project != undefined ){
+        db.collection('Projects').find({randName: request.body.project}).toArray(function (err,docs){//проверка - существует ли проект указанный в теле сообщения
+            //console.log(request.body)
+            //console.log(request.body.message)
+            let i = 0;
+            if(docs.length > 0){//если проект существует
+                db.collection('Dialogs').find({pr_randName: request.body.project, number_Dialogue : request.body.dialog}).toArray(function (err,dialogs){//проверка - существует ли диалог указанный в теле сообщения
+                    if(dialogs.length == 0){//если диалог с таким именем не был найден
+                        let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000; 
+                        db.collection('Dialogs').insertOne({"pr_randName":request.body.project, "number_Dialogue" : Dialog, "Date" : request.body.date},function(){
+                            response.send({dialog : Dialog});//отправить сообщение об ошибке
+                        });//запись нового диалога в бд*/
+                    }else{
+                        console.log(request.body)
+                        db.collection('Dialogs').updateOne({number_Dialogue : request.body.dialog}, {$set: {Date : request.body.date}});//обновление даты последнего сообщения в бд
+                        response.send({dialog :request.body.dialog });//отправить сообщение об ошибке
+                    }
+                    
+                });    
+            }else{//если проект не существует
+                response.send({dialog:500});//отправить сообщение об ошибке
+            }
+
+        });
+    }
+
+
+
 });
 app.get("/control", function(request, response){
     response.render(__dirname +  "/views/control.hbs");

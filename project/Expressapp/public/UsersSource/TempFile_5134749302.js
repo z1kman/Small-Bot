@@ -1,6 +1,8 @@
  var Text= "" ;
- var Number= "" ;
  var Email= "" ;
+ var DialogueStarted = 0;
+ var MessageBeforeDialogue = new Array();
+let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000;
 window.onload = function(){
 	 Start(); 
 }
@@ -16,6 +18,20 @@ function Start(){
 	 SendBotMessage("привет, я чат бот!Я могу вам чем-то помочь?");
 	 LowerDown();
 	 DeleteButton();
+	 Act_1_2_28();
+}
+function Act_1_2_28(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "<img src='http://localhost:3000/uploads/a77e0a7ede26a2b32428198ae5490d22' class='ImageBot' id = 'Image 1 2 28' onclick = 'ClickImage(id)' width = '200px'>"
+	 SendBotMessage(" Вывод изобржаения:http://localhost:3000/uploads/a77e0a7ede26a2b32428198ae5490d22");
+	 DeleteButton();
+	 LowerDown();
 	 Act_1_2_6();
 }
 function Act_1_2_6(){
@@ -128,20 +144,6 @@ function Act_3_6_14(){
 	 SendBotMessage("Для того, чтобы перейти на страницу досуга нажмите на эту ссылку:<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a>  ewqewrwqrqwwq");
 	 LowerDown();
 	 DeleteButton();
-	 Act_3_6_27();
-}
-function Act_3_6_27(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a> gerer";
-	 SendBotMessage("<a href='https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1' target='_blank'>https://www.mos.ru/pgu/ru/application/dogm/077060701/#step_1</a> gerer");
-	 LowerDown();
-	 DeleteButton();
 	InputMessage.value = "" ; 
 	 Act_3_6_13();
 }
@@ -248,6 +250,91 @@ function Act_6_11_26(){
 	 OutgoingMessage.innerHTML = Message;
 	 InputMessage.value = "";
 	 LowerDown(); 
+}
+ async function  SendMessageOnServer(Message,Source){//отправка сообщений на сервер
+	 let url = 'http://localhost:3000/publish';
+	 let ProjectName = document.getElementById('FrameChatBot').getAttribute('ProjectName');
+	 let err = document.getElementById('LabelErrorChatBot');
+	 let DateNow = new Date();
+	 let mess = {
+	       message : Message,
+	       source : Source,
+	       dialog : Dialog,
+	       project : ProjectName,
+	       date : DateNow.getDate() + "." + (DateNow.getMonth() + 1) + "." + DateNow.getFullYear(),
+	       time : DateNow.getHours() + ":" + DateNow.getMinutes() + ":" + DateNow.getSeconds(),
+	       variables : ["Text","Email"],
+			V_Text: Text,
+			V_Email: Email}
+	if(!err.hasAttribute('hidden')){
+	      err.setAttribute('hidden','hidden');
+	      err.innerHTML = "";
+	}; 
+	if(DialogueStarted == 0){
+	MessageBeforeDialogue.push(mess);
+	  if(Source == "User" || Source == "Btn"){
+	       fetch(url, { 
+	           method: 'POST',
+	           headers: {
+	               'Content-Type': 'application/json;charset=utf-8'
+	           },
+	           body: JSON.stringify(mess)
+	        }).then(response => response.json()).then(result => {
+	           if (result.dialog != 500) { 
+	               for(let i = 0; i< MessageBeforeDialogue.length; i++){
+	                document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                 MessageBeforeDialogue[i].dialog = result.dialog;
+	                 Dialog = result.dialog;
+	               }
+	          } else {
+	          if(err.hasAttribute('hidden')){
+	                   err.removeAttribute('hidden');
+	           }
+	      err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	       }
+	       DialogueStarted = 1;
+	   })
+	      }
+	}
+	if(DialogueStarted == 1){
+	   MessageBeforeDialogue.push(mess);
+	    for(let i = 0; i <  MessageBeforeDialogue.length; i++){
+	         fetch(url, { 
+	                  method: 'POST',
+	                    headers: {
+	                        'Content-Type': 'application/json;charset=utf-8'
+	                    },
+	                    body: JSON.stringify(MessageBeforeDialogue[i])
+	         }).then(response => response.json()).then(result => {
+	            if (result.dialog != 500) { 
+	                  //document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                 Dialog = result.dialog;
+	           } else {
+	            if(err.hasAttribute('hidden')){
+	                    err.removeAttribute('hidden');
+	            }
+	        err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	        }})
+	    }
+	    DialogueStarted = 2;
+	}else if(DialogueStarted == 2){
+	    fetch(url, { 
+	        method: 'POST',
+	        headers: {
+	                'Content-Type': 'application/json;charset=utf-8'
+	        },
+	        body: JSON.stringify(mess)
+	    }).then(response => response.json()).then(result => {
+	            if (result.dialog != 500) { 
+	                  document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                  Dialog = result.dialog;
+	        } else {
+	        if(err.hasAttribute('hidden')){
+	               err.removeAttribute('hidden');
+	        }
+	    err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	    }})
+	}
 }
  function OpenChatBot(){
 	 let FormChatBot = document.getElementById('FormChatBot');

@@ -148,7 +148,9 @@ function GenerateCode(ButtonName){
             }
         }
     }
-
+    Code += "\n var DialogueStarted = 0;" +
+            "\n var MessageBeforeDialogue = new Array();" +
+            "\nlet Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000;";
 
     for(let i = 0; i < Panels.length; i++){//Цикл по всем панелям
         for (let j = 0; j < Panels[i].childNodes.length; j++) {//Цикл по всем дочерним элементам панелей
@@ -179,7 +181,8 @@ function GenerateCode(ButtonName){
                             if(NumberOfElement(StartPanelId) == N && SecondNumberOfElement(StartPanelId) == SN && StartExist == false ) //если текущая панель - начальная панель
                             {
                                 StartExist = true;//установления флага в значение - функция старта существует
-                                Code +="\nwindow.onload = function(){\n\t Start(); \n}" +
+                                Code +="\nwindow.onload = function(){"+
+                                        "\n\t Start(); \n}" +
                                         "\nfunction Start(){"; 
                             }
                             else{//если текущая панель не начальная
@@ -284,7 +287,8 @@ function GenerateCode(ButtonName){
                             if(NumberOfElement(StartPanelId) == N && SecondNumberOfElement(StartPanelId) == SN && StartExist == false ) //если это начальная панель
                             {
                                 StartExist = true;//установления флага в значение - функция старта существует
-                                Code +="\nwindow.onload = function(){\n\t Start(); \n}" +
+                                Code +="\nwindow.onload = function(){" + 
+                                        "\n\t Start(); \n}" +
                                         "\nfunction Start(){"; 
                             }
                             else{
@@ -580,7 +584,7 @@ function GenerateCode(ButtonName){
                             }else if(InputConditionPanel.value[f] == '}'){
                                 CountBktFig--;
                             }
-                            if(f + 1 >= InputConditionPanel.value.length  && (CountBkt != 0 ||  CountBktFig != 0)){
+                            if(f + 1 >= InputConditionPanel.value.length  && (CountBkt != 0 ||  CountBktFig != 0)){//если текущий элемент последний и кол-во скобок не совпадает друг с другом
                                 if(CountBkt > 0){
                                     Code = "error Ошибка! В условии:\n\"" + InputConditionPanel.value + "\"\nзаданом на панели с именем:" + NamePanel.innerHTML + " , недостаточно скобок.";
                                     return Code;
@@ -614,6 +618,18 @@ function GenerateCode(ButtonName){
                         }else{
                             Code += Text;
                         }
+
+                        for(let f = Text.length; f > 0; f-- ){//цикл по тексту условия
+                            if(Text[f] == '}'){//если найдена фигурная скобка
+                                Text = Text.slice(0,f) + Text.slice(f+1,Text.length);//удаление последней скобки;
+                                break
+                            }else if(Text[f] == '{'){
+                                break;
+                            }else if(f-1 <= 0){//если ни одной фигурной скобки не обраружено
+                                Code += "{}";
+                            }
+                        }
+                        
                         Code += "\n\t\t else{ "
                             for(let f = k + 1; f < Condition.childNodes.length; f++){//цикл по всем элементам пользователя в данной панели для нахождения других элементов
                                 if(Condition.childNodes[f] != undefined){//проверка на не пустой элемент
@@ -690,31 +706,103 @@ function GenerateCode(ButtonName){
             "\n\t let url = \'"+ domain + "\';" +
             "\n\t let ProjectName = document.getElementById('FrameChatBot').getAttribute('ProjectName');" +
             "\n\t let err = document.getElementById('LabelErrorChatBot');" +
-            "\n\t let mess = {" + 
-            "\n\t   message : Message," + 
-            "\n\t   source : Source," + 
-            "\n\t   project : ProjectName" +
-            "\n\t }; " + 
-            "\n\t if(!err.hasAttribute('hidden')){" + 
-            "\n\t   err.setAttribute('hidden','hidden');" + 
-            "\n\t   err.innerHTML = \"\";" + 
-            "\n\t }; " + 
-            "\n\t let response = await fetch(url, { " + 
-            "\n\t   method: 'POST'," + 
-            "\n\t   headers: {" + 
-            "\n\t       'Content-Type': 'application/json;charset=utf-8'" + 
-            "\n\t    }," + 
-            "\n\t    body: JSON.stringify(mess) " + 
-            "\n\t }); " + 
-
-            "\n\t if (response.ok) { // если HTTP-статус в диапазоне 200-299 " + 
-            "\n\t   } else {" + 
-            "\n\t   if(err.hasAttribute('hidden')){" + 
-            "\n\t       err.removeAttribute('hidden');" + 
-            "\n\t    }" + 
-            "\n\t    err.innerHTML = \"Ошибка! сообщение не отправлена на сервер\";" + 
-            "\n\t }; " + 
-            "\n}";
+            "\n\t let DateNow = new Date();" +
+            "\n\t let mess = {" +
+            "\n\t       message : Message," +
+            "\n\t       source : Source," +
+            "\n\t       dialog : Dialog," +
+            "\n\t       project : ProjectName," +
+            "\n\t       date : DateNow.getDate() + \".\" + (DateNow.getMonth() + 1) + \".\" + DateNow.getFullYear()," +
+            "\n\t       time : DateNow.getHours() + \":\" + DateNow.getMinutes() + \":\" + DateNow.getSeconds()";
+            if(Variables.length > 0){//добавление переменных в сообщение отправки
+                Code +=  ",\n\t       variables : [";
+                //запись переменных в массив
+                for(let f = 0; f < Variables.length; f++){//проход по всем переменным
+                    if(f + 1 < Variables.length){//если текущая переменная не последняя
+                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "\",";
+                    }else if(f + 1 >= Variables.length){//если текущая переменная последняя
+                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "\"],";
+                    } 
+                }
+                //запись значения переменных
+                for(let f = 0; f < Variables.length; f++){//проход по всем переменным
+                    if(f + 1 < Variables.length){//если текущая переменная не последняя
+                        Code += "\n\t\t\tV_" + Variables[f].innerText.replace(/\s/g, '') + ": " + Variables[f].innerText.replace(/\s/g, '') + ",";
+                    }else if(f + 1 >= Variables.length){//если текущая переменная последняя
+                        Code += "\n\t\t\tV_" + Variables[f].innerText.replace(/\s/g, '') + ": " + Variables[f].innerText.replace(/\s/g, '');
+                    } 
+                }
+            }
+        Code +="}\n\tif(!err.hasAttribute('hidden')){" +
+        "\n\t      err.setAttribute('hidden','hidden');" +
+        "\n\t      err.innerHTML = \"\";" +
+        "\n\t}; " +
+        "\n\tif(DialogueStarted == 0){" +
+        "\n\tMessageBeforeDialogue.push(mess);" +
+        "\n\t  if(Source == \"User\" || Source == \"Btn\"){" +
+        "\n\t       fetch(url, { " +
+        "\n\t           method: 'POST'," +
+        "\n\t           headers: {" +
+        "\n\t               'Content-Type': 'application/json;charset=utf-8'" +
+        "\n\t           }," +
+        "\n\t           body: JSON.stringify(mess)" +
+        "\n\t        }).then(response => response.json()).then(result => {" +
+        "\n\t           if (result.dialog != 500) { " +
+        "\n\t               for(let i = 0; i< MessageBeforeDialogue.length; i++){" +
+        "\n\t                document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
+        "\n\t                 MessageBeforeDialogue[i].dialog = result.dialog;" +
+        "\n\t                 Dialog = result.dialog;" +
+        "\n\t               }" + 
+        "\n\t          } else {" +
+        "\n\t          if(err.hasAttribute('hidden')){" +
+        "\n\t                   err.removeAttribute('hidden');" +
+        "\n\t           }" +
+        "\n\t      err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
+        "\n\t       }" +
+        "\n\t       DialogueStarted = 1;" +
+        "\n\t   })" +
+        "\n\t      }" +
+        "\n\t}" +
+        "\n\tif(DialogueStarted == 1){" +
+        "\n\t   MessageBeforeDialogue.push(mess);" +
+        "\n\t    for(let i = 0; i <  MessageBeforeDialogue.length; i++){" +
+        "\n\t         fetch(url, { " +
+        "\n\t                  method: 'POST'," +
+        "\n\t                    headers: {" +
+        "\n\t                        'Content-Type': 'application/json;charset=utf-8'" +
+        "\n\t                    }," +
+        "\n\t                    body: JSON.stringify(MessageBeforeDialogue[i])" +
+        "\n\t         }).then(response => response.json()).then(result => {" +
+        "\n\t            if (result.dialog != 500) { " +
+        "\n\t                  //document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
+        "\n\t                 Dialog = result.dialog;" +
+        "\n\t           } else {" +
+        "\n\t            if(err.hasAttribute('hidden')){" +
+        "\n\t                    err.removeAttribute('hidden');" +
+        "\n\t            }" +
+        "\n\t        err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
+        "\n\t        }})" +
+        "\n\t    }" +
+        "\n\t    DialogueStarted = 2;" +
+        "\n\t}else if(DialogueStarted == 2){" +
+        "\n\t    fetch(url, { " +
+        "\n\t        method: 'POST'," +
+        "\n\t        headers: {" +
+        "\n\t                'Content-Type': 'application/json;charset=utf-8'" +
+        "\n\t        }," +
+        "\n\t        body: JSON.stringify(mess)" +
+        "\n\t    }).then(response => response.json()).then(result => {" +
+        "\n\t            if (result.dialog != 500) { " +
+        "\n\t                  document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
+        "\n\t                  Dialog = result.dialog;" +
+        "\n\t        } else {" +
+        "\n\t        if(err.hasAttribute('hidden')){" +
+        "\n\t               err.removeAttribute('hidden');" +
+        "\n\t        }" +
+        "\n\t    err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
+        "\n\t    }})" +
+        "\n\t}" +
+        "\n}";
     //код для открытия чата
     }
     Code += "\n function OpenChatBot(){" +
