@@ -1,6 +1,7 @@
 <html>
 <head>
-<meta charset = "utf-8"> 
+<meta charset = "utf-8">
+ 
  <script src="UsersSource/2968349000.js?1588081003024"></script>
             <title>Конструктор</title>
             <meta name="viewport" content="width = device-width, initial-scale=1">
@@ -13,7 +14,7 @@
             <script src="js/Constructor/Bot.js"></script>
             <script src="js/Constructor/User.js"></script>
             <script src="js/Constructor/Condition.js"></script>
-    <body>   
+    </head><body onload="RefreshArrows()">   
         <div class="Navbar" id="Navbar">
             <div class="LogoDiv">
                 <a href="/account"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
@@ -26,7 +27,7 @@
                 
                 <div class="NewVariableBtn">
                     <form>
-                        <input type="button" value="Окно переменных" class="Btn"  id="NewVariableBtn" onclick="OnClickOpenPanelVariables()">
+                        <input type="button" value="Окно переменных" class="Btn" id="NewVariableBtn" onclick="OnClickOpenPanelVariables()">
                     </form>
                 </div>
                 <div class="TestDiv">
@@ -41,8 +42,8 @@
             </div>
         </div>
 
-        <div class = "DivVariables">
-            <div class = "VariablesPanel" id="VariablesPanel" hidden="hidden">
+        <div class="DivVariables">
+            <div class="VariablesPanel" id="VariablesPanel" hidden="hidden">
                 <span class="TrashImg" id="CloseVariable" title="Закрыть окно переменных" onclick="OnClickCloseVariablePanel()">
                     <img src="source/constructor/exit.png" alt="удалить" width="16px">
                 </span>
@@ -50,27 +51,27 @@
                     Окно переменных
                 </div>
                 <div class="ContainetVariablesPanel" id="ContainetVariablesPanel">
-                    <div class = "VariableElement" id="VariableElement 1">
-                        <div class = "NameVariable" id="NameVariable 1">
+                    <div class="VariableElement" id="VariableElement 1">
+                        <div class="NameVariable" id="NameVariable 1">
                             Text
                         </div>
-                        <div class = "BtnRemove" id="BtnRemove 1" onclick="OnClickRemoveVariable(id)">
+                        <div class="BtnRemove" id="BtnRemove 1" onclick="OnClickRemoveVariable(id)">
                             Удалить
                         </div>
                     </div> 
-                    <div class = "VariableElement" id="VariableElement 2">
-                        <div class = "NameVariable" id="NameVariable 2">
+                    <div class="VariableElement" id="VariableElement 2">
+                        <div class="NameVariable" id="NameVariable 2">
                             Number
                         </div>
-                        <div class = "BtnRemove" id="BtnRemove 2" onclick="OnClickRemoveVariable(id)">
+                        <div class="BtnRemove" id="BtnRemove 2" onclick="OnClickRemoveVariable(id)">
                             Удалить
                         </div>
                     </div>   
-                    <div class = "VariableElement" id="VariableElement 3">
-                        <div class = "NameVariable" id="NameVariable 3">
+                    <div class="VariableElement" id="VariableElement 3">
+                        <div class="NameVariable" id="NameVariable 3">
                             Email
                         </div>
-                        <div class = "BtnRemove" id="BtnRemove 3" onclick="OnClickRemoveVariable(id)">
+                        <div class="BtnRemove" id="BtnRemove 3" onclick="OnClickRemoveVariable(id)">
                             Удалить
                         </div>
                     </div>   
@@ -82,14 +83,14 @@
 
             <div class="Scroll" id="Scroll">
                 <div class="JumpContainer" id="JumpContainer">
-                </div>
+                <canvas class="canvas" id="Canvas 1 2 5" data-connect="Panel 2 3" width="65" height="413" style="top:100;left:475;"></canvas></div>
                 <div class="Constructor" id="Constructor" onclick="Jump(id)">
                     <div id="Section 1" class="Section">
-                        <form id="formAddInstrumentBtn 1 0" class="FormAddInstrumentBtn" >
-                            <input type="button" value="Добавить панель" class="NewPanelBtn " id="ParentNewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
-                        </form>
+                        <form id="formAddInstrumentBtn 1 0" class="FormAddInstrumentBtn">
+                            <input type="button" value="Добавить панель" class="NewPanelBtn active" id="ParentNewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
+                        </form><div class="Panel" id="Panel 1 2"><div class="InputEdit" id="InputEdit 1 2" hidden="hidden" onclick="OnClickInputEdit(id)"><input class="Edit" id="Edit 1 2" type="text;" maxlength="28"></div><div class="TitlePanel" id="EditNamePanel 1 2" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)"><span class="NamePanel" id="NamePanel 1 2">Панель 2</span><span class="ImgPencil" style="opacity: 0;" id="ImgPencil 1 2"><img src="source/constructor/pencil.png" alt="Редактировать" width="16px"></span></div><span class="TrashImg" id="TrashImg 1 2" title="удалить эту панель" onclick="OnClickRemovePanel(id)"><img src="source/constructor/trash.png" alt="удалить" width="16px"></span><div class="Bot" id="Bot 1 2"><div class="Label">Действие чат бота</div><div class="TextBot" id="TextBot 1 2 4" onmouseover="OnMouseOverTextBot(id)" onmouseout="OnMouseOutTextBot(id)"><div class="LabelTextBot">Вывод текста</div><span class="TrashImg" id="TrashImg 1 2 4" style="opacity:0;" title="удалить этот элемент" onclick="OnClickRemoveTextBot(id)"><img src="source/constructor/trash.png" alt="удалить" width="16px"></span><div class="ImgPencilInstrument" id="ImgPencil 1 2 4" style="opacity: 0;" onclick="OnClickEditTextBot(id)"><img src="source/constructor/pencil.png" alt="Редактировать" width="16px"></div><input class="textareaTextBot" id="textareaTextBot 1 2 4" readonly="readonly" value="befrwe"></div><form id="formAddInstrumentBtnBot 1 2"><input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnBot 1 2" onclick="OnClickAddInstrumentBtnBot(id)"></form></div><div class="User" id="User 1 2"><div class="Label">Действие пользователя</div><div class="DivUserButton" id="DivUserButton 1 2 5" onmouseover="OnMouseOverUserPanel(id)" onmouseout="OnMouseOutUserPanel(id)"><div class="LabelElementUser">Нажатие на кнопку</div><span class="TrashImg" id="TrashImg 1 2 5" style="opacity: 0;" title="удалить этот элемент" onclick="OnClickRemoveButtonUser(id)"><img src="source/constructor/trash.png" alt="удалить" width="16px"></span><div class="ImgPencilInstrument" id="ImgPencil 1 2 5" style="opacity: 0;" title="Редактировать этот элемент" onclick="OnClickEditButtonUser(id)"><img src="source/constructor/pencil.png" alt="Редактировать" width="16px"></div><div class="DivFormUser" id="DivFormUser 1 2 5"><form class="FormButton"><input type="button" name="button" class="ButtonUser" id="ButtonUser 1 2 5" value="wq"></form></div><div class="DivJumpIndicator" id="DivJumpIndicator 1 2 5" onmouseover="OnMouseOverDivJump(id)" onmouseout="OnMouseOutDivJump(id)"><input type="button" value="Удалить связь" title="Удалить связь" class="RemoveConnect" id="RemoveConnect 1 2 5" onclick="OnClickRemoveConnect(id)" hidden="hidden"><div class="JumpIndicator ActiveJumpIndicator" onclick="OnClickJumpIndicator(id)" id="JumpIndicator 1 2 5"></div></div></div><form id="formAddInstrumentBtnUser 1 2"><input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnUser 1 2 " onclick="OnClickAddInstrumentBtnUser(id)"></form></div><div class="DivJumpIndicator" id="DivJumpIndicator 1 2 2" onmouseover="OnMouseOverDivJump(id)" onmouseout="OnMouseOutDivJump(id)"><div class="JumpIndicatorPanel" id="JumpIndicator 1 2 2" title="Создание связи в случае, если ни одно из действий пользователя не выполняется" onclick="OnClickJumpIndicator(id)"></div></div></div><form id="formAddInstrumentBtn 1 2"><input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 1 2" onclick="OnClickNewPanelBtn(id)"></form>
                     </div>
-                </div>
+                <div class="Section" id="Section 2"><form id="formAddInstrumentBtn 2 0" class="FormAddInstrumentBtn"><input type="button" value="Добавить панель" class="NewPanelBtn active" id="ParentNewPanelBtn 2 0" onclick="OnClickNewPanelBtn(id)"></form><div class="Panel" id="Panel 2 3" data-connect-0="Canvas 1 2 5"><div class="InputEdit" id="InputEdit 2 3" hidden="hidden" onclick="OnClickInputEdit(id)"><input class="Edit" id="Edit 2 3" type="text;" maxlength="28"></div><div class="TitlePanel" id="EditNamePanel 2 3" onclick="OnClickEditPanelName(id)" onmouseover="OnMouseOverEditPanelName(id)" onmouseout="OnMouseOutEditPanelName(id)"><span class="NamePanel" id="NamePanel 2 3">Панель 3</span><span class="ImgPencil" style="opacity:0;" id="ImgPencil 2 3"><img src="source/constructor/pencil.png" alt="Редактировать" width="16px"></span></div><span class="TrashImg" id="TrashImg 2 3" title="удалить эту панель" onclick="OnClickRemovePanel(id)"><img src="source/constructor/trash.png" alt="удалить" width="16px"></span><div class="Bot" id="Bot 2 3"><div class="Label">Действие чат бота</div><form id="formAddInstrumentBtnBot 2 3"><input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnBot 2 3" onclick="OnClickAddInstrumentBtnBot(id)"></form></div><div class="User" id="User 2 3"><div class="Label">Действие пользователя</div><form id="formAddInstrumentBtnUser 2 3"><input type="button" value="Добавить действие" class="AddInstrumentBtn" id="AddInstrumentBtnUser 2 3 " onclick="OnClickAddInstrumentBtnUser(id)"></form></div><div class="DivJumpIndicator" id="DivJumpIndicator 2 3 3" onmouseover="OnMouseOverDivJump(id)" onmouseout="OnMouseOutDivJump(id)"><div class="JumpIndicatorPanel" id="JumpIndicator 2 3 3" title="Создание связи в случае, если ни одно из действий пользователя не выполняется" onclick="OnClickJumpIndicator(id)"></div></div></div><form id="formAddInstrumentBtn 2 3"><input type="button" value="Добавить панель" class="NewPanelBtn" id="NewPanelBtn 2 3" onclick="OnClickNewPanelBtn(id)"></form></div><div class="Section" id="Section 3"><form id="formAddInstrumentBtn 3 0" class="FormAddInstrumentBtn"><input type="button" value="Добавить панель" class="NewPanelBtn" id="ParentNewPanelBtn 3 0" onclick="OnClickNewPanelBtn(id)"></form></div></div>
         </div>
-    </body>
-</html> 
+    
+ 

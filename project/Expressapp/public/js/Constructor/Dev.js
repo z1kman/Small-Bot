@@ -738,8 +738,8 @@ function GenerateCode(ButtonName){
         "\n\t      err.innerHTML = \"\";" +
         "\n\t}; " +
         "\n\tif(DialogueStarted == 0){" +
-        "\n\tMessageBeforeDialogue.push(mess);" +
-        "\n\t  if(Source == \"User\" || Source == \"Btn\"){" +
+        "\n\t    MessageBeforeDialogue.push(mess);" +
+        "\n\t     if(Source == \"User\" || Source == \"Btn\"){" +
         "\n\t       fetch(url, { " +
         "\n\t           method: 'POST'," +
         "\n\t           headers: {" +
@@ -747,44 +747,44 @@ function GenerateCode(ButtonName){
         "\n\t           }," +
         "\n\t           body: JSON.stringify(mess)" +
         "\n\t        }).then(response => response.json()).then(result => {" +
-        "\n\t           if (result.dialog != 500) { " +
+        "\n\t               if (result.dialog != 500) { " +
         "\n\t               for(let i = 0; i< MessageBeforeDialogue.length; i++){" +
-        "\n\t                document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
-        "\n\t                 MessageBeforeDialogue[i].dialog = result.dialog;" +
-        "\n\t                 Dialog = result.dialog;" +
-        "\n\t               }" + 
-        "\n\t          } else {" +
-        "\n\t          if(err.hasAttribute('hidden')){" +
-        "\n\t                   err.removeAttribute('hidden');" +
-        "\n\t           }" +
-        "\n\t      err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
-        "\n\t       }" +
-        "\n\t       DialogueStarted = 1;" +
-        "\n\t   })" +
-        "\n\t      }" +
-        "\n\t}" +
-        "\n\tif(DialogueStarted == 1){" +
-        "\n\t   MessageBeforeDialogue.push(mess);" +
-        "\n\t    for(let i = 0; i <  MessageBeforeDialogue.length; i++){" +
-        "\n\t         fetch(url, { " +
-        "\n\t                  method: 'POST'," +
-        "\n\t                    headers: {" +
-        "\n\t                        'Content-Type': 'application/json;charset=utf-8'" +
-        "\n\t                    }," +
-        "\n\t                    body: JSON.stringify(MessageBeforeDialogue[i])" +
-        "\n\t         }).then(response => response.json()).then(result => {" +
-        "\n\t            if (result.dialog != 500) { " +
-        "\n\t                  //document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
-        "\n\t                 Dialog = result.dialog;" +
-        "\n\t           } else {" +
-        "\n\t            if(err.hasAttribute('hidden')){" +
-        "\n\t                    err.removeAttribute('hidden');" +
+        "\n\t                     document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);" +
+        "\n\t                     MessageBeforeDialogue[i].dialog = result.dialog;" +
+        "\n\t                     Dialog = result.dialog;" +
+        "\n\t                   }" +
+        "\n\t              } else {" +
+        "\n\t                  if(err.hasAttribute('hidden')){" +
+        "\n\t                       err.removeAttribute('hidden');" +
+        "\n\t                   }" +
+        "\n\t              err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
+        "\n\t               }" +
+        "\n\t               DialogueStarted = 1;" +
+        "\n\t            if(DialogueStarted == 1){" +
+        "\n\t                for(let i = 0; i <  MessageBeforeDialogue.length; i++){" +
+        "\n\t                    fetch(url, { " +
+        "\n\t                          method: 'POST'," +
+        "\n\t                        headers: {" +
+        "\n\t                            'Content-Type': 'application/json;charset=utf-8'" +
+        "\n\t                        }," +
+        "\n\t                        body: JSON.stringify(MessageBeforeDialogue[i])" +
+        "\n\t                     }).then(response => response.json()).then(result => {" +
+        "\n\t                        if (result.dialog != 500) { " +
+        "\n\t                             Dialog = result.dialog;" +
+        "\n\t                           } else {" +
+        "\n\t                            if(err.hasAttribute('hidden')){" +
+        "\n\t                                    err.removeAttribute('hidden');" +
+        "\n\t                            }" +
+        "\n\t                            err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
+        "\n\t                        }" +
+        "\n\t                    })" +
+        "\n\t                }" +
+        "\n\t                DialogueStarted = 2;" +
         "\n\t            }" +
-        "\n\t        err.innerHTML = \"Ошибка! сообщение не отправлено на сервер\";" +
-        "\n\t        }})" +
+        "\n\t        })" +
         "\n\t    }" +
-        "\n\t    DialogueStarted = 2;" +
-        "\n\t}else if(DialogueStarted == 2){" +
+        "\n\t}" +
+        "\n\tif(DialogueStarted == 2){" +
         "\n\t    fetch(url, { " +
         "\n\t        method: 'POST'," +
         "\n\t        headers: {" +

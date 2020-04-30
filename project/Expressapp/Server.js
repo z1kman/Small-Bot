@@ -344,16 +344,16 @@ app.get("/publish", function(request, response){
 });
 
 app.post("/publish",urlencodedParser,function(request,response){   
-    if(request.body.project != undefined ){
+    if(request.body.project != undefined){//если вызов произошел с чат бота
         db.collection('Projects').find({randName: request.body.project}).toArray(function (err,docs){//проверка - существует ли проект указанный в теле сообщения
             //console.log(request.body)
             //console.log(request.body.message)
             let i = 0;
             if(docs.length > 0){//если проект существует
                 db.collection('Dialogs').find({pr_randName: request.body.project, number_Dialogue : request.body.dialog}).toArray(function (err,dialogs){//проверка - существует ли диалог указанный в теле сообщения
-                    if(dialogs.length == 0){//если диалог с таким именем не был найден
-                        let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000; 
-                        db.collection('Dialogs').insertOne({"pr_randName":request.body.project, "number_Dialogue" : Dialog, "Date" : request.body.date},function(){
+                    if(dialogs.length == 0){//если диалог не существует
+                        let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000;//генерация рандомного имени
+                        db.collection('Dialogs').insertOne({"pr_randName": request.body.project.toString(), "number_Dialogue" :Number(Dialog), "Date" : request.body.date},function(){//добавление диалога в бд
                             response.send({dialog : Dialog});//отправить сообщение об ошибке
                         });//запись нового диалога в бд*/
                     }else{
@@ -375,6 +375,70 @@ app.post("/publish",urlencodedParser,function(request,response){
 });
 app.get("/control", function(request, response){
     response.render(__dirname +  "/views/control.hbs");
+});
+
+app.post("/control",urlencodedParser,function(request,response){  
+    if(request.body.project != undefined && request.body.message == "GetDialogs"){//загрузка диалогов
+        db.collection('Dialogs').find({pr_randName: request.body.project}).toArray(function (err,dialogs){//поиск диалогов
+            if(dialogs.length == 0){//если диалог не существует
+                response.send({dialogs : "NoDialogue"});//отправить сообщение
+            }else{
+                if(dialogs.length > 21){//если записей больше чем 20
+                    let dialogsLimited = new Array();
+                    for(let i = 0; i < 20; i++){
+                        dialogsLimited.push(dialogs[i]); 
+                    }
+                    response.send({objects : dialogsLimited, count : dialogsLimited.length});
+                }else{//если записей меньше 20
+                    response.send(dialogs);//отправить сообщение со всеми диалогами
+                }
+            }           
+        });  
+    }else if(request.body.project != undefined && request.body.message == "RemoveDialog" &&  request.body.dialog != undefined){//удаление диалога
+            db.collection('Dialogs').findOneAndDelete({"pr_randName": request.body.project.toString(), "number_Dialogue" : Number(request.body.dialog)}, function(err,result){
+                if(err){
+                    response.send({dialog : 'error'});
+                    return;
+                }
+                response.send({dialog : "ok"});
+            });
+
+    }else if(request.body.project != undefined && request.body.message == "LoadOneDialog" && request.body.count != undefined){//подгрузка одного сообщения
+        db.collection('Dialogs').find({pr_randName: request.body.project}).toArray(function (err,dialogs){//поиск диалогов
+            if(dialogs.length == 0){//если диалог не существует
+                response.send({count : 0});//отправить сообщение что больше нет сообщений
+            }else if(Number(request.body.count) + 1 < dialogs.length){//если диалог еще есть
+                    response.send({objects : dialogs[request.body.count + 1], count : 1});//отправить диалог
+            }else{
+                response.send({count : 0});//отправить сообщение что больше нет сообщений
+            }          
+        });  
+    }else if(request.body.project != undefined && request.body.message == "LoadMoreDialogs" &&request.body.count != undefined){//подгрузка множества диалогов
+        db.collection('Dialogs').find({pr_randName: request.body.project}).toArray(function (err,dialogs){//поиск диалогов
+            if(dialogs.length == 0){//если диалог не существует
+                response.send({count : 0});//отправить сообщение что больше нет сообщений
+            }else if(Number(request.body.count) + 15 < dialogs.length){//если еще есть 15 диалогов
+                let MoreDialogs = new Array();
+                for(let i = Number(request.body.count) + 1; i < Number(request.body.count) + 15; i++){
+                    MoreDialogs.push(dialogs[i]);
+                    if(i + 1 == Number(request.body.count) + 15){//если текущая итерация последняя
+                        response.send({objects : MoreDialogs, count : i, length : dialogs.length});//отправить диалог
+                    }
+                }
+            }else if(Number(request.body.count) + 1 < dialogs.length){//если есть еще хотя бы 1 диалог
+                let MoreDialogs = new Array();
+                for(let i = Number(request.body.count) + 1; i < dialogs.length; i++){
+                    MoreDialogs.push(dialogs[i]);
+                    if(i + 1 == dialogs.length ){//если текущая итерация последняя
+                        response.send({objects : MoreDialogs, count : i, length : dialogs.length});//отправить диалог
+                    }
+                }
+            }     
+        });  
+    }
+
+
+
 });
 app.post("")
 MongoClient.connect('mongodb://localhost:27017/Users',{useUnifiedTopology: true} ,function(err, database){ //подключение к бд, запуск сервера

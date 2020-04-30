@@ -3,119 +3,19 @@
             <title>Управление проектом</title>
             <meta name="viewport" content="width = device-width, initial-scale=1">
             <link rel="stylesheet" href="css/Control/control.css">
-            <script src="js/Constructor/Condition.js"></script>
+            <script src="js/Control/Control.js"></script>
     </head>
     <body>   
         <div class="Panel">
             <div class="Section">
                 <label class = "LabelSection">Раздел</label>
-                <div class="SectionDialogs">
+                <div class="SectionDialogs ActiveSectionDialogs" onclick="DialogsOpen(this)">
                     Диалоги
                 </div>
             </div>
             <div class="SectionValue">
                 <label class = "LabelSectionValue" id="LabelSectionValue">Диалоги</label>
-                <div class="DialogsDiv">
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
-                    <div class="Dialog">
-                        <div class="UserId">Пользователь: 5325321451</div>
-                        <div class="Data">28.04.2020</div>
-                    </div>  
+                <div class="DialogsDiv" id="DialogsDiv" hidden = 'hidden'> 
                 </div>
             </div>
         </div>

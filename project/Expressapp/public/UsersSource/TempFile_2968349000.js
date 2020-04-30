@@ -1,4 +1,5 @@
  var Text= "" ;
+ var Number= "" ;
  var Email= "" ;
  var DialogueStarted = 0;
  var MessageBeforeDialogue = new Array();
@@ -14,13 +15,13 @@ function Start(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "привет, я чат бот!Я могу вам чем-то помочь?";
-	 SendBotMessage("привет, я чат бот!Я могу вам чем-то помочь?");
+	 IncomingMessage.innerHTML = "befrwe";
+	 SendBotMessage("befrwe");
 	 LowerDown();
 	 DeleteButton();
-	 Act_1_2_6();
+	 Act_1_2_5();
 }
-function Act_1_2_6(){
+function Act_1_2_5(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let ButtonBlock = document.createElement('div');
 	 let ButtonOnChat = document.createElement('input');
@@ -28,36 +29,9 @@ function Act_1_2_6(){
 	 ChatForm.append(ButtonBlock);
 	 ButtonOnChat.className = 'ButtonOnChat';
 	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'Да';
+	 ButtonOnChat.value = 'wq';
 	 ButtonBlock.append(ButtonOnChat);
 	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_7_14_34();')
-	 Act_1_2_7();
-}
-function Act_1_2_7(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let ButtonBlock = document.createElement('div');
-	 let ButtonOnChat = document.createElement('input');
-	 ButtonBlock.className = 'ButtonBlock';
-	 ChatForm.append(ButtonBlock);
-	 ButtonOnChat.className = 'ButtonOnChat';
-	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'Нет';
-	 ButtonBlock.append(ButtonOnChat);
-	 LowerDown();
-}
-function Act_7_14_34(){
-	 let ChatForm = document.getElementById("ChatForm");
-	 let MessageBot = document.createElement('div');
-	 let IncomingMessage = document.createElement('div');
-	 MessageBot.className = 'MessageBot';
-	 ChatForm.append(MessageBot);
-	 IncomingMessage.className = 'IncomingMessage';
-	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "ghbdyn";
-	 SendBotMessage("ghbdyn");
-	 LowerDown();
-	 DeleteButton();
 }
  function DeleteButton(){
 	 let Buttons = document.getElementsByClassName("ButtonBlock");
@@ -95,16 +69,17 @@ function Act_7_14_34(){
 	       project : ProjectName,
 	       date : DateNow.getDate() + "." + (DateNow.getMonth() + 1) + "." + DateNow.getFullYear(),
 	       time : DateNow.getHours() + ":" + DateNow.getMinutes() + ":" + DateNow.getSeconds(),
-	       variables : ["Text","Email"],
+	       variables : ["Text","Number","Email"],
 			V_Text: Text,
+			V_Number: Number,
 			V_Email: Email}
 	if(!err.hasAttribute('hidden')){
 	      err.setAttribute('hidden','hidden');
 	      err.innerHTML = "";
 	}; 
 	if(DialogueStarted == 0){
-	    MessageBeforeDialogue.push(mess);
-	     if(Source == "User" || Source == "Btn"){
+	MessageBeforeDialogue.push(mess);
+	  if(Source == "User" || Source == "Btn"){
 	       fetch(url, { 
 	           method: 'POST',
 	           headers: {
@@ -112,44 +87,44 @@ function Act_7_14_34(){
 	           },
 	           body: JSON.stringify(mess)
 	        }).then(response => response.json()).then(result => {
-	               if (result.dialog != 500) { 
+	           if (result.dialog != 500) { 
 	               for(let i = 0; i< MessageBeforeDialogue.length; i++){
-	                     document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
-	                     MessageBeforeDialogue[i].dialog = result.dialog;
-	                     Dialog = result.dialog;
-	                   }
-	              } else {
-	                  if(err.hasAttribute('hidden')){
-	                       err.removeAttribute('hidden');
-	                   }
-	              err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	                document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                 MessageBeforeDialogue[i].dialog = result.dialog;
+	                 Dialog = result.dialog;
 	               }
-	               DialogueStarted = 1;
-	            if(DialogueStarted == 1){
-	                for(let i = 0; i <  MessageBeforeDialogue.length; i++){
-	                    fetch(url, { 
-	                          method: 'POST',
-	                        headers: {
-	                            'Content-Type': 'application/json;charset=utf-8'
-	                        },
-	                        body: JSON.stringify(MessageBeforeDialogue[i])
-	                     }).then(response => response.json()).then(result => {
-	                        if (result.dialog != 500) { 
-	                             Dialog = result.dialog;
-	                           } else {
-	                            if(err.hasAttribute('hidden')){
-	                                    err.removeAttribute('hidden');
-	                            }
-	                            err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
-	                        }
-	                    })
-	                }
-	                DialogueStarted = 2;
-	            }
-	        })
-	    }
+	          } else {
+	          if(err.hasAttribute('hidden')){
+	                   err.removeAttribute('hidden');
+	           }
+	      err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	       }
+	       DialogueStarted = 1;
+	   })
+	      }
 	}
-	if(DialogueStarted == 2){
+	if(DialogueStarted == 1){
+	   MessageBeforeDialogue.push(mess);
+	    for(let i = 0; i <  MessageBeforeDialogue.length; i++){
+	         fetch(url, { 
+	                  method: 'POST',
+	                    headers: {
+	                        'Content-Type': 'application/json;charset=utf-8'
+	                    },
+	                    body: JSON.stringify(MessageBeforeDialogue[i])
+	         }).then(response => response.json()).then(result => {
+	            if (result.dialog != 500) { 
+	                  //document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                 Dialog = result.dialog;
+	           } else {
+	            if(err.hasAttribute('hidden')){
+	                    err.removeAttribute('hidden');
+	            }
+	        err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	        }})
+	    }
+	    DialogueStarted = 2;
+	}else if(DialogueStarted == 2){
 	    fetch(url, { 
 	        method: 'POST',
 	        headers: {
