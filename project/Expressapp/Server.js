@@ -354,14 +354,14 @@ app.post("/publish",urlencodedParser,function(request,response){
                     if(dialogs.length == 0){//если диалог не существует
                         let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000;//генерация рандомного имени
                         db.collection('Dialogs').insertOne({"pr_randName": request.body.project.toString(), "number_Dialogue" :Number(Dialog), "Date" : request.body.date},function(){//добавление диалога в бд
-                            response.send({dialog : Dialog});//отправить сообщение об ошибке
+                            response.send({dialog : Dialog});//отправить сообщение с номером диалога
                         });//запись нового диалога в бд*/
                     }else{
-                        console.log(request.body)
                         db.collection('Dialogs').updateOne({number_Dialogue : request.body.dialog}, {$set: {Date : request.body.date}});//обновление даты последнего сообщения в бд
-                        response.send({dialog :request.body.dialog });//отправить сообщение об ошибке
+                        db.collection('Messages').insertOne({pr_randName: request.body.project.toString(), number_Dialogue :Number(request.body.dialog),Message : (request.body.message).toString(), Variables : request.body.variables, Source : request.body.source, Date : request.body.date, Time : request.body.time})//добавление сообщения в бд
+                        console.log(request.body.variables)
+                        response.send({dialog :request.body.dialog });//отправить сообщение с номером диалога
                     }
-                    
                 });    
             }else{//если проект не существует
                 response.send({dialog:500});//отправить сообщение об ошибке
@@ -400,7 +400,10 @@ app.post("/control",urlencodedParser,function(request,response){
                     response.send({dialog : 'error'});
                     return;
                 }
-                response.send({dialog : "ok"});
+                db.collection('Messages').deleteMany({"pr_randName": request.body.project.toString(), "number_Dialogue" : Number(request.body.dialog)}, function(err,result){
+                    response.send({dialog : "ok"});
+                });
+                
             });
 
     }else if(request.body.project != undefined && request.body.message == "LoadOneDialog" && request.body.count != undefined){//подгрузка одного сообщения
@@ -434,6 +437,14 @@ app.post("/control",urlencodedParser,function(request,response){
                     }
                 }
             }     
+        });  
+    }else if(request.body.dialog != undefined && request.body.message == "LoadMessage"){//загрузка диалогов
+        db.collection('Messages').find({"number_Dialogue" : Number(request.body.dialog)}).toArray(function (err,dialogs){//поиск диалогов
+            if(dialogs.length == 0){//если диалог не существует
+                response.send({count : 0});//отправить сообщение что больше нет сообщений
+            }else{//если есть записи
+                response.send(dialogs);
+            }    
         });  
     }
 

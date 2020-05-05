@@ -169,7 +169,6 @@ function OnClickAcceptRemoveVariable(id){//Всплывающее окно. Со
             let N = NumberOfElement(arr[i].id);
             let SN = SecondNumberOfElement(arr[i].id);
             let TN = ThirdNumberOfElement(arr[i].id);
-            alert(arr[i].id);
             let DivFormUser = document.getElementById("DivFormUser " + N + " " + SN + " " + TN);
             DivFormUser.remove(document.getElementById("DivUserText " + N + " " + SN + " " + TN ));
             if(document.getElementById("DivUserText " + N + " " + SN + " " + TN ) != null){

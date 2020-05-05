@@ -715,23 +715,17 @@ function GenerateCode(ButtonName){
             "\n\t       date : DateNow.getDate() + \".\" + (DateNow.getMonth() + 1) + \".\" + DateNow.getFullYear()," +
             "\n\t       time : DateNow.getHours() + \":\" + DateNow.getMinutes() + \":\" + DateNow.getSeconds()";
             if(Variables.length > 0){//добавление переменных в сообщение отправки
-                Code +=  ",\n\t       variables : [";
+                Code +=  ",\n\t       variables : ";
                 //запись переменных в массив
                 for(let f = 0; f < Variables.length; f++){//проход по всем переменным
                     if(f + 1 < Variables.length){//если текущая переменная не последняя
-                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "\",";
+                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "=\" + " + Variables[f].innerText.replace(/\s/g, '') + "+ \";\" + ";
                     }else if(f + 1 >= Variables.length){//если текущая переменная последняя
-                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "\"],";
+                        Code += "\"" + Variables[f].innerText.replace(/\s/g, '') + "=\" + " + Variables[f].innerText.replace(/\s/g, '');
                     } 
                 }
-                //запись значения переменных
-                for(let f = 0; f < Variables.length; f++){//проход по всем переменным
-                    if(f + 1 < Variables.length){//если текущая переменная не последняя
-                        Code += "\n\t\t\tV_" + Variables[f].innerText.replace(/\s/g, '') + ": " + Variables[f].innerText.replace(/\s/g, '') + ",";
-                    }else if(f + 1 >= Variables.length){//если текущая переменная последняя
-                        Code += "\n\t\t\tV_" + Variables[f].innerText.replace(/\s/g, '') + ": " + Variables[f].innerText.replace(/\s/g, '');
-                    } 
-                }
+            }else{
+                Code +=  ",\n\t       variables : \"null\"";
             }
         Code +="}\n\tif(!err.hasAttribute('hidden')){" +
         "\n\t      err.setAttribute('hidden','hidden');" +

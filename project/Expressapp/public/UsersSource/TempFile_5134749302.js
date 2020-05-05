@@ -1,5 +1,4 @@
- var Text= "" ;
- var Email= "" ;
+ var elem= "" ;
  var DialogueStarted = 0;
  var MessageBeforeDialogue = new Array();
 let Dialog = + Math.floor(Math.random() * (9999999999 - 1000000000)) + 1000000000;
@@ -19,6 +18,8 @@ function Start(){
 	 LowerDown();
 	 DeleteButton();
 	 Act_1_2_6();
+	 let SendMessage = document.getElementById('SendMessage')
+	 SendMessage.setAttribute('onclick','Act_1_2_33(); InputMessage.value = "" ; ')
 }
 function Act_1_2_6(){
 	 let ChatForm = document.getElementById("ChatForm");
@@ -45,6 +46,17 @@ function Act_1_2_7(){
 	 ButtonOnChat.value = 'Нет';
 	 ButtonBlock.append(ButtonOnChat);
 	 LowerDown();
+}
+document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById('SendMessage').setAttribute('onclick','InputMessage.value = ""; Act_1_2_33() InputMessage.value = "" ; ');
+});
+function Act_1_2_33(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value != ""){
+		elem = InputMessage.value;
+		 Act_7_14_34(); 
+	 }else{
+	 }
 }
 function Act_7_14_34(){
 	 let ChatForm = document.getElementById("ChatForm");
@@ -95,9 +107,7 @@ function Act_7_14_34(){
 	       project : ProjectName,
 	       date : DateNow.getDate() + "." + (DateNow.getMonth() + 1) + "." + DateNow.getFullYear(),
 	       time : DateNow.getHours() + ":" + DateNow.getMinutes() + ":" + DateNow.getSeconds(),
-	       variables : ["Text","Email"],
-			V_Text: Text,
-			V_Email: Email}
+	       variables : "elem=" + elem}
 	if(!err.hasAttribute('hidden')){
 	      err.setAttribute('hidden','hidden');
 	      err.innerHTML = "";

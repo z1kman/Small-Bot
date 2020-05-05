@@ -6,7 +6,9 @@ function DialogsOpen(Button){//нажатие на кнопку "Диалоги"
     let DialogsDiv = document.getElementById('DialogsDiv');
     let LabelSectionValue = document.getElementById('LabelSectionValue');//надпись секции
     let LoadMore = document.getElementById('LoadMore');//кнопка "Загрузить еще"
+    let MessagesDiv = document.getElementById('MessagesDiv');
 
+    MessagesDiv.setAttribute('hidden','hidden');
     if(!Button.classList.contains('ActiveSectionDialogs')){//если на эту кнопку еще не нажимали
         let LabelOnDialogsPanel = document.getElementById("LabelOnDialogsPanel");
         let Dialog = document.getElementsByClassName('Dialog');
@@ -32,6 +34,7 @@ function DialogsOpen(Button){//нажатие на кнопку "Диалоги"
     }
     
 }
+
 function RemoveDialogStep(Dialog){//удаление диалога
     let Dialogs = document.getElementsByClassName("Dialog");
     let LoadMore = document.getElementById("LoadMore");
@@ -79,7 +82,7 @@ function RemoveDialogStep(Dialog){//удаление диалога
                             LoadMore.setAttribute('countdialogs', (Number(LoadMore.getAttribute('countdialogs')) + 1));//увеличить значение на единицу
                             let DialogNew = document.createElement('div');
                             DialogNew.className = "Dialog";
-                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects.number_Dialogue + "\" dataDialog=\"" + result.objects.Date +"\" onclick=\"OpenDialog()\">" +
+                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects.number_Dialogue + "\" dataDialog=\"" + result.objects.Date +"\" onclick=\"OpenDialog(this)\">" +
                                 "\n\t<div class=\"UserId\">Диалог: " +  result.objects.number_Dialogue + "</div>" + 
                                 "\n\t\t  <div class=\"Data\">" + result.objects.Date + "</div>" +
                                 "\n\t</div>" + 
@@ -125,7 +128,7 @@ function LoadDialogue(){//загрузка диалогов из базы
                         for(let i = 0; i < result.objects.length; i++){//вывод диалогов
                             let DialogNew = document.createElement('div');
                             DialogNew.className = "Dialog";
-                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects[i].number_Dialogue + "\" dataDialog=\"" + result.objects[i].Date +"\" onclick=\"OpenDialog()\">" +
+                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects[i].number_Dialogue + "\" dataDialog=\"" + result.objects[i].Date +"\" onclick=\"OpenDialog(this)\">" +
                                 "\n\t<div class=\"UserId\">Диалог: " +  result.objects[i].number_Dialogue + "</div>" + 
                                 "\n\t\t  <div class=\"Data\">" + result.objects[i].Date + "</div>" +
                                 "\n\t</div>" + 
@@ -147,7 +150,7 @@ function LoadDialogue(){//загрузка диалогов из базы
                         for(let i = 0; i < result.length; i++){//вывод диалогов
                             let DialogNew = document.createElement('div');
                             DialogNew.className = "Dialog";
-                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result[i].number_Dialogue + "\" dataDialog=\"" + result[i].Date +"\" onclick=\"OpenDialog()\">" +
+                            DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result[i].number_Dialogue + "\" dataDialog=\"" + result[i].Date +"\" onclick=\"OpenDialog(this)\">" +
                                 "\n\t<div class=\"UserId\">Диалог: " +  result[i].number_Dialogue + "</div>" + 
                                 "\n\t\t  <div class=\"Data\">" + result[i].Date + "</div>" +
                                 "\n\t</div>" + 
@@ -184,7 +187,7 @@ function LoadMoreDialogs(LoadMore){//загрузить еще диалоги
             for(let i = 0 ; Number(LoadMore.getAttribute('countdialogs')) + i < result.count; i++){//вывод подгруженных диалогов
                 let DialogNew = document.createElement('div');
                 DialogNew.className = "Dialog";
-                DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects[i].number_Dialogue + "\" dataDialog=\"" + result.objects[i].Date +"\" onclick=\"OpenDialog()\">" +
+                DialogNew.innerHTML = "\n<div class=\"ClickDialog\" dialog=\"" + result.objects[i].number_Dialogue + "\" dataDialog=\"" + result.objects[i].Date +"\" onclick=\"OpenDialog(this)\">" +
                     "\n\t<div class=\"UserId\">Диалог: " +  result.objects[i].number_Dialogue + "</div>" + 
                     "\n\t\t  <div class=\"Data\">" + result.objects[i].Date + "</div>" +
                     "\n\t</div>" + 
@@ -199,6 +202,93 @@ function LoadMoreDialogs(LoadMore){//загрузить еще диалоги
             }
         }
     });
+}
+function OpenDialog(obj){
+    let Message = {//сообщение для отправки на сервер
+        project : get_cookie('Project'),
+        dialog : obj.getAttribute('dialog'),
+        message : "LoadMessage"
+    }
+    fetch(url, { 
+        method: 'POST',
+        headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(Message)//отправка сообщения на сервер
+    }).then(response => response.json()).then(result => {//чтение сообщений с сервера
+        if(result.count == undefined){//если записи были найдены
+            let DialogsDiv = document.getElementById("DialogsDiv");//блок с диалогами
+            let MessagesDiv = document.getElementById("MessagesDiv");//блок с сообщениями
+            let LabelSectionValue = document.getElementById("LabelSectionValue");//надпись секции
+            let VariablesDiv = document.getElementById("VariablesDiv");//блок с переменными
+            let ChatForm = document.getElementById("ChatForm");
+            let MessageBotOnPage = document.getElementsByClassName('MessageBot');
+            let MessageUserOnPage = document.getElementsByClassName('MessageUser');
+
+            if(result[0].Variables == "null"){//если в проекте нет переменных
+                VariablesDiv.setAttribute("hidden","hidden");//скрыть блок с переменными
+            }else{//если в проекте есть переменные
+                let VariablesOnPage = document.getElementsByClassName('Variable');//все переменные на странице
+                for(let i = VariablesOnPage.length; i > 0; i--){//удаление переменных
+                    VariablesOnPage[0].remove();
+                }
+                if(VariablesDiv.hasAttribute("hidden")){//если блок с переменными был скрыт
+                    VariablesDiv.removeAttribute("hidden");
+                }
+                let VariablesSplit = result[result.length - 1].Variables.split(";");
+                for(let i = 0; i < VariablesSplit.length; i++){//цикл по всем полученным переменным
+                    let Variable = document.createElement('div');
+                    Variable.className = "Variable";
+                    if(VariablesSplit[i].split("=")[1] == ""){//если переменная пуста
+                        Variable.innerHTML = VariablesSplit[i].split("=")[0] + " = null";
+                    }else{//если переменная что-то содержит
+                        Variable.innerHTML = VariablesSplit[i].split("=")[0] + " = " + VariablesSplit[i].split("=")[1];
+                    }
+                    VariablesDiv.append(Variable);//добавление полученных переменных 
+                }
+            }
+
+            for(let i = MessageBotOnPage.length; i > 0; i--){//удаление сообщений бота
+                MessageBotOnPage[0].remove();
+            }
+            for(let i = MessageUserOnPage.length; i > 0; i--){//удаление сообщений пользователя
+                MessageUserOnPage[0].remove();
+            }
+
+            for(let i = 0; i < result.length; i++){//вывод сообщщений
+                    if(result[i].Source == "Bot"){//если текущий элемент - сообщение бота
+                        let MessageBot = document.createElement("div");
+                        MessageBot.className = "MessageBot";
+                        MessageBot.innerHTML = "<div class=\"IncomingMessage\">" + result[i].Message + "</div>" +
+                            "<div class=\"dateBot\">" + result[i].Date + " " + result[i].Time + "</div>";
+                        ChatForm.append(MessageBot);
+                    }else if(result[i].Source == "User" || result[i].Source == "Btn"){//если текущий элемент - сообщение пользователя или нажатие на кнопку
+                        let MessageUser = document.createElement("div");
+                        MessageUser.className = "MessageUser";
+                        MessageUser.innerHTML =  "<div class=\"dateUser\">" + result[i].Date + " " + result[i].Time + "</div>" + 
+                            "<div class=\"OutgoingMessage\">" + result[i].Message + "</div>";
+                        ChatForm.append(MessageUser);
+                    }
+            }
+            LabelSectionValue.innerHTML = "Сообщения"
+            MessagesDiv.removeAttribute("hidden");
+            DialogsDiv.setAttribute("hidden","hidden");
+        }
+    });
+}
+function BackToDialogs(){
+    let LabelSectionValue = document.getElementById('LabelSectionValue');//надпись секции
+    let LoadMore = document.getElementById('LoadMore');//кнопка "Загрузить еще"
+    let Dialog = document.getElementsByClassName('Dialog');
+    LabelSectionValue.innerHTML = "Диалоги";
+    document.getElementById("MessagesDiv").setAttribute('hidden','hidden');
+    if(LoadMore != null){
+        LoadMore.remove();
+    }
+    for(i = Dialog.length; i > 0; i--){//удаление всех ранее загруженных диалогов
+        Dialog[0].remove();
+    }
+    LoadDialogue();
 }
 function get_cookie ( cookie_name )//получение кукисов
 {
