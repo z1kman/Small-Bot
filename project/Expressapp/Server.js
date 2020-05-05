@@ -359,7 +359,6 @@ app.post("/publish",urlencodedParser,function(request,response){
                     }else{
                         db.collection('Dialogs').updateOne({number_Dialogue : request.body.dialog}, {$set: {Date : request.body.date}});//обновление даты последнего сообщения в бд
                         db.collection('Messages').insertOne({pr_randName: request.body.project.toString(), number_Dialogue :Number(request.body.dialog),Message : (request.body.message).toString(), Variables : request.body.variables, Source : request.body.source, Date : request.body.date, Time : request.body.time})//добавление сообщения в бд
-                        console.log(request.body.variables)
                         response.send({dialog :request.body.dialog });//отправить сообщение с номером диалога
                     }
                 });    

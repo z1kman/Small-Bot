@@ -6,6 +6,7 @@ body{
     justify-content: center;
     align-items: center;
     font-family: 'Segoe UI Light', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: auto;
 }
 .LabelSection{
     display: flex;
@@ -239,8 +240,28 @@ body{
 .BackToDialogs:hover{
     color: rgb(2, 150, 209);
 }
-@media (max-width: 1400px){
+.BackToConstructor{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-top: 10px;
+}
+a{
+    text-decoration: none;
+    color: rgb(0, 183, 255);
+    font-size: 18px;
+}
+a:hover{
+    color: rgb(0, 141, 197);
+}
+
+@media (min-width: 590px) and (max-width: 1500px){
     .Panel{
-        width: 700px;
+        width: 800px;
+    }
+}
+@media (max-width: 590px){
+    .Panel{
+        width: 1200px;
     }
 }

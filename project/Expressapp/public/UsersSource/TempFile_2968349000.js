@@ -69,17 +69,14 @@ function Act_1_2_5(){
 	       project : ProjectName,
 	       date : DateNow.getDate() + "." + (DateNow.getMonth() + 1) + "." + DateNow.getFullYear(),
 	       time : DateNow.getHours() + ":" + DateNow.getMinutes() + ":" + DateNow.getSeconds(),
-	       variables : ["Text","Number","Email"],
-			V_Text: Text,
-			V_Number: Number,
-			V_Email: Email}
+	       variables : "Text=" + Text+ ";" + "Number=" + Number+ ";" + "Email=" + Email}
 	if(!err.hasAttribute('hidden')){
 	      err.setAttribute('hidden','hidden');
 	      err.innerHTML = "";
 	}; 
 	if(DialogueStarted == 0){
-	MessageBeforeDialogue.push(mess);
-	  if(Source == "User" || Source == "Btn"){
+	    MessageBeforeDialogue.push(mess);
+	     if(Source == "User" || Source == "Btn"){
 	       fetch(url, { 
 	           method: 'POST',
 	           headers: {
@@ -87,44 +84,44 @@ function Act_1_2_5(){
 	           },
 	           body: JSON.stringify(mess)
 	        }).then(response => response.json()).then(result => {
-	           if (result.dialog != 500) { 
+	               if (result.dialog != 500) { 
 	               for(let i = 0; i< MessageBeforeDialogue.length; i++){
-	                document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
-	                 MessageBeforeDialogue[i].dialog = result.dialog;
-	                 Dialog = result.dialog;
+	                     document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                     MessageBeforeDialogue[i].dialog = result.dialog;
+	                     Dialog = result.dialog;
+	                   }
+	              } else {
+	                  if(err.hasAttribute('hidden')){
+	                       err.removeAttribute('hidden');
+	                   }
+	              err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
 	               }
-	          } else {
-	          if(err.hasAttribute('hidden')){
-	                   err.removeAttribute('hidden');
-	           }
-	      err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
-	       }
-	       DialogueStarted = 1;
-	   })
-	      }
-	}
-	if(DialogueStarted == 1){
-	   MessageBeforeDialogue.push(mess);
-	    for(let i = 0; i <  MessageBeforeDialogue.length; i++){
-	         fetch(url, { 
-	                  method: 'POST',
-	                    headers: {
-	                        'Content-Type': 'application/json;charset=utf-8'
-	                    },
-	                    body: JSON.stringify(MessageBeforeDialogue[i])
-	         }).then(response => response.json()).then(result => {
-	            if (result.dialog != 500) { 
-	                  //document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
-	                 Dialog = result.dialog;
-	           } else {
-	            if(err.hasAttribute('hidden')){
-	                    err.removeAttribute('hidden');
+	               DialogueStarted = 1;
+	            if(DialogueStarted == 1){
+	                for(let i = 0; i <  MessageBeforeDialogue.length; i++){
+	                    fetch(url, { 
+	                          method: 'POST',
+	                        headers: {
+	                            'Content-Type': 'application/json;charset=utf-8'
+	                        },
+	                        body: JSON.stringify(MessageBeforeDialogue[i])
+	                     }).then(response => response.json()).then(result => {
+	                        if (result.dialog != 500) { 
+	                             Dialog = result.dialog;
+	                           } else {
+	                            if(err.hasAttribute('hidden')){
+	                                    err.removeAttribute('hidden');
+	                            }
+	                            err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	                        }
+	                    })
+	                }
+	                DialogueStarted = 2;
 	            }
-	        err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
-	        }})
+	        })
 	    }
-	    DialogueStarted = 2;
-	}else if(DialogueStarted == 2){
+	}
+	if(DialogueStarted == 2){
 	    fetch(url, { 
 	        method: 'POST',
 	        headers: {
