@@ -58,19 +58,14 @@ app.get("/account", function(request, response){
             }
             if(docs.length > 0){//если акаунт найден
                 let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+
                 db.collection('Users').find({login: Login},function(err,cursor){
                     cursor.forEach(function(obj){
                         let ProjectString = "";
                         db.collection('Projects').find({"id_User": obj._id},function(err,projects){
-                            projects.forEach(function(objPr){//массив всех проектов пользователя
-                                ProjectString += "<form class=\"FormProject\"><div class=\"DivProject\">" + objPr.name + "</div><div class=\"BtnProject\"><input type=\"button\" class=\"OpenProject\" value=\"Открыть\" name=\""+ objPr.randName + "\" onclick=\"OpenProject(name)\">" +
-                                "<input type=\"button\" class=\"DeleteProject\" value=\"Удалить\" name=\""+ objPr.randName + "\" onclick=\"DeleteProject(name)\"></div></form>";
-                                },
-                                hbs.registerHelper("Project", function(){
-                                    return new hbs.SafeString(ProjectString);
-                                }, response.render(__dirname + "/views/account.hbs") ));
-                        });//поиск проектов пользователя
-                    });//получение id пользователя который открывает проект
+                            response.render(__dirname + "/views/account.hbs");
+                        });
+                    });
                 });
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
@@ -102,14 +97,14 @@ app.post("/account",urlencodedParser,function(request,response){
                     cursor.forEach(function(obj){
                         db.collection('Projects').insertOne({"id_User": obj._id, "name" : request.body.NameProject, "Obj_html" : objHtmlLink, "Obj_js": objJsLink, 'randName': RandName.toString()});//запись нового проекта в бд
                     })
-                    fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n<meta charset = \"utf-8\"> \n <script src=\"" + objJsLink  + "?" + Date.now() + "\"></script>" + fileHtml , function(error){//создание html файла
+                    fs.writeFile(__dirname  + objHtmlLink,"<html>\n<head>\n <script src=\"" + objJsLink  + "?" + Date.now() + "\"></script>" + fileHtml , function(error){//создание html файла
                         if(error) 
                         {
                             console.log("Ошибка при записи файла:" + error);
                             return;
                         }
                     });
-                    fs.writeFile(__dirname  + "/public/" + objJsLink,"var VariableId= 3;\n var NumberOfPanels= 1;\n var ElementKol = 1;\n var NumberOfSection= 1;", function(error){//создание js файла
+                    fs.writeFile(__dirname  + "/public/" + objJsLink,"var VariableId= 3;\n var NumberOfPanels= 0;\n var ElementKol = 0;\n var NumberOfSection= 1;", function(error){//создание js файла
                         if(error) 
                         {
                             console.log("Ошибка при записи файла:" + error);
@@ -132,6 +127,29 @@ app.post("/account",urlencodedParser,function(request,response){
                         }
                     });
                     response.redirect('/account');
+                }else if(request.body.message == "LoadProjects"){//если пост запрос с подгрузки новых проектов            
+                    let Token = request.cookies['token'];//токен из куков
+                    let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+                    db.collection('Users').find({"login" : Login, "token" : Token }).toArray(function (err,docs){//поиск записей в бд с таким же логином и токеном
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        if(docs.length > 0){//если акаунт найден
+                            let Login = jwt.verify(Token,secret)['userLogin'];//логин из куков
+                            db.collection('Users').find({login: Login},function(err,cursor){//поиск записей пользователей в бд
+                                cursor.forEach(function(obj){
+                                    db.collection('Projects').find({"id_User": obj._id}).toArray(function(err,projects){
+                                        response.send(projects);
+                                    });
+                                });
+                            });
+
+                        }
+                    });
+
+
+
                 }
             }else{//если ни один аккаунт не найден
                 response.render(__dirname + "/views/LoginForm.hbs",{//рендерит страницу с логином и сообщает о ошибке
@@ -266,22 +284,24 @@ app.post("/constructor", urlencodedParser, function(request, response){
         let objJsLink = "UsersSource/TempFile_" + Project + ".js";
         let fileHtml = fs.readFileSync(__dirname + "/views/testing.hbs", "utf8");
         if(request.body.Content != undefined){//если пост запрос с кнопки сохранения проекта
-            fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n<meta charset = \"utf-8\">\n" + request.body.Content , function(error){//запись html файла
+            fs.writeFile(__dirname  + "/views/UsersSource/html/" + Project + ".html","<html>\n<head>\n" + request.body.Content , function(error){//запись html файла
                 if(error) 
                 {
                     console.log("Ошибка при записи файла:" + error);
+                    response.send({status : 500});
                     return;
                 }
             });
-            fs.writeFile(__dirname  + "/public/UsersSource/" + Project + ".js","var VariableId=" +  request.body.VariableId + ";\n var NumberOfPanels=" +
-                request.body.NumberOfPanels + ";\n var ElementKol =" + request.body.ElementKol + "; \n var NumberOfSection=" + request.body.NumberOfSection + ";", function(error){//запись js файла
+            fs.writeFile(__dirname  + "/public/UsersSource/" + Project + ".js","var VariableId=" +  request.body.variableId + ";\n var NumberOfPanels=" +
+                request.body.numberOfPanels + ";\n var ElementKol =" + request.body.elementKol + "; \n var NumberOfSection=" + request.body.numberOfSection + ";", function(error){//запись js файла
                 if(error) 
                 {
                     console.log("Ошибка при записи файла:" + error);
+                    response.send({status : 500});
                     return;
                 }
             });
-            response.sendStatus(200);
+            response.send({status : 200});
         }else if(request.body.CodeTest != undefined){//если пост запрос с нажатия кнопки тестирования проекта
             fs.writeFile(__dirname  + "/public/" +  objJsLink ,request.body.CodeTest, function(error){//запись js файла
                 if(error) 

@@ -4,6 +4,9 @@ function PublishProject(id){
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
     }
+    if(document.getElementById("DivSaveProject") != undefined){//если панель с сообщением о сохранении присутствует, тогда удалить ее
+        document.getElementById("DivSaveProject").remove();
+    }
     clearTimeout(timerId);
     Code = GenerateCode(id);
     if(Code.split(' ')[0] == "error"){//если возникла какая то ошибка
@@ -35,36 +38,72 @@ function PublishProject(id){
     form.innerHTML = "";
 }
 function SaveProject(){
-    let form = document.createElement('form');
-    let iframe = document.createElement('iframe');
+    let urlConstr = "http://localhost:3000/constructor"
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
     }
-    if(document.getElementById('myIFR')!= undefined && document.getElementById('formSub') != undefined){
-        document.getElementById('myIFR').remove();
-        document.getElementById('formSub').remove();
+    if(document.getElementById("DivSaveProject") != undefined){//если панель с сообщением о сохранении присутствует, тогда удалить ее
+        document.getElementById("DivSaveProject").remove();
     }
-    iframe.name = 'myIFR';
-    iframe.id = 'myIFR';
-    iframe.style = 'display: none';
-    form.id = "formSub"
-    form.method = 'POST';
-    form.target = "myIFR";
-    form.setAttribute('hidden','hidden');
-    form.innerHTML = "<input type=\"hidden\" name=\"VariableId\" value=\"" + VariableId + "\">" + 
-    "<input type=\"hidden\" name=\"NumberOfPanels\" value=\"" + NumberOfPanels + "\">" + 
-    "<input type=\"hidden\" name=\"ElementKol\" value=\"" + ElementKol + "\">" + 
-    "<input type=\"hidden\" name=\"NumberOfSection\" value=\"" + NumberOfSection + "\">"+
-    "<textarea name=\"Content\" value=\"" + document.head.innerHTML + "</head><body onload=\"RefreshArrows()\">" + document.body.innerHTML;
-    document.body.append(iframe);
-    document.body.append(form);
-    form.submit();//отправка кода на сервер
-    form.innerHTML = "";
+    let Message = {//сообщение для отправки на сервер
+        variableId : VariableId,
+        numberOfPanels : NumberOfPanels,
+        elementKol : ElementKol,
+        numberOfSection : NumberOfSection, 
+        Content : document.head.innerHTML + "</head><body onload=\"RefreshArrows()\">" + document.body.innerHTML
+    }
+    fetch(urlConstr, { 
+        method: 'POST',
+        headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(Message)//отправка сообщения на сервер
+    }).then(response => response.json()).then(result => {//чтение сообщений с сервера
+        if(result.status == 200){//если проект сохранен
+            clearTimeout(timerId);
+            let DivSaveProject = document.createElement('div');
+            let SaveProject = document.createElement('div');
+            DivSaveProject.className = "DivSaveProject";
+            DivSaveProject.id = "DivSaveProject";
+            SaveProject.className = "SaveProject";
+            SaveProject.innerText = "Проект успешно сохранен";
+            DivSaveProject.setAttribute('title','нажмите чтобы закрыть');
+            DivSaveProject.setAttribute('onclick',"this.remove()");
+            document.body.prepend(DivSaveProject);
+            DivSaveProject.append(SaveProject);
+            timerId = setTimeout(function(){
+                if(document.getElementById("DivSaveProject") != undefined){//если панель с сообщением о сохранении присутствует, тогда удалить ее
+                    document.getElementById("DivSaveProject").remove();
+                }
+            },5000);
+            return 0;
+        }else{//если проект не сохранен
+            let DivErrorProject = document.createElement('div');
+            let ErrorProject = document.createElement('div');
+            DivErrorProject.className = "DivErrorProject";
+            DivErrorProject.id = "DivErrorProject";
+            ErrorProject.className = "ErrorProject";
+            ErrorProject.innerText = "Возникла ошибка. Проект не сохранен";
+            DivErrorProject.setAttribute('title','нажмите чтобы закрыть');
+            DivErrorProject.setAttribute('onclick',"this.remove()");
+            document.body.prepend(DivErrorProject);
+            DivErrorProject.append(ErrorProject);
+            timerId = setTimeout(function(){
+            if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
+                document.getElementById("DivErrorProject").remove();
+            }
+        },10000);
+        return 0;
+        }
+    })
 }
 function TestProject(id){ 
     let Code = "";
     if(document.getElementById("DivErrorProject") != undefined){//если панель с ошибкой присутствует на форме, тогда удалить ее
         document.getElementById("DivErrorProject").remove();
+    }
+    if(document.getElementById("DivSaveProject") != undefined){//если панель с сообщением о сохранении присутствует, тогда удалить ее
+        document.getElementById("DivSaveProject").remove();
     }
     clearTimeout(timerId);
     Code = GenerateCode(id);
