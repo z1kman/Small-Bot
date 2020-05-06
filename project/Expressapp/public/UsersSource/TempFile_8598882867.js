@@ -84,6 +84,89 @@ function Act_2_2_6(){
 	 InputMessage.value = "";
 	 LowerDown(); 
 }
+ async function  SendMessageOnServer(Message,Source){//отправка сообщений на сервер
+	 let url = 'http://localhost:3000/publish';
+	 let ProjectName = document.getElementById('FrameChatBot').getAttribute('ProjectName');
+	 let err = document.getElementById('LabelErrorChatBot');
+	 let DateNow = new Date();
+	 let mess = {
+	       message : Message,
+	       source : Source,
+	       dialog : Dialog,
+	       project : ProjectName,
+	       date : DateNow.getDate() + "." + (DateNow.getMonth() + 1) + "." + DateNow.getFullYear(),
+	       time : DateNow.getHours() + ":" + DateNow.getMinutes() + ":" + DateNow.getSeconds(),
+	       variables : "Text=" + Text+ ";" + "Number=" + Number+ ";" + "Email=" + Email}
+	if(!err.hasAttribute('hidden')){
+	      err.setAttribute('hidden','hidden');
+	      err.innerHTML = "";
+	}; 
+	if(DialogueStarted == 0){
+	    MessageBeforeDialogue.push(mess);
+	     if(Source == "User" || Source == "Btn"){
+	       fetch(url, { 
+	           method: 'POST',
+	           headers: {
+	               'Content-Type': 'application/json;charset=utf-8'
+	           },
+	           body: JSON.stringify(mess)
+	        }).then(response => response.json()).then(result => {
+	               if (result.dialog != 500) { 
+	               for(let i = 0; i< MessageBeforeDialogue.length; i++){
+	                     document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                     MessageBeforeDialogue[i].dialog = result.dialog;
+	                     Dialog = result.dialog;
+	                   }
+	              } else {
+	                  if(err.hasAttribute('hidden')){
+	                       err.removeAttribute('hidden');
+	                   }
+	              err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	               }
+	               DialogueStarted = 1;
+	            if(DialogueStarted == 1){
+	                for(let i = 0; i <  MessageBeforeDialogue.length; i++){
+	                    fetch(url, { 
+	                          method: 'POST',
+	                        headers: {
+	                            'Content-Type': 'application/json;charset=utf-8'
+	                        },
+	                        body: JSON.stringify(MessageBeforeDialogue[i])
+	                     }).then(response => response.json()).then(result => {
+	                        if (result.dialog != 500) { 
+	                             Dialog = result.dialog;
+	                           } else {
+	                            if(err.hasAttribute('hidden')){
+	                                    err.removeAttribute('hidden');
+	                            }
+	                            err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	                        }
+	                    })
+	                }
+	                DialogueStarted = 2;
+	            }
+	        })
+	    }
+	}
+	if(DialogueStarted == 2){
+	    fetch(url, { 
+	        method: 'POST',
+	        headers: {
+	                'Content-Type': 'application/json;charset=utf-8'
+	        },
+	        body: JSON.stringify(mess)
+	    }).then(response => response.json()).then(result => {
+	            if (result.dialog != 500) { 
+	                  document.getElementById('FrameChatBot').setAttribute('dialog',result.dialog);
+	                  Dialog = result.dialog;
+	        } else {
+	        if(err.hasAttribute('hidden')){
+	               err.removeAttribute('hidden');
+	        }
+	    err.innerHTML = "Ошибка! сообщение не отправлено на сервер";
+	    }})
+	}
+}
  function OpenChatBot(){
 	 let FormChatBot = document.getElementById('FormChatBot');
 	 let DivImgCloseBot = document.getElementById('DivImgCloseBot');
