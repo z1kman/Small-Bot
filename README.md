@@ -33,6 +33,8 @@
 
 ## <a name="Video">Демонстрация работы (видео You Tube) </a>
 [![](http://img.youtube.com/vi/bZGllXZ_x08/0.jpg)](https://youtu.be/bZGllXZ_x08)
+
+Пример из демонстрационного видео находится в данном проекте и доступен по адресу: `project\TestProject`; 
  
 # <a name="StartProject">Запуск проекта</a>
 Для того, чтобы запустить проект необходимо иметь установленный Node Js и MongoDB.
