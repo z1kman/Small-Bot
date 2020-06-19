@@ -26,6 +26,9 @@
 Страница конструктора с примером заполнения:
 ![](https://i.ibb.co/H77vZTy/image.jpg)
 
+## Демонстрация работы (видео)
+[![](http://img.youtube.com/vi/bZGllXZ_x08/0.jpg)](https://youtu.be/bZGllXZ_x08)
+
 # Запуск проекта
 Для того, чтобы запустить проект необходимо иметь установленный Node Js и MongoDB.
 
