@@ -15,13 +15,13 @@ function Start(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "Привет, я чат-бот, я могу чем то помочь?";
-	 SendBotMessage("Привет, я чат-бот, я могу чем то помочь?");
+	 IncomingMessage.innerHTML = "Привет! я чат-бот. Я могу вам чем то помочь?";
+	 SendBotMessage("Привет! я чат-бот. Я могу вам чем то помочь?");
 	 LowerDown();
 	 DeleteButton();
-	 Act_1_1_4();
+	 Act_1_1_3();
 }
-function Act_1_1_4(){
+function Act_1_1_3(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let ButtonBlock = document.createElement('div');
 	 let ButtonOnChat = document.createElement('input');
@@ -32,10 +32,10 @@ function Act_1_1_4(){
 	 ButtonOnChat.value = 'Да';
 	 ButtonBlock.append(ButtonOnChat);
 	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_2_2_6();')
-	 Act_1_1_5();
+	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_2_2_8();')
+	 Act_1_1_4();
 }
-function Act_1_1_5(){
+function Act_1_1_4(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let ButtonBlock = document.createElement('div');
 	 let ButtonOnChat = document.createElement('input');
@@ -43,12 +43,12 @@ function Act_1_1_5(){
 	 ChatForm.append(ButtonBlock);
 	 ButtonOnChat.className = 'ButtonOnChat';
 	 ButtonOnChat.type = 'button';
-	 ButtonOnChat.value = 'До свидания';
+	 ButtonOnChat.value = 'Нет';
 	 ButtonBlock.append(ButtonOnChat);
 	 LowerDown();
-	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_2_3_8();')
+	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_2_3_7();')
 }
-function Act_2_2_6(){
+function Act_2_2_8(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -56,12 +56,40 @@ function Act_2_2_6(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "чем я могу вам помочь?";
-	 SendBotMessage("чем я могу вам помочь?");
+	 IncomingMessage.innerHTML = "Выберите, чем я могу вам помочь";
+	 SendBotMessage("Выберите, чем я могу вам помочь");
 	 LowerDown();
 	 DeleteButton();
+	 Act_2_2_9();
 }
-function Act_2_3_8(){
+function Act_2_2_9(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let ButtonBlock = document.createElement('div');
+	 let ButtonOnChat = document.createElement('input');
+	 ButtonBlock.className = 'ButtonBlock';
+	 ChatForm.append(ButtonBlock);
+	 ButtonOnChat.className = 'ButtonOnChat';
+	 ButtonOnChat.type = 'button';
+	 ButtonOnChat.value = 'Оформить заказ';
+	 ButtonBlock.append(ButtonOnChat);
+	 LowerDown();
+	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_3_4_12();')
+	 Act_2_2_10();
+}
+function Act_2_2_10(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let ButtonBlock = document.createElement('div');
+	 let ButtonOnChat = document.createElement('input');
+	 ButtonBlock.className = 'ButtonBlock';
+	 ChatForm.append(ButtonBlock);
+	 ButtonOnChat.className = 'ButtonOnChat';
+	 ButtonOnChat.type = 'button';
+	 ButtonOnChat.value = 'Другое';
+	 ButtonBlock.append(ButtonOnChat);
+	 LowerDown();
+	 ButtonOnChat.setAttribute('onclick','GenerateOutMessage(this.value); SendUserClickOnButton(this.value);Act_3_5_16();')
+}
+function Act_2_3_7(){
 	 let ChatForm = document.getElementById("ChatForm");
 	 let MessageBot = document.createElement('div');
 	 let IncomingMessage = document.createElement('div');
@@ -69,11 +97,119 @@ function Act_2_3_8(){
 	 ChatForm.append(MessageBot);
 	 IncomingMessage.className = 'IncomingMessage';
 	 MessageBot.append(IncomingMessage);
-	 IncomingMessage.innerHTML = "пока";
-	 SendBotMessage("пока");
+	 IncomingMessage.innerHTML = "Пока";
+	 SendBotMessage("Пока");
 	 LowerDown();
 	 DeleteButton();
 }
+function Act_3_4_12(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "Выберите желаемый товар:";
+	 SendBotMessage("Выберите желаемый товар:");
+	 LowerDown();
+	 DeleteButton();
+	 Act_3_4_13();
+}
+function Act_3_4_13(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let ButtonBlock = document.createElement('div');
+	 let ButtonOnChat = document.createElement('input');
+	 ButtonBlock.className = 'ButtonBlock';
+	 ChatForm.append(ButtonBlock);
+	 ButtonOnChat.className = 'ButtonOnChat';
+	 ButtonOnChat.type = 'button';
+	 ButtonOnChat.value = 'Дождевик';
+	 ButtonBlock.append(ButtonOnChat);
+	 LowerDown();
+	 Act_3_4_14();
+}
+function Act_3_4_14(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let ButtonBlock = document.createElement('div');
+	 let ButtonOnChat = document.createElement('input');
+	 ButtonBlock.className = 'ButtonBlock';
+	 ChatForm.append(ButtonBlock);
+	 ButtonOnChat.className = 'ButtonOnChat';
+	 ButtonOnChat.type = 'button';
+	 ButtonOnChat.value = 'Сумка';
+	 ButtonBlock.append(ButtonOnChat);
+	 LowerDown();
+}
+function Act_3_5_16(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "опишите ваш вопрос";
+	 SendBotMessage("опишите ваш вопрос");
+	 LowerDown();
+	 DeleteButton();
+	 let SendMessage = document.getElementById('SendMessage')
+	 SendMessage.setAttribute('onclick','Act_3_5_17(); InputMessage.value = "" ; ')
+}
+document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById('SendMessage').setAttribute('onclick','InputMessage.value = ""; Act_3_5_17() InputMessage.value = "" ; ');
+});
+function Act_3_5_17(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value.toLowerCase().indexOf("проблема") + 1 > 0 ){
+		 Act_3_6_22(); 
+	 }else{
+		 Act_3_5_20();
+	 }
+}
+function Act_3_5_20(){
+	 let InputMessage = document.getElementById('InputMessage');
+	 if(InputMessage.value.toLowerCase().indexOf("как") + 1 > 0 && InputMessage.value.toLowerCase().indexOf("заказать") + 1 > 0 ){
+		 Act_3_7_24(); 
+	 }else{
+	 }
+}
+function Act_3_7_24(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "для заказа товара необходимо выбрать нужный товар у чат-бот и ввести все необходимые данные";
+	 SendBotMessage("для заказа товара необходимо выбрать нужный товар у чат-бот и ввести все необходимые данные");
+	 LowerDown();
+	 DeleteButton();
+	InputMessage.value = "" ; 
+	 Act_3_7_23();
+}
+ function Act_3_7_23(){
+		 Act_3_4_12(); 
+ }
+function Act_3_6_22(){
+	 let ChatForm = document.getElementById("ChatForm");
+	 let MessageBot = document.createElement('div');
+	 let IncomingMessage = document.createElement('div');
+	 MessageBot.className = 'MessageBot';
+	 ChatForm.append(MessageBot);
+	 IncomingMessage.className = 'IncomingMessage';
+	 MessageBot.append(IncomingMessage);
+	 IncomingMessage.innerHTML = "по всем вопросам вы можете обращаться по телефону: 8 800 200 450";
+	 SendBotMessage("по всем вопросам вы можете обращаться по телефону: 8 800 200 450");
+	 LowerDown();
+	 DeleteButton();
+	InputMessage.value = "" ; 
+	 Act_3_6_21();
+}
+ function Act_3_6_21(){
+		 Act_2_2_8(); 
+ }
  function DeleteButton(){
 	 let Buttons = document.getElementsByClassName("ButtonBlock");
 	 let btn = new Array();

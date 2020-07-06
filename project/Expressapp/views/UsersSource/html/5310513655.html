@@ -1,0 +1,95 @@
+<html>
+<head>
+ <script src="UsersSource/5310513655.js?1589221600812"></script>
+            <meta charset = "utf-8">
+            <title>Конструктор</title>
+            <meta name="viewport" content="width = device-width, initial-scale=1">
+            <link rel="stylesheet" href="css/Constructor/NavbarConstructor.css">
+            <link rel="stylesheet" href="css/Constructor/ContentConstructor.css">
+            <script src="js/Constructor/Dev.js"></script>
+            <script src="js/Constructor/Variable.js"></script>
+            <script src="js/Constructor/Service.js"></script>
+            <script src="js/Constructor/Panel.js"></script>
+            <script src="js/Constructor/Bot.js"></script>
+            <script src="js/Constructor/User.js"></script>
+            <script src="js/Constructor/Condition.js"></script>
+    <body>   
+        <div class="Navbar" id="Navbar">
+            <div class="LogoDiv">
+                <a href="/account"><img src="source/navbar/logo.png" alt="Small Bot" id="LogoPng"></a>
+                <a href="/account" id="LabelLogo">Small Bot</a>
+            </div>
+            <div class="LinkControlPanelDiv">
+                <a href="/control" class="LinkControlPanel">Управление проектом</a>
+            </div>
+            <div class="BtnDiv">
+                
+                <div class="NewVariableBtn">
+                    <form>
+                        <input type="button" value="Окно переменных" class="Btn"  id="NewVariableBtn" onclick="OnClickOpenPanelVariables()">
+                    </form>
+                </div>
+                <div class="TestDiv">
+                        <button value="Тестировать" class="Btn" id="TestBtn" onclick="TestProject(id)">Тестировать</button>
+                </div>
+                <div class="SaveDiv">
+                        <button value="Сохранить" class="Btn" id="SaveBtn" onclick="SaveProject()">Сохранить</button>
+                </div>
+                <div class="PublishDiv">
+                    <button value="Опубликовать" class="Btn" id="PublishBtn" onclick="PublishProject(id)">Опубликовать</button>
+                </div>
+            </div>
+        </div>
+
+        <div class = "DivVariables">
+            <div class = "VariablesPanel" id="VariablesPanel" hidden="hidden">
+                <span class="TrashImg" id="CloseVariable" title="Закрыть окно переменных" onclick="OnClickCloseVariablePanel()">
+                    <img src="source/constructor/exit.png" alt="удалить" width="16px">
+                </span>
+                <div class="LabelBlack">
+                    Окно переменных
+                </div>
+                <div class="ContainetVariablesPanel" id="ContainetVariablesPanel">
+                    <div class = "VariableElement" id="VariableElement 1">
+                        <div class = "NameVariable" id="NameVariable 1">
+                            Text
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 1" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div> 
+                    <div class = "VariableElement" id="VariableElement 2">
+                        <div class = "NameVariable" id="NameVariable 2">
+                            Number
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 2" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div>   
+                    <div class = "VariableElement" id="VariableElement 3">
+                        <div class = "NameVariable" id="NameVariable 3">
+                            Email
+                        </div>
+                        <div class = "BtnRemove" id="BtnRemove 3" onclick="OnClickRemoveVariable(id)">
+                            Удалить
+                        </div>
+                    </div>   
+                </div>
+                <input type="button" class="BtnNewVarible" value="Создать переменную" onclick="OnClickAddNewVariable()">
+            </div>
+        </div>
+        
+
+            <div class="Scroll" id="Scroll">
+                <div class="JumpContainer" id="JumpContainer">
+                </div>
+                <div class="Constructor" id="Constructor" onclick="Jump(id)">
+                    <div id="Section 1" class="Section">
+                        <form id="formAddInstrumentBtn 1 0" class="FormAddInstrumentBtn" >
+                            <input type="button" value="Добавить панель" class="NewPanelBtn " id="ParentNewPanelBtn 1 0" onclick="OnClickNewPanelBtn(id)">
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </body>
+</html> 

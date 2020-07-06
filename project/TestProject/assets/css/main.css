@@ -66,10 +66,6 @@ mark {
 	color: inherit;
 }
 
-input::-moz-focus-inner {
-	border: 0;
-	padding: 0;
-}
 
 input, select, textarea {
 	-moz-appearance: none;
@@ -1773,7 +1769,6 @@ input, select, textarea {
 			background: #45c89f;
 		}
 
-		input[type="button"].style2,
 		input[type="submit"].style2,
 		input[type="reset"].style2,
 		button.style2,
@@ -1782,8 +1777,6 @@ input, select, textarea {
 			background: #fff;
 			box-shadow: inset 0 0 0 1px #fff;
 		}
-
-			input[type="button"].style2:hover,
 			input[type="submit"].style2:hover,
 			input[type="reset"].style2:hover,
 			button.style2:hover,
@@ -1792,8 +1785,6 @@ input, select, textarea {
 				color: #fff !important;
 				text-shadow: 0 0 0.5px rgba(255, 255, 255, 0.25) !important;
 			}
-
-		input[type="button"].style3,
 		input[type="submit"].style3,
 		input[type="reset"].style3,
 		button.style3,
@@ -1803,7 +1794,6 @@ input, select, textarea {
 			box-shadow: inset 0 0 0 1px #dad9d9;
 		}
 
-			input[type="button"].style3:hover,
 			input[type="submit"].style3:hover,
 			input[type="reset"].style3:hover,
 			button.style3:hover,
@@ -2502,7 +2492,6 @@ input, select, textarea {
 
 		/* Button */
 
-			input[type="button"],
 			input[type="submit"],
 			input[type="reset"],
 			button,
